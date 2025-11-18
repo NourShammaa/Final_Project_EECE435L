@@ -4,7 +4,7 @@ This part of the project is the databse of the rooms service.
 
 import sqlite3
 
-db_file_name = "rooms.db"
+db_file_name = "database.db"
 
 
 def get_db_connection():

@@ -5,7 +5,7 @@
 import sqlite3
 from datetime import datetime
 
-db_file_name = "users.db"
+db_file_name = "database.db"
 def get_db_connection():
     """Open a connection to the users database and return it.
     The connection uses ``sqlite3.Row`` so we can access columns by name.
