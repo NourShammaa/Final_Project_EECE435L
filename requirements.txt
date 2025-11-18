@@ -1,0 +1,7 @@
+Flask
+sphinx_rtd_theme
+sphinx
+pytest 
+pytest-cov
+memory_profiler
+psutil

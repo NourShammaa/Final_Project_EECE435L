@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Rooms Service API (room_service/app.py) &#8212; Smart Meeting Room Backend v1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=5cb08e4e"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Rooms Database Helpers (room_service/database.py)" href="rooms_database.html" />
+    <link rel="prev" title="Users Database Helpers (users_service/database.py)" href="users_database.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-room_service.app">
+<span id="rooms-service-api-room-service-app-py"></span><h1>Rooms Service API (room_service/app.py)<a class="headerlink" href="#module-room_service.app" title="Link to this heading">¶</a></h1>
+<p>This part of the project iis just the HTTP endpoints for the rooms service. it is for managing meeting rooms:
+creating, updating, deleting, listing, and checking availability.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.create_room">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">create_room</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.create_room" title="Link to this definition">¶</a></dt>
+<dd><p>create a new meeting room.
+takes in a JSON body with name, capacity, equipment, location, and optional status( “available” or “booked”, defaults to “available”).
+returns JSON response with appropriate status code meaning 4xx/5xx if error, 201 if room created.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.delete_room">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">delete_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.delete_room" title="Link to this definition">¶</a></dt>
+<dd><p>delete room by name.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.get_all_rooms">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">get_all_rooms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.get_all_rooms" title="Link to this definition">¶</a></dt>
+<dd><p>return all rooms in the system as a JSON list.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.get_available_rooms">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">get_available_rooms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.get_available_rooms" title="Link to this definition">¶</a></dt>
+<dd><p>returns available rooms, optionally filtered by capacity, location, and equipment. takes in as query params min_capacity, location, equipment.
+returns JSON list of matching rooms.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.get_room">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">get_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.get_room" title="Link to this definition">¶</a></dt>
+<dd><p>just returns a single room by name.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.get_room_status">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">get_room_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.get_room_status" title="Link to this definition">¶</a></dt>
+<dd><p>basically return the status of a room: available or booked.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.update_room">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">update_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.update_room" title="Link to this definition">¶</a></dt>
+<dd><p>update room details or status.
+accepts a JSON body with capacity, equipment, location, and/or status fields to update.
+returns JSON response with appropriate status code 4xx/5xx if error, 200 if room updated.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Smart Meeting Room Backend</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="users_app.html">Users Service API (users_service/app.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users_database.html">Users Database Helpers (users_service/database.py)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Rooms Service API (room_service/app.py)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.create_room"><code class="docutils literal notranslate"><span class="pre">create_room()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.delete_room"><code class="docutils literal notranslate"><span class="pre">delete_room()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_all_rooms"><code class="docutils literal notranslate"><span class="pre">get_all_rooms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_available_rooms"><code class="docutils literal notranslate"><span class="pre">get_available_rooms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_room"><code class="docutils literal notranslate"><span class="pre">get_room()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_room_status"><code class="docutils literal notranslate"><span class="pre">get_room_status()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.update_room"><code class="docutils literal notranslate"><span class="pre">update_room()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rooms_database.html">Rooms Database Helpers (room_service/database.py)</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="users_database.html" title="previous chapter">Users Database Helpers (users_service/database.py)</a></li>
+      <li>Next: <a href="rooms_database.html" title="next chapter">Rooms Database Helpers (room_service/database.py)</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Nour Shammaa and Riwa ElKari.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/rooms_app.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
