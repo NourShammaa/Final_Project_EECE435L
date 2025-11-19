@@ -58,6 +58,124 @@ def make_bookings_table_if_missing():
     conn.close()
 
 
+def get_all_bookings():
+    """Return all bookings with their stored details."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        select * from bookings
+        order by date, start_time;
+        """
+    )
+
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def create_booking(user_id, room_id, date, start_time, end_time):
+    """Insert a new booking into the database."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        insert into bookings (user_id, room_id, date, start_time, end_time)
+        values (?, ?, ?, ?, ?);
+        """,
+        (user_id, room_id, date, start_time, end_time),
+    )
+
+    conn.commit()
+    booking_id = cur.lastrowid
+    conn.close()
+    return booking_id
+
+# note: availability conflicts should be checked in app.py using is_room_available before calling this function or it will cause an error!
+def update_booking(booking_id, date, start_time, end_time):
+    """Update the date/time of an existing booking."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        update bookings
+        set date = ?, start_time = ?, end_time = ?, updated_at = current_timestamp
+        where id = ?;
+        """,
+        (date, start_time, end_time, booking_id),
+    )
+
+    conn.commit()
+    conn.close()
+
+
+def cancel_booking(booking_id):
+    """Mark a booking as cancelled."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        update bookings
+        set status = 'cancelled', updated_at = current_timestamp
+        where id = ?;
+        """,
+        (booking_id,),
+    )
+
+    conn.commit()
+    conn.close()
+
+
+
+#even canceled ones
+def get_bookings_for_user(user_id):
+    """Return all bookings made by a specific user."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        select * from bookings
+        where user_id = ?
+        order by date, start_time;
+        """,
+        (user_id,),
+    )
+
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def is_room_available(room_id, date, start_time, end_time):
+    """Check if a room is free during the given date and time window."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        select * from bookings
+        where room_id = ?
+          and date = ?
+          and status = 'active'
+          and (
+                (start_time < ? and end_time > ?)  -- overlapping intervals
+              );
+        """,
+        (room_id, date, end_time, start_time),
+    )
+
+    conflict = cur.fetchone()
+    conn.close()
+
+    # if conflict exists → room is NOT available
+    return conflict is None
+
+
 # Create the table automatically
 if not os.path.exists(db_file_name):
     make_bookings_table_if_missing()

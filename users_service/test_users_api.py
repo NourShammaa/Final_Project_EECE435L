@@ -1,4 +1,7 @@
 import json
+import os
+import sys
+sys.path.insert(0, os.path.dirname(__file__))  # make local database.py importable
 
 import database
 from app import app
