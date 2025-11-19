@@ -6,7 +6,12 @@ Getting db connection, creating bookings table if it's not there, and other db r
 import sqlite3
 import os
 
-db_file_name = "database.db"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(BASE_DIR)
+db_file_name = os.path.join(ROOT_DIR, "database.db")
+
+
+
 
 
 def get_db_connection():

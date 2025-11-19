@@ -5,3 +5,6 @@ pytest
 pytest-cov
 memory_profiler
 psutil
+Flask-Cors
+Werkzeug
+coverage
