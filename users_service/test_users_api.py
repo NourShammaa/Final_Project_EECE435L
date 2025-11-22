@@ -145,7 +145,10 @@ def test_get_all_users_returns_list():
     client.post("/users/register", data=json.dumps(first), content_type="application/json")
     client.post("/users/register", data=json.dumps(second), content_type="application/json")
 
-    response = client.get("/users")
+    response = client.get(
+    "/users",
+    headers={"X-User-Name": "hadi", "X-User-Role": "admin"},
+)
     assert response.status_code == 200
     data = response.get_json()
     usernames = {u["username"] for u in data}
@@ -169,12 +172,18 @@ def test_get_user_by_username_found_and_not_found():
         content_type="application/json",
     )
 
-    resp_ok = client.get("/users/somebody")
+    resp_ok = client.get(
+    "/users/somebody",
+    headers={"X-User-Name": "somebody", "X-User-Role": "regular"},
+)
     assert resp_ok.status_code == 200
     data_ok = resp_ok.get_json()
     assert data_ok["username"] == "somebody"
 
-    resp_missing = client.get("/users/unknownuser")
+    resp_missing = client.get(
+    "/users/unknownuser",
+    headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+)
     assert resp_missing.status_code == 404
 
 def test_update_user_changes_email_and_role():
@@ -199,10 +208,12 @@ def test_update_user_changes_email_and_role():
         "role": "admin",
     }
     response = client.put(
-        "/users/upuser",
-        data=json.dumps(update_body),
-        content_type="application/json",
-    )
+    "/users/upuser",
+    data=json.dumps(update_body),
+    content_type="application/json",
+    headers={"X-User-Name": "upuser", "X-User-Role": "regular"},
+)
+
 
     assert response.status_code == 200
     data = response.get_json()
@@ -226,10 +237,16 @@ def test_delete_user_removes_them():
         content_type="application/json",
     )
 
-    resp_del = client.delete("/users/delme")
+    resp_del = client.delete(
+    "/users/delme",
+    headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+)
     assert resp_del.status_code == 200
 
-    resp_after = client.get("/users/delme")
+    resp_after = client.get(
+    "/users/delme",
+    headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+)
     assert resp_after.status_code == 404
 
 def test_get_user_bookings_returns_empty_list():
@@ -308,10 +325,11 @@ def test_update_user_not_found():
 
     body = {"email": "doesnt@exist.com"}
     resp = client.put(
-        "/users/not_there",
-        data=json.dumps(body),
-        content_type="application/json",
-    )
+    "/users/not_there",
+    data=json.dumps(body),
+    content_type="application/json",
+    headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+)
 
     assert resp.status_code == 404
 def test_delete_user_not_found():
@@ -319,12 +337,41 @@ def test_delete_user_not_found():
     clean_users_table()
     client = app.test_client()
 
-    resp = client.delete("/users/ghost")
+    resp = client.delete(
+    "/users/ghost",
+    headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+)
+
     assert resp.status_code == 404
 def test_get_user_bookings_user_not_found():
     """ask for bookings of a non-existing user and expect 404."""
     clean_users_table()
     client = app.test_client()
 
-    resp = client.get("/users/ghost/bookings")
+    resp = client.get(
+    "/users/ghost/bookings",
+    headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+)
     assert resp.status_code == 404
+def test_get_all_users_forbidden_for_regular():
+    clean_users_table()
+    client = app.test_client()
+
+    body = {
+        "name": "user1",
+        "username": "user1",
+        "email": "user1@example.com",
+        "password": "pwd",
+        "role": "regular",
+    }
+    client.post(
+        "/users/register",
+        data=json.dumps(body),
+        content_type="application/json",
+    )
+
+    resp = client.get(
+        "/users",
+        headers={"X-User-Name": "user1", "X-User-Role": "regular"},
+    )
+    assert resp.status_code == 403

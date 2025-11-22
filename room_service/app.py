@@ -2,7 +2,36 @@
 creating, updating, deleting, listing, and checking availability.
 """
 from flask import Flask, jsonify, request
-# Try package-style imports first (for Sphinx etc.), then local modules
+from functools import wraps
+def get_current_user():
+    """Read current user identity from HTTP headers."""
+    username = request.headers.get("X-User-Name")
+    role = request.headers.get("X-User-Role")
+    return username, role
+
+
+def require_roles(*allowed_roles):
+    """Decorator to enforce that current user has one of the allowed roles."""
+    def decorator(view_func):
+        @wraps(view_func)
+        def wrapped(*args, **kwargs):
+            username, role = get_current_user()
+            if role is None:
+                return jsonify({"error": "missing X-User-Role header"}), 401
+            if role not in allowed_roles:
+                return (
+                    jsonify(
+                        {
+                            "error": "forbidden: requires one of roles: "
+                            + ", ".join(allowed_roles)
+                        }
+                    ),
+                    403,
+                )
+            return view_func(*args, **kwargs)
+        return wrapped
+    return decorator
+
 try:
     from room_service.database import (
         make_rooms_table_if_missing,
@@ -29,6 +58,7 @@ app = Flask(__name__)
 
 
 @app.route("/rooms", methods=["POST"])
+@require_roles("admin", "facility_manager")
 def create_room():
     """create a new meeting room.
     takes in a JSON body with name, capacity, equipment, location, and optional status( "available" or "booked", defaults to "available").
@@ -101,6 +131,7 @@ def get_room(name):
 
 
 @app.route("/rooms/<string:name>", methods=["PUT"])
+@require_roles("admin", "facility_manager")
 def update_room(name):
     """update room details or status.
     accepts a JSON body with capacity, equipment, location, and/or status fields to update.
@@ -134,6 +165,7 @@ def update_room(name):
 
 
 @app.route("/rooms/<string:name>", methods=["DELETE"])
+@require_roles("admin", "facility_manager")
 def delete_room(name):
     """delete room by name."""
     existing = find_room_by_name(name)

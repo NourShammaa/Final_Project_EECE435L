@@ -11,7 +11,7 @@ from app import app
 
 
 def exercise_rooms_api():
-    """Call the main endpoints to simulate normal usage."""
+    """Call the main endpoints to simulate normal usage, with RBAC headers."""
     database.make_rooms_table_if_missing()
     conn = database.get_db_connection()
     cur = conn.cursor()
@@ -20,6 +20,9 @@ def exercise_rooms_api():
     conn.close()
 
     client = app.test_client()
+
+    # Admin headers (required for POST / PUT / DELETE in RBAC)
+    admin_headers = {"X-User-Name": "adminuser", "X-User-Role": "admin"}
 
     # create a few rooms
     for i in range(5):
@@ -34,19 +37,26 @@ def exercise_rooms_api():
             "/rooms",
             data=json.dumps(body),
             content_type="application/json",
+            headers=admin_headers,
         )
 
-    # hit endpoints
+    # hit endpoints (GETs are open, no headers needed)
     client.get("/rooms")
     client.get("/rooms/PerfRoom0")
     client.get("/rooms/available?min_capacity=6&equipment=projector")
+
+    # update and delete need admin/facility_manager headers
     client.put(
         "/rooms/PerfRoom0",
         data=json.dumps({"status": "booked"}),
         content_type="application/json",
+        headers=admin_headers,
     )
     client.get("/rooms/PerfRoom0/status")
-    client.delete("/rooms/PerfRoom1")
+    client.delete(
+        "/rooms/PerfRoom1",
+        headers=admin_headers,
+    )
 
 
 def main():

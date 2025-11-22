@@ -3,6 +3,44 @@
 focuses on validation and shaping  the JSON responses. """
 from flask import Flask, jsonify, request
 from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
+def get_current_user():
+    """
+    Read current user identity from HTTP headers.
+
+    We assume some external gateway already authenticated the user and set:
+    - X-User-Name: username string
+    - X-User-Role: role string such as 'admin', 'regular', 'facility_manager', etc.
+    """
+    username = request.headers.get("X-User-Name")
+    role = request.headers.get("X-User-Role")
+    return username, role
+
+
+def require_roles(*allowed_roles):
+    """
+    Decorator to ensure the current user has one of the allowed roles.
+    Returns 401 if role missing, 403 if role not allowed.
+    """
+    def decorator(view_func):
+        @wraps(view_func)
+        def wrapped(*args, **kwargs):
+            username, role = get_current_user()
+            if role is None:
+                return jsonify({"error": "missing X-User-Role header"}), 401
+            if role not in allowed_roles:
+                return (
+                    jsonify(
+                        {
+                            "error": "forbidden: requires one of roles: "
+                            + ", ".join(allowed_roles)
+                        }
+                    ),
+                    403,
+                )
+            return view_func(*args, **kwargs)
+        return wrapped
+    return decorator
 
 # This import style works both when running directly and when Sphinx imports the package
 try:
@@ -92,6 +130,7 @@ def login_user():
 
 
 @app.route("/users", methods=["GET"])
+@require_roles("admin", "auditor")
 def get_all_users():
     """ retrieves all users from database, removes password hashes before returning.
     returns JSON list of user objects. """
@@ -101,8 +140,18 @@ def get_all_users():
     return jsonify(all_people), 200
 
 
+
 @app.route("/users/<string:username>", methods=["GET"])
 def get_user_by_username_route(username):
+    current_username, role = get_current_user()
+    if role is None:
+        return jsonify({"error": "missing X-User-Role header"}), 401
+    # admin/auditor can see anyone; others only themselves
+    if role not in ("admin", "auditor") and current_username != username:
+        return jsonify(
+            {"error": "forbidden: you can only view your own user profile"}
+        ), 403
+
     """ retrieves a single user by username, removes password hash before returning.
     returns JSON user object if found with user data, 404 if not found if user doesn't even exist. """
     user_row = find_user_by_username(username)
@@ -115,6 +164,15 @@ def get_user_by_username_route(username):
 
 @app.route("/users/<string:username>", methods=["PUT"])
 def update_user(username):
+    current_username, role = get_current_user()
+    if role is None:
+        return jsonify({"error": "missing X-User-Role header"}), 401
+    # admin can update anybody; others only themselves
+    if role != "admin" and current_username != username:
+        return jsonify(
+            {"error": "forbidden: you can only update your own user"}
+        ), 403
+
     """ updates user profile info. 
     Expects JSON body with optional fields: name, email,role , password.(optional; if present, the password is updated)
     not provided fields remain unchanged.
@@ -144,6 +202,13 @@ def update_user(username):
 
 @app.route("/users/<string:username>", methods=["DELETE"])
 def delete_user(username):
+    current_username, role = get_current_user()
+    if role is None:
+        return jsonify({"error": "missing X-User-Role header"}), 401
+    if role != "admin":
+        return jsonify(
+            {"error": "forbidden: only admin can delete users"}
+        ), 403
     """ deletes a user by username as  parameter.
     returns Json with short confirmation message if deleted, 404 if user not found."""
     existing = find_user_by_username(username)
@@ -159,6 +224,15 @@ def delete_user(username):
 
 @app.route("/users/<string:username>/bookings", methods=["GET"])
 def get_user_bookings(username):
+    current_username, role = get_current_user()
+    if role is None:
+        return jsonify({"error": "missing X-User-Role header"}), 401
+    # admin/facility_manager can view anyone; regular only themselves
+    if role not in ("admin", "facility_manager") and current_username != username:
+        return jsonify(
+            {"error": "forbidden: you can only view your own bookings"}
+        ), 403
+
     """ reuturns a user's bookings history. this only checks that  user exists and returns empty
     list of bookings for now. it takes  username as parameters and returns json with  user data and a bookings list."""
     existing = find_user_by_username(username)

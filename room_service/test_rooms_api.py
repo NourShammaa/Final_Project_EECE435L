@@ -1,8 +1,3 @@
-
-# room_service/test_rooms_api.py
-# room_service/test_rooms_api.py
-# room_service/test_rooms_api.py
-
 import os
 import sys
 sys.path.insert(0, os.path.dirname(__file__))  # make local database.py importable
@@ -11,16 +6,7 @@ import json
 import database
 from app import app
 
-#old bad
-#def wipe_rooms_table():
-   # """Small helper: removes all rows from rooms before a test."""
-  #  database.make_rooms_table_if_missing()
-  #  conn = database.get_db_connection()
- #   cur = conn.cursor()
-  #  cur.execute("delete from rooms")
-  #  conn.commit()
-  #  conn.close()
-    # Create table once when tests import this file
+# Create table once when tests import this file
 database.make_rooms_table_if_missing()
 
 def wipe_rooms_table():
@@ -47,6 +33,7 @@ def test_create_room_ok():
         "/rooms",
         data=json.dumps(body),
         content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
     )
 
     assert resp.status_code == 201
@@ -54,9 +41,6 @@ def test_create_room_ok():
     assert data["message"] == "room created"
     assert data["room"]["name"] == "KaakeLounge"
     assert data["room"]["capacity"] == 10
-
-
-
 def test_create_room_missing_field():
     wipe_rooms_table()
     client = app.test_client()
@@ -71,9 +55,11 @@ def test_create_room_missing_field():
         "/rooms",
         data=json.dumps(body),
         content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
     )
 
     assert resp.status_code == 400
+
 
 def test_get_all_rooms_returns_both():
     wipe_rooms_table()
@@ -93,17 +79,25 @@ def test_get_all_rooms_returns_both():
         "status": "booked",
     }
 
-    client.post("/rooms", data=json.dumps(room1), content_type="application/json")
-    client.post("/rooms", data=json.dumps(room2), content_type="application/json")
+    client.post(
+        "/rooms",
+        data=json.dumps(room1),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+    client.post(
+        "/rooms",
+        data=json.dumps(room2),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+
     resp = client.get("/rooms")
     assert resp.status_code == 200
     data = resp.get_json()
     names = {r["name"] for r in data}
     assert "MiniMankoushe" in names
     assert "BigMansaf" in names
-
-
-
 def test_get_room_by_name_found_and_not_found():
     wipe_rooms_table()
     client = app.test_client()
@@ -115,7 +109,13 @@ def test_get_room_by_name_found_and_not_found():
         "location": "2nd floor - Corniche side",
         "status": "available",
     }
-    client.post("/rooms", data=json.dumps(body), content_type="application/json")
+    client.post(
+        "/rooms",
+        data=json.dumps(body),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+
     # found
     resp_ok = client.get("/rooms/BeirutFocus")
     assert resp_ok.status_code == 200
@@ -152,9 +152,25 @@ def test_get_available_rooms_filters_and_skips_booked():
         "status": "booked",
     }
 
-    client.post("/rooms", data=json.dumps(majlis_room), content_type="application/json")
-    client.post("/rooms", data=json.dumps(tiny_room), content_type="application/json")
-    client.post("/rooms", data=json.dumps(booked_room), content_type="application/json")
+    client.post(
+        "/rooms",
+        data=json.dumps(majlis_room),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+    client.post(
+        "/rooms",
+        data=json.dumps(tiny_room),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+    client.post(
+        "/rooms",
+        data=json.dumps(booked_room),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+
     # ask for rooms with capacity >= 10 and projectors
     resp = client.get("/rooms/available?min_capacity=10&equipment=projector")
     assert resp.status_code == 200
@@ -179,8 +195,12 @@ def test_update_room_changes_capacity_and_status():
         "location": "2nd floor - Hamra",
         "status": "available",
     }
-    client.post("/rooms", data=json.dumps(body), content_type="application/json")
-
+    client.post(
+        "/rooms",
+        data=json.dumps(body),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
 
     update_body = {
         "capacity": 8,
@@ -190,6 +210,7 @@ def test_update_room_changes_capacity_and_status():
         "/rooms/TeamZa3tar",
         data=json.dumps(update_body),
         content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
     )
 
     assert resp.status_code == 200
@@ -201,9 +222,6 @@ def test_update_room_changes_capacity_and_status():
     assert status_resp.status_code == 200
     status_data = status_resp.get_json()
     assert status_data["status"] == "booked"
-
-
-
 def test_delete_room_then_get_404():
     wipe_rooms_table()
     client = app.test_client()
@@ -214,12 +232,24 @@ def test_delete_room_then_get_404():
         "location": "1st floor - Tripoli",
         "status": "available",
     }
-    client.post("/rooms", data=json.dumps(body), content_type="application/json")
-    resp_del = client.delete("/rooms/DeleteMeYa3ne")
+    client.post(
+        "/rooms",
+        data=json.dumps(body),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+
+    resp_del = client.delete(
+        "/rooms/DeleteMeYa3ne",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+
     assert resp_del.status_code == 200
     resp_after = client.get("/rooms/DeleteMeYa3ne")
     assert resp_after.status_code == 404
-# the follwing is added to try to make it better in terms of coverage 
+
+
+# the following is added to try to make it better in terms of coverage
 def test_create_room_duplicate_name():
     """Calling POST /rooms twice with same name should give 400 on the second call."""
     wipe_rooms_table()
@@ -234,11 +264,21 @@ def test_create_room_duplicate_name():
     }
 
     # first create is OK
-    first = client.post("/rooms", data=json.dumps(body), content_type="application/json")
+    first = client.post(
+        "/rooms",
+        data=json.dumps(body),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
     assert first.status_code == 201
 
     # second with same name should hit the 'room already exists' branch
-    second = client.post("/rooms", data=json.dumps(body), content_type="application/json")
+    second = client.post(
+        "/rooms",
+        data=json.dumps(body),
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
     assert second.status_code == 400
 
 
@@ -251,6 +291,7 @@ def test_update_room_not_found():
         "/rooms/NoSuchRoom",
         data=json.dumps({"capacity": 99}),
         content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
     )
     assert resp.status_code == 404
 
@@ -259,7 +300,11 @@ def test_delete_room_not_found():
     """Del /rooms/<name> on a non-existing room should return 404."""
     wipe_rooms_table()
     client = app.test_client()
-    resp = client.delete("/rooms/NoSuchRoom")
+    resp = client.delete(
+        "/rooms/NoSuchRoom",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
+
     assert resp.status_code == 404
 
 
@@ -275,5 +320,31 @@ def test_create_room_bad_payload():
     """POST /rooms with invalid JSON or empty body should hit the 400 path."""
     wipe_rooms_table()
     client = app.test_client()
-    resp = client.post("/rooms", data="{}", content_type="application/json")
+    resp = client.post(
+        "/rooms",
+        data="{}",
+        content_type="application/json",
+        headers={"X-User-Name": "adminuser", "X-User-Role": "admin"},
+    )
     assert resp.status_code == 400
+
+
+def test_create_room_forbidden_for_regular_user():
+    wipe_rooms_table()
+    client = app.test_client()
+
+    body = {
+        "name": "SecretRoom",
+        "capacity": 10,
+        "equipment": "projector",
+        "location": "Basement",
+        "status": "available",
+    }
+
+    resp = client.post(
+        "/rooms",
+        data=json.dumps(body),
+        content_type="application/json",
+        headers={"X-User-Name": "nour", "X-User-Role": "regular"},
+    )
+    assert resp.status_code == 403

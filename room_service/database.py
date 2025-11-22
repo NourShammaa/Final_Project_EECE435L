@@ -4,8 +4,9 @@ This part of the project is the databse of the rooms service.
 
 import sqlite3
 
-db_file_name = "database.db"
-
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+db_file_name = os.path.join(BASE_DIR, "database.db")
 
 def get_db_connection():
     """open a connection to the rooms database and return it.
