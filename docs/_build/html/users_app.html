@@ -40,9 +40,7 @@ focuses on validation and shaping  the JSON responses.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="users_service.app.delete_user">
 <span class="sig-prename descclassname"><span class="pre">users_service.app.</span></span><span class="sig-name descname"><span class="pre">delete_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#users_service.app.delete_user" title="Link to this definition">¶</a></dt>
-<dd><p>deletes a user by username as  parameter.
-returns Json with short confirmation message if deleted, 404 if user not found.</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="users_service.app.get_all_users">
@@ -52,18 +50,23 @@ returns JSON list of user objects.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="users_service.app.get_current_user">
+<span class="sig-prename descclassname"><span class="pre">users_service.app.</span></span><span class="sig-name descname"><span class="pre">get_current_user</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#users_service.app.get_current_user" title="Link to this definition">¶</a></dt>
+<dd><p>Read current user identity from HTTP headers.</p>
+<p>We assume some external gateway already authenticated the user and set:
+- X-User-Name: username string
+- X-User-Role: role string such as ‘admin’, ‘regular’, ‘facility_manager’, etc.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="users_service.app.get_user_bookings">
 <span class="sig-prename descclassname"><span class="pre">users_service.app.</span></span><span class="sig-name descname"><span class="pre">get_user_bookings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#users_service.app.get_user_bookings" title="Link to this definition">¶</a></dt>
-<dd><p>reuturns a user’s bookings history. this only checks that  user exists and returns empty
-list of bookings for now. it takes  username as parameters and returns json with  user data and a bookings list.</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="users_service.app.get_user_by_username_route">
 <span class="sig-prename descclassname"><span class="pre">users_service.app.</span></span><span class="sig-name descname"><span class="pre">get_user_by_username_route</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#users_service.app.get_user_by_username_route" title="Link to this definition">¶</a></dt>
-<dd><p>retrieves a single user by username, removes password hash before returning.
-returns JSON user object if found with user data, 404 if not found if user doesn’t even exist.</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="users_service.app.login_user">
@@ -76,24 +79,27 @@ reutrns JSON response with appropriate status code 4xx/5xx if error, 200 if logi
 <dl class="py function">
 <dt class="sig sig-object py" id="users_service.app.register_user">
 <span class="sig-prename descclassname"><span class="pre">users_service.app.</span></span><span class="sig-name descname"><span class="pre">register_user</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#users_service.app.register_user" title="Link to this definition">¶</a></dt>
-<dd><p>handkes user registration, this endpoint  expects a JSON bosy with
+<dd><p>handkes user registration, this endpoint  expects a JSON body with
 “name”, “username”, “email”, “password”, and “role” fields. if everything looks good,</p>
 <blockquote>
 <div><dl class="simple">
-<dt>a new user is inserted into daatabase and  returned ofcourse without password hash.</dt><dd><p>returs a JSON response with appropriate status code meaning 4xx/5xx if error  and if user created then status 201.</p>
+<dt>a new user is inserted into daatabase and  returned ofcourse without password hash.</dt><dd><p>returns a JSON response with appropriate status code meaning 4xx/5xx if error  and if user created then status 201.</p>
 </dd>
 </dl>
 </div></blockquote>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="users_service.app.require_roles">
+<span class="sig-prename descclassname"><span class="pre">users_service.app.</span></span><span class="sig-name descname"><span class="pre">require_roles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">allowed_roles</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#users_service.app.require_roles" title="Link to this definition">¶</a></dt>
+<dd><p>Decorator to ensure the current user has one of the allowed roles.
+Returns 401 if role missing, 403 if role not allowed.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="users_service.app.update_user">
 <span class="sig-prename descclassname"><span class="pre">users_service.app.</span></span><span class="sig-name descname"><span class="pre">update_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#users_service.app.update_user" title="Link to this definition">¶</a></dt>
-<dd><p>updates user profile info.
-Expects JSON body with optional fields: name, email,role , password.(optional; if present, the password is updated)
-not provided fields remain unchanged.
-returns  JSON wiht updated  user or an error message.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </section>
 
@@ -128,16 +134,22 @@ returns  JSON wiht updated  user or an error message.</p>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Users Service API (users_service/app.py)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#users_service.app.delete_user"><code class="docutils literal notranslate"><span class="pre">delete_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#users_service.app.get_all_users"><code class="docutils literal notranslate"><span class="pre">get_all_users()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#users_service.app.get_current_user"><code class="docutils literal notranslate"><span class="pre">get_current_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#users_service.app.get_user_bookings"><code class="docutils literal notranslate"><span class="pre">get_user_bookings()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#users_service.app.get_user_by_username_route"><code class="docutils literal notranslate"><span class="pre">get_user_by_username_route()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#users_service.app.login_user"><code class="docutils literal notranslate"><span class="pre">login_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#users_service.app.register_user"><code class="docutils literal notranslate"><span class="pre">register_user()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#users_service.app.require_roles"><code class="docutils literal notranslate"><span class="pre">require_roles()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#users_service.app.update_user"><code class="docutils literal notranslate"><span class="pre">update_user()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="users_database.html">Users Database Helpers (users_service/database.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_app.html">Rooms Service API (room_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_database.html">Rooms Database Helpers (room_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookings_app.html">Bookings Service API (bookings_service/app.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookings_database.html">Bookings Database Helpers (bookings_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_app.html">Reviews Service API (reviews_service/app.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_database.html">Reviews Database Helpers (reviews_service/database.py)</a></li>
 </ul>
 
 <div class="relations">

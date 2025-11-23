@@ -65,6 +65,12 @@ returns JSON list of matching rooms.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.get_current_user">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">get_current_user</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.get_current_user" title="Link to this definition">¶</a></dt>
+<dd><p>Read current user identity from HTTP headers.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="room_service.app.get_room">
 <span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">get_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.get_room" title="Link to this definition">¶</a></dt>
 <dd><p>just returns a single room by name.</p>
@@ -74,6 +80,12 @@ returns JSON list of matching rooms.</p>
 <dt class="sig sig-object py" id="room_service.app.get_room_status">
 <span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">get_room_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.get_room_status" title="Link to this definition">¶</a></dt>
 <dd><p>basically return the status of a room: available or booked.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="room_service.app.require_roles">
+<span class="sig-prename descclassname"><span class="pre">room_service.app.</span></span><span class="sig-name descname"><span class="pre">require_roles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">allowed_roles</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#room_service.app.require_roles" title="Link to this definition">¶</a></dt>
+<dd><p>Decorator to enforce that current user has one of the allowed roles.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -121,12 +133,18 @@ returns JSON response with appropriate status code 4xx/5xx if error, 200 if room
 <li class="toctree-l2"><a class="reference internal" href="#room_service.app.delete_room"><code class="docutils literal notranslate"><span class="pre">delete_room()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_all_rooms"><code class="docutils literal notranslate"><span class="pre">get_all_rooms()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_available_rooms"><code class="docutils literal notranslate"><span class="pre">get_available_rooms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_current_user"><code class="docutils literal notranslate"><span class="pre">get_current_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_room"><code class="docutils literal notranslate"><span class="pre">get_room()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#room_service.app.get_room_status"><code class="docutils literal notranslate"><span class="pre">get_room_status()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#room_service.app.require_roles"><code class="docutils literal notranslate"><span class="pre">require_roles()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#room_service.app.update_room"><code class="docutils literal notranslate"><span class="pre">update_room()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_database.html">Rooms Database Helpers (room_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookings_app.html">Bookings Service API (bookings_service/app.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookings_database.html">Bookings Database Helpers (bookings_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_app.html">Reviews Service API (reviews_service/app.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_database.html">Reviews Database Helpers (reviews_service/database.py)</a></li>
 </ul>
 
 <div class="relations">

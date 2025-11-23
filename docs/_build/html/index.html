@@ -40,10 +40,12 @@
 <li class="toctree-l1"><a class="reference internal" href="users_app.html">Users Service API (users_service/app.py)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.delete_user"><code class="docutils literal notranslate"><span class="pre">delete_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.get_all_users"><code class="docutils literal notranslate"><span class="pre">get_all_users()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.get_current_user"><code class="docutils literal notranslate"><span class="pre">get_current_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.get_user_bookings"><code class="docutils literal notranslate"><span class="pre">get_user_bookings()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.get_user_by_username_route"><code class="docutils literal notranslate"><span class="pre">get_user_by_username_route()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.login_user"><code class="docutils literal notranslate"><span class="pre">login_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.register_user"><code class="docutils literal notranslate"><span class="pre">register_user()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.require_roles"><code class="docutils literal notranslate"><span class="pre">require_roles()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="users_app.html#users_service.app.update_user"><code class="docutils literal notranslate"><span class="pre">update_user()</span></code></a></li>
 </ul>
 </li>
@@ -63,8 +65,10 @@
 <li class="toctree-l2"><a class="reference internal" href="rooms_app.html#room_service.app.delete_room"><code class="docutils literal notranslate"><span class="pre">delete_room()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rooms_app.html#room_service.app.get_all_rooms"><code class="docutils literal notranslate"><span class="pre">get_all_rooms()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rooms_app.html#room_service.app.get_available_rooms"><code class="docutils literal notranslate"><span class="pre">get_available_rooms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rooms_app.html#room_service.app.get_current_user"><code class="docutils literal notranslate"><span class="pre">get_current_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rooms_app.html#room_service.app.get_room"><code class="docutils literal notranslate"><span class="pre">get_room()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rooms_app.html#room_service.app.get_room_status"><code class="docutils literal notranslate"><span class="pre">get_room_status()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rooms_app.html#room_service.app.require_roles"><code class="docutils literal notranslate"><span class="pre">require_roles()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rooms_app.html#room_service.app.update_room"><code class="docutils literal notranslate"><span class="pre">update_room()</span></code></a></li>
 </ul>
 </li>
@@ -79,14 +83,47 @@
 <li class="toctree-l2"><a class="reference internal" href="rooms_database.html#room_service.database.update_room_row"><code class="docutils literal notranslate"><span class="pre">update_room_row()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bookings_app.html">Bookings Service API (bookings_service/app.py)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.cancel_booking_route"><code class="docutils literal notranslate"><span class="pre">cancel_booking_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.check_room_availability_route"><code class="docutils literal notranslate"><span class="pre">check_room_availability_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.get_bookings_for_user_route"><code class="docutils literal notranslate"><span class="pre">get_bookings_for_user_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.list_all_bookings"><code class="docutils literal notranslate"><span class="pre">list_all_bookings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.make_booking_route"><code class="docutils literal notranslate"><span class="pre">make_booking_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.require_fields"><code class="docutils literal notranslate"><span class="pre">require_fields()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.update_booking_route"><code class="docutils literal notranslate"><span class="pre">update_booking_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.valid_date"><code class="docutils literal notranslate"><span class="pre">valid_date()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_app.html#bookings_service.app.valid_time"><code class="docutils literal notranslate"><span class="pre">valid_time()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="bookings_database.html">Bookings Database Helpers (bookings_service/database.py)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bookings_database.html#bookings_service.database.cancel_booking"><code class="docutils literal notranslate"><span class="pre">cancel_booking()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_database.html#bookings_service.database.create_booking"><code class="docutils literal notranslate"><span class="pre">create_booking()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_database.html#bookings_service.database.get_all_bookings"><code class="docutils literal notranslate"><span class="pre">get_all_bookings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_database.html#bookings_service.database.get_bookings_for_user"><code class="docutils literal notranslate"><span class="pre">get_bookings_for_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="bookings_database.html#bookings_service.database.get_db_connection"><code class="docutils literal notranslate"><span class="pre">get_db_connection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_database.html#bookings_service.database.is_room_available"><code class="docutils literal notranslate"><span class="pre">is_room_available()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="bookings_database.html#bookings_service.database.make_bookings_table_if_missing"><code class="docutils literal notranslate"><span class="pre">make_bookings_table_if_missing()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bookings_database.html#bookings_service.database.update_booking"><code class="docutils literal notranslate"><span class="pre">update_booking()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_app.html">Reviews Service API (reviews_service/app.py)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reviews_app.html#reviews_service.app.delete_review_route"><code class="docutils literal notranslate"><span class="pre">delete_review_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_app.html#reviews_service.app.flag_review_route"><code class="docutils literal notranslate"><span class="pre">flag_review_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_app.html#reviews_service.app.list_reviews_for_room"><code class="docutils literal notranslate"><span class="pre">list_reviews_for_room()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_app.html#reviews_service.app.require_fields"><code class="docutils literal notranslate"><span class="pre">require_fields()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_app.html#reviews_service.app.submit_review_route"><code class="docutils literal notranslate"><span class="pre">submit_review_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_app.html#reviews_service.app.update_review_route"><code class="docutils literal notranslate"><span class="pre">update_review_route()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_app.html#reviews_service.app.valid_rating"><code class="docutils literal notranslate"><span class="pre">valid_rating()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reviews_database.html">Reviews Database Helpers (reviews_service/database.py)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reviews_database.html#reviews_service.database.delete_review"><code class="docutils literal notranslate"><span class="pre">delete_review()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_database.html#reviews_service.database.flag_review"><code class="docutils literal notranslate"><span class="pre">flag_review()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="reviews_database.html#reviews_service.database.get_connection"><code class="docutils literal notranslate"><span class="pre">get_connection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_database.html#reviews_service.database.get_reviews_for_room"><code class="docutils literal notranslate"><span class="pre">get_reviews_for_room()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="reviews_database.html#reviews_service.database.make_reviews_table_if_missing"><code class="docutils literal notranslate"><span class="pre">make_reviews_table_if_missing()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_database.html#reviews_service.database.submit_review"><code class="docutils literal notranslate"><span class="pre">submit_review()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews_database.html#reviews_service.database.update_review"><code class="docutils literal notranslate"><span class="pre">update_review()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -125,7 +162,9 @@
 <li class="toctree-l1"><a class="reference internal" href="users_database.html">Users Database Helpers (users_service/database.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_app.html">Rooms Service API (room_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_database.html">Rooms Database Helpers (room_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookings_app.html">Bookings Service API (bookings_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bookings_database.html">Bookings Database Helpers (bookings_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_app.html">Reviews Service API (reviews_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reviews_database.html">Reviews Database Helpers (reviews_service/database.py)</a></li>
 </ul>
 

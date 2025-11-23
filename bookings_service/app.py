@@ -1,7 +1,7 @@
 # bookings_service/app.py
 """
-This module exposes the HTTP endpoints for the bookings service.
-It calls database fcts from database.py in the same folder. It focuses on
+This is the file that handles all API routes for bookings.
+It calls database fcts from database.py that is in same folder. It focuses on
 input validation, checking room availability, and shaping JSON responses.
 """
 
@@ -33,11 +33,21 @@ except ImportError:
 app = Flask(__name__)
 
 
-
-# Helpers because I want to avoid being redundant
+# Helpers
 
 def require_fields(data, fields):
-    """This fct will check that certain fields exist and are not empty in the data that is given."""
+    """This fct checks that all required fields exist in the input JSON.
+
+    Parameters
+    data : dict
+        The parsed request body.
+    fields : list of str
+        The list of fields that must be present.
+
+    Returns
+    str or None
+        A message listing missing fields, or None if all are there.
+    """
     missing = []
 
     for f in fields:
@@ -50,14 +60,33 @@ def require_fields(data, fields):
 
 
 def valid_time(t):
-    """This is just a simple HH:MM validation for times."""
+    """This fct does a simple HH:MM validation to check if a time is well-formatted.
+
+    Parameters
+    t : str
+        A time string in the form HH:MM.
+
+    Returns
+    bool
+        True if valid, False otherwise.
+    """
     if len(t) != 5 or t[2] != ":":
         return False
     hh, mm = t.split(":")
     return hh.isdigit() and mm.isdigit() and 0 <= int(hh) <= 23 and 0 <= int(mm) <= 59
 
+
 def valid_date(d):
-    """This is just a simple YYYY-MM-DD validation for dates."""
+    """This fct performs a basic YYYY-MM-DD validation.
+
+    Parameters
+    d : str
+        A date string in the form YYYY-MM-DD.
+
+    Returns
+    bool
+        True if valid, False otherwise.
+    """
     if len(d) != 10 or d[4] != "-" or d[7] != "-":
         return False
 
@@ -75,12 +104,15 @@ def valid_date(d):
 
 # Routes
 
-
 @app.route("/bookings", methods=["GET"])
 def list_all_bookings():
-    """
-    This fct returns all bookings in the system sorted by date/time. It just calls the db fct.
-    It returns JSON list of booking objects.
+    """This fct returns all bookings in the system.
+
+    It gets all the bookings from the db, converts each row to a dict, and returns them as JSON.
+
+    Returns
+    tuple
+        A list of bookings and status code 200.
     """
     rows = get_all_bookings()
     return jsonify([dict(r) for r in rows]), 200
@@ -88,8 +120,17 @@ def list_all_bookings():
 
 @app.route("/bookings/user/<int:user_id>", methods=["GET"])
 def get_bookings_for_user_route(user_id):
-    """
-    This fct returns all of the bookings for the given user (including cancelled ones).
+    """This fct returns all bookings that were made by a specific user.
+
+    Cancelled bookings are included too btw.
+
+    Parameters
+    user_id : int
+        The user whose bookings are requested.
+
+    Returns
+    tuple
+        A list of bookings and status 200.
     """
     rows = get_bookings_for_user(user_id)
     return jsonify([dict(r) for r in rows]), 200
@@ -97,10 +138,23 @@ def get_bookings_for_user_route(user_id):
 
 @app.route("/bookings", methods=["POST"])
 def make_booking_route():
-    """
-    This fct handles the creation of a new booking.
-    It expects a JSON that has: user_id, room_id, date, start_time, end_time.
-    It will automatically check the availability too; returns 409 if there's a conflict.
+    """This fct handles the creation of a new booking.
+
+    Expected JSON
+    user_id : int
+        The user making the booking.
+    room_id : int
+        The room being booked.
+    date : str
+        Booking date in YYYY-MM-DD format.
+    start_time : str
+        Start time in HH:MM format.
+    end_time : str
+        End time in HH:MM format.
+
+    Returns
+    tuple
+        A confirmation message and status code.
     """
     data = request.get_json() or {}
 
@@ -112,12 +166,11 @@ def make_booking_route():
     # validate time format
     if not valid_time(data["start_time"]) or not valid_time(data["end_time"]):
         return jsonify({"error": "invalid time format HH:MM"}), 400
-    #same for date
+
     if not valid_date(data["date"]):
         return jsonify({"error": "invalid date format YYYY-MM-DD"}), 400
 
-
-    # check room availability
+    # check availability
     ok = is_room_available(
         data["room_id"],
         data["date"],
@@ -125,7 +178,10 @@ def make_booking_route():
         data["end_time"],
     )
     if not ok:
-        return jsonify({"error": "Unfortunately, the room not available for this time slot. Either choose another room or another time"}), 409
+        return jsonify({
+            "error": "Unfortunately =(, the room is not available for this time slot. "
+                     "Either choose another room or another time."
+        }), 409
 
     booking_id = create_booking(
         data["user_id"],
@@ -143,26 +199,35 @@ def make_booking_route():
 
 @app.route("/bookings/<int:booking_id>", methods=["PUT"])
 def update_booking_route(booking_id):
-    """
-    This fct updates an existing booking.
-    It expects input JSON with: date, start_time, end_time, and room_id.
-    The room's availability will be checked before updating.
+    """This fct updates an existing booking.
+
+    Expected JSON
+    date : str
+        New date.
+    start_time : str
+        New start time.
+    end_time : str
+        New end time.
+    room_id : int
+        Room to update for.
+
+    Returns
+    tuple
+        A message and status code.
     """
     data = request.get_json() or {}
 
     needed = ["date", "start_time", "end_time", "room_id"]
-    missing_msg = require_fields(data, needed) #calls the helper fct
+    missing_msg = require_fields(data, needed)
     if missing_msg:
         return jsonify({"error": missing_msg}), 400
 
     if not valid_time(data["start_time"]) or not valid_time(data["end_time"]):
         return jsonify({"error": "invalid time format HH:MM"}), 400
-    
+
     if not valid_date(data["date"]):
         return jsonify({"error": "invalid date format YYYY-MM-DD"}), 400
 
-
-    # availability check
     ok = is_room_available(
         data["room_id"],
         data["date"],
@@ -170,7 +235,7 @@ def update_booking_route(booking_id):
         data["end_time"],
     )
     if not ok:
-        return jsonify({"error": "room not available for this updated time slot"}), 409
+        return jsonify({"error": "room's not available for this updated time slot"}), 409
 
     update_booking(
         booking_id,
@@ -184,20 +249,36 @@ def update_booking_route(booking_id):
 
 @app.route("/bookings/<int:booking_id>", methods=["DELETE"])
 def cancel_booking_route(booking_id):
+    """This fct cancels a booking by putting its status as 'cancelled'.
+
+    Parameters
+    booking_id : int
+        The booking to cancel.
+
+    Returns
+    tuple
+        Confirmation message and status code.
     """
-    This fct cancels a booking (whos ID is given) by marking its status = 'cancelled'.
-    It returns a JSON confirmation message.
-    """
-    cancel_booking(booking_id)  #simply call db fct
+    cancel_booking(booking_id)
     return jsonify({"message": "booking cancelled"}), 200
 
 
 @app.route("/rooms/<int:room_id>/availability", methods=["GET"])
 def check_room_availability_route(room_id):
-    """
-    This fct checks whether a room is available for a given date and time period.
-    Query parameters required:
-      ?date=YYYY-MM-DD&start_time=HH:MM&end_time=HH:MM
+    """This fct checks if a room is available for the given date/time.
+
+    The query needs these:
+    date : YYYY-MM-DD
+    start_time : HH:MM
+    end_time : HH:MM
+
+    Parameters
+    room_id : int
+        The room being checked.
+
+    Returns
+    tuple
+        Availability result and status code.
     """
     date = request.args.get("date")
     st = request.args.get("start_time")
@@ -208,7 +289,7 @@ def check_room_availability_route(room_id):
 
     if not valid_time(st) or not valid_time(et):
         return jsonify({"error": "invalid time format HH:MM"}), 400
-    
+
     if not valid_date(date):
         return jsonify({"error": "invalid date format YYYY-MM-DD"}), 400
 

@@ -45,10 +45,20 @@
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
  
 </div>
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    bookings_service.app
+
+      <ul>
+        <li><a href="bookings_app.html#module-bookings_service.app">module</a>
+</li>
+      </ul></li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     bookings_service.database
@@ -63,6 +73,16 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bookings_database.html#bookings_service.database.cancel_booking">cancel_booking() (in module bookings_service.database)</a>
+</li>
+      <li><a href="bookings_app.html#bookings_service.app.cancel_booking_route">cancel_booking_route() (in module bookings_service.app)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bookings_app.html#bookings_service.app.check_room_availability_route">check_room_availability_route() (in module bookings_service.app)</a>
+</li>
+      <li><a href="bookings_database.html#bookings_service.database.create_booking">create_booking() (in module bookings_service.database)</a>
+</li>
       <li><a href="rooms_app.html#room_service.app.create_room">create_room() (in module room_service.app)</a>
 </li>
   </ul></td>
@@ -71,12 +91,16 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="rooms_app.html#room_service.app.delete_room">delete_room() (in module room_service.app)</a>
+      <li><a href="reviews_database.html#reviews_service.database.delete_review">delete_review() (in module reviews_service.database)</a>
 </li>
-      <li><a href="rooms_database.html#room_service.database.delete_room_row">delete_room_row() (in module room_service.database)</a>
+      <li><a href="reviews_app.html#reviews_service.app.delete_review_route">delete_review_route() (in module reviews_service.app)</a>
+</li>
+      <li><a href="rooms_app.html#room_service.app.delete_room">delete_room() (in module room_service.app)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rooms_database.html#room_service.database.delete_room_row">delete_room_row() (in module room_service.database)</a>
+</li>
       <li><a href="users_app.html#users_service.app.delete_user">delete_user() (in module users_service.app)</a>
 </li>
       <li><a href="users_database.html#users_service.database.delete_user_row">delete_user_row() (in module users_service.database)</a>
@@ -89,11 +113,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="rooms_database.html#room_service.database.find_room_by_name">find_room_by_name() (in module room_service.database)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="users_database.html#users_service.database.find_user_by_email">find_user_by_email() (in module users_service.database)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="users_database.html#users_service.database.find_user_by_username">find_user_by_username() (in module users_service.database)</a>
+</li>
+      <li><a href="reviews_database.html#reviews_service.database.flag_review">flag_review() (in module reviews_service.database)</a>
+</li>
+      <li><a href="reviews_app.html#reviews_service.app.flag_review_route">flag_review_route() (in module reviews_service.app)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -101,14 +129,28 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bookings_database.html#bookings_service.database.get_all_bookings">get_all_bookings() (in module bookings_service.database)</a>
+</li>
       <li><a href="rooms_app.html#room_service.app.get_all_rooms">get_all_rooms() (in module room_service.app)</a>
 </li>
       <li><a href="users_app.html#users_service.app.get_all_users">get_all_users() (in module users_service.app)</a>
 </li>
       <li><a href="rooms_app.html#room_service.app.get_available_rooms">get_available_rooms() (in module room_service.app)</a>
 </li>
+      <li><a href="bookings_database.html#bookings_service.database.get_bookings_for_user">get_bookings_for_user() (in module bookings_service.database)</a>
+</li>
+      <li><a href="bookings_app.html#bookings_service.app.get_bookings_for_user_route">get_bookings_for_user_route() (in module bookings_service.app)</a>
+</li>
       <li><a href="reviews_database.html#reviews_service.database.get_connection">get_connection() (in module reviews_service.database)</a>
 </li>
+      <li><a href="rooms_app.html#room_service.app.get_current_user">get_current_user() (in module room_service.app)</a>
+
+      <ul>
+        <li><a href="users_app.html#users_service.app.get_current_user">(in module users_service.app)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="bookings_database.html#bookings_service.database.get_db_connection">get_db_connection() (in module bookings_service.database)</a>
 
       <ul>
@@ -117,8 +159,8 @@
         <li><a href="users_database.html#users_service.database.get_db_connection">(in module users_service.database)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reviews_database.html#reviews_service.database.get_reviews_for_room">get_reviews_for_room() (in module reviews_service.database)</a>
+</li>
       <li><a href="rooms_app.html#room_service.app.get_room">get_room() (in module room_service.app)</a>
 </li>
       <li><a href="rooms_app.html#room_service.app.get_room_status">get_room_status() (in module room_service.app)</a>
@@ -139,17 +181,23 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="users_database.html#users_service.database.insert_user">insert_user() (in module users_service.database)</a>
 </li>
+      <li><a href="bookings_database.html#bookings_service.database.is_room_available">is_room_available() (in module bookings_service.database)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bookings_app.html#bookings_service.app.list_all_bookings">list_all_bookings() (in module bookings_service.app)</a>
+</li>
       <li><a href="rooms_database.html#room_service.database.list_all_rooms">list_all_rooms() (in module room_service.database)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="users_database.html#users_service.database.list_all_users">list_all_users() (in module users_service.database)</a>
+</li>
+      <li><a href="reviews_app.html#reviews_service.app.list_reviews_for_room">list_reviews_for_room() (in module reviews_service.app)</a>
 </li>
       <li><a href="users_app.html#users_service.app.login_user">login_user() (in module users_service.app)</a>
 </li>
@@ -159,6 +207,8 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bookings_app.html#bookings_service.app.make_booking_route">make_booking_route() (in module bookings_service.app)</a>
+</li>
       <li><a href="bookings_database.html#bookings_service.database.make_bookings_table_if_missing">make_bookings_table_if_missing() (in module bookings_service.database)</a>
 </li>
       <li><a href="reviews_database.html#reviews_service.database.make_reviews_table_if_missing">make_reviews_table_if_missing() (in module reviews_service.database)</a>
@@ -171,7 +221,11 @@
     module
 
       <ul>
+        <li><a href="bookings_app.html#module-bookings_service.app">bookings_service.app</a>
+</li>
         <li><a href="bookings_database.html#module-bookings_service.database">bookings_service.database</a>
+</li>
+        <li><a href="reviews_app.html#module-reviews_service.app">reviews_service.app</a>
 </li>
         <li><a href="reviews_database.html#module-reviews_service.database">reviews_service.database</a>
 </li>
@@ -192,6 +246,27 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="users_app.html#users_service.app.register_user">register_user() (in module users_service.app)</a>
 </li>
+      <li><a href="bookings_app.html#bookings_service.app.require_fields">require_fields() (in module bookings_service.app)</a>
+
+      <ul>
+        <li><a href="reviews_app.html#reviews_service.app.require_fields">(in module reviews_service.app)</a>
+</li>
+      </ul></li>
+      <li><a href="rooms_app.html#room_service.app.require_roles">require_roles() (in module room_service.app)</a>
+
+      <ul>
+        <li><a href="users_app.html#users_service.app.require_roles">(in module users_service.app)</a>
+</li>
+      </ul></li>
+      <li>
+    reviews_service.app
+
+      <ul>
+        <li><a href="reviews_app.html#module-reviews_service.app">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     reviews_service.database
 
@@ -199,8 +274,6 @@
         <li><a href="reviews_database.html#module-reviews_service.database">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     room_service.app
 
@@ -224,21 +297,35 @@
       <li><a href="rooms_database.html#room_service.database.search_available_rooms">search_available_rooms() (in module room_service.database)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reviews_database.html#reviews_service.database.submit_review">submit_review() (in module reviews_service.database)</a>
+</li>
+      <li><a href="reviews_app.html#reviews_service.app.submit_review_route">submit_review_route() (in module reviews_service.app)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bookings_database.html#bookings_service.database.update_booking">update_booking() (in module bookings_service.database)</a>
+</li>
+      <li><a href="bookings_app.html#bookings_service.app.update_booking_route">update_booking_route() (in module bookings_service.app)</a>
+</li>
+      <li><a href="reviews_database.html#reviews_service.database.update_review">update_review() (in module reviews_service.database)</a>
+</li>
+      <li><a href="reviews_app.html#reviews_service.app.update_review_route">update_review_route() (in module reviews_service.app)</a>
+</li>
       <li><a href="rooms_app.html#room_service.app.update_room">update_room() (in module room_service.app)</a>
 </li>
       <li><a href="rooms_database.html#room_service.database.update_room_row">update_room_row() (in module room_service.database)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="users_app.html#users_service.app.update_user">update_user() (in module users_service.app)</a>
 </li>
       <li><a href="users_database.html#users_service.database.update_user_row">update_user_row() (in module users_service.database)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     users_service.app
 
@@ -253,6 +340,20 @@
         <li><a href="users_database.html#module-users_service.database">module</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bookings_app.html#bookings_service.app.valid_date">valid_date() (in module bookings_service.app)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reviews_app.html#reviews_service.app.valid_rating">valid_rating() (in module reviews_service.app)</a>
+</li>
+      <li><a href="bookings_app.html#bookings_service.app.valid_time">valid_time() (in module bookings_service.app)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -289,7 +390,9 @@
 <li class="toctree-l1"><a class="reference internal" href="users_database.html">Users Database Helpers (users_service/database.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_app.html">Rooms Service API (room_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_database.html">Rooms Database Helpers (room_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookings_app.html">Bookings Service API (bookings_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bookings_database.html">Bookings Database Helpers (bookings_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_app.html">Reviews Service API (reviews_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reviews_database.html">Reviews Database Helpers (reviews_service/database.py)</a></li>
 </ul>
 

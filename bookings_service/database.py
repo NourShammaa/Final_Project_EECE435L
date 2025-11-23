@@ -1,6 +1,7 @@
 """
-This file is for database related code for the bookings service. 
-Getting db connection, creating bookings table if it's not there, and other db related functions which will be used by app.py.
+This file has all the database related code for the bookings service.
+It manages the database connection, creates the bookings table when needed,
+and provides helper functions that app.py depends on.
 """
 
 import sqlite3
@@ -11,23 +12,31 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 db_file_name = os.path.join(ROOT_DIR, "database.db")
 
 
-
-
-
 def get_db_connection():
-    """This fct opens a connection to the bookings database and returns it.
-    It uses sqlite3.Row so columns can be accessed by name. It also enables foreign keys.
+    """This fct opens a connection to the bookings database.
+
+    It configures sqlite3 so rows can be accessed by column name 
+    and enables foreign-key constraints.
+
+    Returns
+    sqlite3.Connection
+        A ready to use SQLite connection.
     """
     conn = sqlite3.connect(db_file_name)
     conn.row_factory = sqlite3.Row
-
-    # Enable foreign keys
     conn.execute("pragma foreign_keys = on;")
     return conn
 
 
 def make_bookings_table_if_missing():
-    """This fct will create the bookings table if it does not already exist."""
+    """This fct creates the bookings table if it does not already exist.
+
+    It is usually called once at service startup so the rest of the
+    application can safely assume table is there.
+
+    Returns
+    None
+    """
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -50,8 +59,8 @@ def make_bookings_table_if_missing():
                 default 'active'
                 check (status in ('active', 'cancelled', 'updated')),
 
-            created_at text default current_timestamp,   -- when the booking was created
-            updated_at text default current_timestamp,   -- when the booking was last updated
+            created_at text default current_timestamp,
+            updated_at text default current_timestamp,
 
             foreign key(user_id) references users(id),
             foreign key(room_id) references rooms(id)
@@ -64,7 +73,14 @@ def make_bookings_table_if_missing():
 
 
 def get_all_bookings():
-    """Return all bookings with their stored details."""
+    """This fct gets all bookings stored in the database.
+
+    The returned list is sorted by date and starting time to make it easier for the caller to display or process.
+
+    Returns
+    list of sqlite3.Row
+        All booking records.
+    """
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -81,7 +97,24 @@ def get_all_bookings():
 
 
 def create_booking(user_id, room_id, date, start_time, end_time):
-    """Insert a new booking into the database."""
+    """This fct inserts a new booking into the database.
+
+    Parameters
+    user_id : int
+        ID of the user making the booking.
+    room_id : int
+        ID of the room being booked.
+    date : str
+        Booking date in YYYY-MM-DD format.
+    start_time : str
+        Start time in HH:MM format.
+    end_time : str
+        End time in HH:MM format.
+
+    Returns
+    int
+        The ID of the newly created booking.
+    """
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -98,9 +131,25 @@ def create_booking(user_id, room_id, date, start_time, end_time):
     conn.close()
     return booking_id
 
-# note: availability conflicts should be checked in app.py using is_room_available before calling this function or it will cause an error!
+
 def update_booking(booking_id, date, start_time, end_time):
-    """Update the date/time of an existing booking."""
+    """This fct updates the date and/or time of an existing booking.
+
+    It is VIP to check availability first using is_room_available.
+
+    Parameters
+    booking_id : int
+        ID of the booking to update.
+    date : str
+        New booking date.
+    start_time : str
+        New start time.
+    end_time : str
+        New end time.
+
+    Returns
+    None
+    """
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -118,7 +167,15 @@ def update_booking(booking_id, date, start_time, end_time):
 
 
 def cancel_booking(booking_id):
-    """Mark a booking as cancelled."""
+    """This fct marks a booking as cancelled.
+
+    Parameters
+    booking_id : int
+        ID of the booking to cancel.
+
+    Returns
+    None
+    """
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -135,10 +192,21 @@ def cancel_booking(booking_id):
     conn.close()
 
 
-
-#even canceled ones
 def get_bookings_for_user(user_id):
-    """Return all bookings made by a specific user."""
+    """This fct gets all the bookings that were made by a specific user whos user id is given.
+
+    It returns both active and cancelled bookings so we can see full booking history.
+
+    Parameters
+    ----------
+    user_id : int
+        The user whose bookings are requested.
+
+    Returns
+    -------
+    list of sqlite3.Row
+        All bookings made by this user.
+    """
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -157,7 +225,24 @@ def get_bookings_for_user(user_id):
 
 
 def is_room_available(room_id, date, start_time, end_time):
-    """Check if a room is free during the given date and time window."""
+    """This fct checks whether a room is free during a specific time window.
+
+    It looks for overlapping active bookings on the same date.
+
+    Parameters
+    room_id : int
+        Room to check.
+    date : str
+        Booking date in YYYY-MM-DD format.
+    start_time : str
+        Proposed start time.
+    end_time : str
+        Proposed end time.
+
+    Returns
+    bool
+        True if the room is available, False if it is already booked.
+    """
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -168,7 +253,7 @@ def is_room_available(room_id, date, start_time, end_time):
           and date = ?
           and status = 'active'
           and (
-                (start_time < ? and end_time > ?)  -- overlapping intervals
+                (start_time < ? and end_time > ?)
               );
         """,
         (room_id, date, end_time, start_time),
@@ -177,7 +262,6 @@ def is_room_available(room_id, date, start_time, end_time):
     conflict = cur.fetchone()
     conn.close()
 
-    # if conflict exists → room is NOT available
     return conflict is None
 
 

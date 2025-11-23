@@ -72,10 +72,10 @@ app = Flask(__name__)
 
 @app.route("/users/register", methods=["POST"])
 def register_user():
-    """ handkes user registration, this endpoint  expects a JSON bosy with
+    """ handkes user registration, this endpoint  expects a JSON body with
       "name", "username", "email", "password", and "role" fields. if everything looks good, 
         a new user is inserted into daatabase and  returned ofcourse without password hash.
-          returs a JSON response with appropriate status code meaning 4xx/5xx if error  and if user created then status 201."""
+          returns a JSON response with appropriate status code meaning 4xx/5xx if error  and if user created then status 201."""
     data = request.get_json() or {}
     needed = ["name", "username", "email", "password", "role"]
     missing = [x for x in needed if not data.get(x)]

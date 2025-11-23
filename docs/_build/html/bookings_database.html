@@ -14,8 +14,8 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Reviews Database Helpers (reviews_service/database.py)" href="reviews_database.html" />
-    <link rel="prev" title="Rooms Database Helpers (room_service/database.py)" href="rooms_database.html" />
+    <link rel="next" title="Reviews Service API (reviews_service/app.py)" href="reviews_app.html" />
+    <link rel="prev" title="Bookings Service API (bookings_service/app.py)" href="bookings_app.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -35,19 +35,146 @@
             
   <section id="bookings-database-helpers-bookings-service-database-py">
 <h1>Bookings Database Helpers (bookings_service/database.py)<a class="headerlink" href="#bookings-database-helpers-bookings-service-database-py" title="Link to this heading">¶</a></h1>
-<p id="module-bookings_service.database">This file is for database related code for the bookings service.
-Getting db connection, creating bookings table if it’s not there, and other db related functions which will be used by app.py.</p>
+<p id="module-bookings_service.database">This file has all the database related code for the bookings service.
+It manages the database connection, creates the bookings table when needed,
+and provides helper functions that app.py depends on.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="bookings_service.database.cancel_booking">
+<span class="sig-prename descclassname"><span class="pre">bookings_service.database.</span></span><span class="sig-name descname"><span class="pre">cancel_booking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">booking_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bookings_service.database.cancel_booking" title="Link to this definition">¶</a></dt>
+<dd><p>This fct marks a booking as cancelled.</p>
+<p>Parameters
+booking_id : int</p>
+<blockquote>
+<div><p>ID of the booking to cancel.</p>
+</div></blockquote>
+<p>Returns
+None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bookings_service.database.create_booking">
+<span class="sig-prename descclassname"><span class="pre">bookings_service.database.</span></span><span class="sig-name descname"><span class="pre">create_booking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">room_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bookings_service.database.create_booking" title="Link to this definition">¶</a></dt>
+<dd><p>This fct inserts a new booking into the database.</p>
+<p>Parameters
+user_id : int</p>
+<blockquote>
+<div><p>ID of the user making the booking.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>room_id<span class="classifier">int</span></dt><dd><p>ID of the room being booked.</p>
+</dd>
+<dt>date<span class="classifier">str</span></dt><dd><p>Booking date in YYYY-MM-DD format.</p>
+</dd>
+<dt>start_time<span class="classifier">str</span></dt><dd><p>Start time in HH:MM format.</p>
+</dd>
+<dt>end_time<span class="classifier">str</span></dt><dd><p>End time in HH:MM format.</p>
+</dd>
+</dl>
+<p>Returns
+int</p>
+<blockquote>
+<div><p>The ID of the newly created booking.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bookings_service.database.get_all_bookings">
+<span class="sig-prename descclassname"><span class="pre">bookings_service.database.</span></span><span class="sig-name descname"><span class="pre">get_all_bookings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bookings_service.database.get_all_bookings" title="Link to this definition">¶</a></dt>
+<dd><p>This fct gets all bookings stored in the database.</p>
+<p>The returned list is sorted by date and starting time to make it easier for the caller to display or process.</p>
+<p>Returns
+list of sqlite3.Row</p>
+<blockquote>
+<div><p>All booking records.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bookings_service.database.get_bookings_for_user">
+<span class="sig-prename descclassname"><span class="pre">bookings_service.database.</span></span><span class="sig-name descname"><span class="pre">get_bookings_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bookings_service.database.get_bookings_for_user" title="Link to this definition">¶</a></dt>
+<dd><p>This fct gets all the bookings that were made by a specific user whos user id is given.</p>
+<p>It returns both active and cancelled bookings so we can see full booking history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>int</em>) – The user whose bookings are requested.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>All bookings made by this user.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of sqlite3.Row</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="bookings_service.database.get_db_connection">
 <span class="sig-prename descclassname"><span class="pre">bookings_service.database.</span></span><span class="sig-name descname"><span class="pre">get_db_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bookings_service.database.get_db_connection" title="Link to this definition">¶</a></dt>
-<dd><p>This fct opens a connection to the bookings database and returns it.
-It uses sqlite3.Row so columns can be accessed by name. It also enables foreign keys.</p>
+<dd><p>This fct opens a connection to the bookings database.</p>
+<p>It configures sqlite3 so rows can be accessed by column name
+and enables foreign-key constraints.</p>
+<p>Returns
+sqlite3.Connection</p>
+<blockquote>
+<div><p>A ready to use SQLite connection.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bookings_service.database.is_room_available">
+<span class="sig-prename descclassname"><span class="pre">bookings_service.database.</span></span><span class="sig-name descname"><span class="pre">is_room_available</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bookings_service.database.is_room_available" title="Link to this definition">¶</a></dt>
+<dd><p>This fct checks whether a room is free during a specific time window.</p>
+<p>It looks for overlapping active bookings on the same date.</p>
+<p>Parameters
+room_id : int</p>
+<blockquote>
+<div><p>Room to check.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>date<span class="classifier">str</span></dt><dd><p>Booking date in YYYY-MM-DD format.</p>
+</dd>
+<dt>start_time<span class="classifier">str</span></dt><dd><p>Proposed start time.</p>
+</dd>
+<dt>end_time<span class="classifier">str</span></dt><dd><p>Proposed end time.</p>
+</dd>
+</dl>
+<p>Returns
+bool</p>
+<blockquote>
+<div><p>True if the room is available, False if it is already booked.</p>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bookings_service.database.make_bookings_table_if_missing">
 <span class="sig-prename descclassname"><span class="pre">bookings_service.database.</span></span><span class="sig-name descname"><span class="pre">make_bookings_table_if_missing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bookings_service.database.make_bookings_table_if_missing" title="Link to this definition">¶</a></dt>
-<dd><p>This fct will create the bookings table if it does not already exist.</p>
+<dd><p>This fct creates the bookings table if it does not already exist.</p>
+<p>It is usually called once at service startup so the rest of the
+application can safely assume table is there.</p>
+<p>Returns
+None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bookings_service.database.update_booking">
+<span class="sig-prename descclassname"><span class="pre">bookings_service.database.</span></span><span class="sig-name descname"><span class="pre">update_booking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">booking_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bookings_service.database.update_booking" title="Link to this definition">¶</a></dt>
+<dd><p>This fct updates the date and/or time of an existing booking.</p>
+<p>It is VIP to check availability first using is_room_available.</p>
+<p>Parameters
+booking_id : int</p>
+<blockquote>
+<div><p>ID of the booking to update.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>date<span class="classifier">str</span></dt><dd><p>New booking date.</p>
+</dd>
+<dt>start_time<span class="classifier">str</span></dt><dd><p>New start time.</p>
+</dd>
+<dt>end_time<span class="classifier">str</span></dt><dd><p>New end time.</p>
+</dd>
+</dl>
+<p>Returns
+None</p>
 </dd></dl>
 
 </section>
@@ -84,11 +211,19 @@ It uses sqlite3.Row so columns can be accessed by name. It also enables foreign 
 <li class="toctree-l1"><a class="reference internal" href="users_database.html">Users Database Helpers (users_service/database.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_app.html">Rooms Service API (room_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rooms_database.html">Rooms Database Helpers (room_service/database.py)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookings_app.html">Bookings Service API (bookings_service/app.py)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Bookings Database Helpers (bookings_service/database.py)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bookings_service.database.cancel_booking"><code class="docutils literal notranslate"><span class="pre">cancel_booking()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bookings_service.database.create_booking"><code class="docutils literal notranslate"><span class="pre">create_booking()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bookings_service.database.get_all_bookings"><code class="docutils literal notranslate"><span class="pre">get_all_bookings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bookings_service.database.get_bookings_for_user"><code class="docutils literal notranslate"><span class="pre">get_bookings_for_user()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bookings_service.database.get_db_connection"><code class="docutils literal notranslate"><span class="pre">get_db_connection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bookings_service.database.is_room_available"><code class="docutils literal notranslate"><span class="pre">is_room_available()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bookings_service.database.make_bookings_table_if_missing"><code class="docutils literal notranslate"><span class="pre">make_bookings_table_if_missing()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bookings_service.database.update_booking"><code class="docutils literal notranslate"><span class="pre">update_booking()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_app.html">Reviews Service API (reviews_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reviews_database.html">Reviews Database Helpers (reviews_service/database.py)</a></li>
 </ul>
 
@@ -96,8 +231,8 @@ It uses sqlite3.Row so columns can be accessed by name. It also enables foreign 
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="rooms_database.html" title="previous chapter">Rooms Database Helpers (room_service/database.py)</a></li>
-      <li>Next: <a href="reviews_database.html" title="next chapter">Reviews Database Helpers (reviews_service/database.py)</a></li>
+      <li>Previous: <a href="bookings_app.html" title="previous chapter">Bookings Service API (bookings_service/app.py)</a></li>
+      <li>Next: <a href="reviews_app.html" title="next chapter">Reviews Service API (reviews_service/app.py)</a></li>
   </ul></li>
 </ul>
 </div>

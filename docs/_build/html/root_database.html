@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Reviews Database Helpers (reviews_service/database.py) &#8212; Smart Meeting Room Backend v1 documentation</title>
+    <title>Root Database Module &#8212; Smart Meeting Room Backend v1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
@@ -14,7 +14,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Reviews Service API (reviews_service/app.py)" href="reviews_app.html" />
+    <link rel="prev" title="Reviews Database Helpers (reviews_service/database.py)" href="reviews_database.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,14 +32,14 @@
 
           <div class="body" role="main">
             
-  <section id="reviews-database-helpers-reviews-service-database-py">
-<h1>Reviews Database Helpers (reviews_service/database.py)<a class="headerlink" href="#reviews-database-helpers-reviews-service-database-py" title="Link to this heading">¶</a></h1>
-<p id="module-reviews_service.database">This file is for database related code for the reviews service.
+  <section id="module-database">
+<span id="root-database-module"></span><h1>Root Database Module<a class="headerlink" href="#module-database" title="Link to this heading">¶</a></h1>
+<p>This file is for database related code for the reviews service.
 Getting db connection, creating reviews table if it’s not there,
 and other db related functions which will be used by app.py.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="reviews_service.database.delete_review">
-<span class="sig-prename descclassname"><span class="pre">reviews_service.database.</span></span><span class="sig-name descname"><span class="pre">delete_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reviews_service.database.delete_review" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="database.delete_review">
+<span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">delete_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#database.delete_review" title="Link to this definition">¶</a></dt>
 <dd><p>Delete a review permanently.</p>
 <p>Parameters
 review_id : int</p>
@@ -54,8 +54,8 @@ None</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="reviews_service.database.flag_review">
-<span class="sig-prename descclassname"><span class="pre">reviews_service.database.</span></span><span class="sig-name descname"><span class="pre">flag_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reviews_service.database.flag_review" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="database.flag_review">
+<span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">flag_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#database.flag_review" title="Link to this definition">¶</a></dt>
 <dd><p>Mark a review as flagged (moderation action).</p>
 <p>Parameters
 review_id : int</p>
@@ -70,8 +70,8 @@ None</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="reviews_service.database.get_connection">
-<span class="sig-prename descclassname"><span class="pre">reviews_service.database.</span></span><span class="sig-name descname"><span class="pre">get_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews_service.database.get_connection" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="database.get_connection">
+<span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">get_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#database.get_connection" title="Link to this definition">¶</a></dt>
 <dd><p>Open a connection to the unified reviews database.
 It uses sqlite3.Row so columns can be accessed by name.
 Foreign-key constraints are enabled for safety.</p>
@@ -83,8 +83,8 @@ sqlite3.Connection</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="reviews_service.database.get_reviews_for_room">
-<span class="sig-prename descclassname"><span class="pre">reviews_service.database.</span></span><span class="sig-name descname"><span class="pre">get_reviews_for_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reviews_service.database.get_reviews_for_room" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="database.get_reviews_for_room">
+<span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">get_reviews_for_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#database.get_reviews_for_room" title="Link to this definition">¶</a></dt>
 <dd><p>Return all reviews for a specific room.</p>
 <p>Parameters
 room_id : int</p>
@@ -99,8 +99,8 @@ list of sqlite3.Row</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="reviews_service.database.make_reviews_table_if_missing">
-<span class="sig-prename descclassname"><span class="pre">reviews_service.database.</span></span><span class="sig-name descname"><span class="pre">make_reviews_table_if_missing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews_service.database.make_reviews_table_if_missing" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="database.make_reviews_table_if_missing">
+<span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">make_reviews_table_if_missing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#database.make_reviews_table_if_missing" title="Link to this definition">¶</a></dt>
 <dd><p>Create the <code class="docutils literal notranslate"><span class="pre">reviews</span></code> table if it does not already exist.</p>
 <p>Takes no parameters.</p>
 <p>Returns
@@ -111,8 +111,8 @@ None</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="reviews_service.database.submit_review">
-<span class="sig-prename descclassname"><span class="pre">reviews_service.database.</span></span><span class="sig-name descname"><span class="pre">submit_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">room_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reviews_service.database.submit_review" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="database.submit_review">
+<span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">submit_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">room_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#database.submit_review" title="Link to this definition">¶</a></dt>
 <dd><p>Insert a new review.</p>
 <p>Parameters
 user_id : int</p>
@@ -135,8 +135,8 @@ int</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="reviews_service.database.update_review">
-<span class="sig-prename descclassname"><span class="pre">reviews_service.database.</span></span><span class="sig-name descname"><span class="pre">update_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reviews_service.database.update_review" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="database.update_review">
+<span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">update_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#database.update_review" title="Link to this definition">¶</a></dt>
 <dd><p>Update an existing review’s rating and comment.</p>
 <p>Parameters
 review_id : int</p>
@@ -193,14 +193,15 @@ None</p>
 <li class="toctree-l1"><a class="reference internal" href="bookings_app.html">Bookings Service API (bookings_service/app.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bookings_database.html">Bookings Database Helpers (bookings_service/database.py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reviews_app.html">Reviews Service API (reviews_service/app.py)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Reviews Database Helpers (reviews_service/database.py)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#reviews_service.database.delete_review"><code class="docutils literal notranslate"><span class="pre">delete_review()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reviews_service.database.flag_review"><code class="docutils literal notranslate"><span class="pre">flag_review()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reviews_service.database.get_connection"><code class="docutils literal notranslate"><span class="pre">get_connection()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reviews_service.database.get_reviews_for_room"><code class="docutils literal notranslate"><span class="pre">get_reviews_for_room()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reviews_service.database.make_reviews_table_if_missing"><code class="docutils literal notranslate"><span class="pre">make_reviews_table_if_missing()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reviews_service.database.submit_review"><code class="docutils literal notranslate"><span class="pre">submit_review()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reviews_service.database.update_review"><code class="docutils literal notranslate"><span class="pre">update_review()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews_database.html">Reviews Database Helpers (reviews_service/database.py)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Root Database Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#database.delete_review"><code class="docutils literal notranslate"><span class="pre">delete_review()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database.flag_review"><code class="docutils literal notranslate"><span class="pre">flag_review()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database.get_connection"><code class="docutils literal notranslate"><span class="pre">get_connection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database.get_reviews_for_room"><code class="docutils literal notranslate"><span class="pre">get_reviews_for_room()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database.make_reviews_table_if_missing"><code class="docutils literal notranslate"><span class="pre">make_reviews_table_if_missing()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database.submit_review"><code class="docutils literal notranslate"><span class="pre">submit_review()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database.update_review"><code class="docutils literal notranslate"><span class="pre">update_review()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -209,7 +210,7 @@ None</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="reviews_app.html" title="previous chapter">Reviews Service API (reviews_service/app.py)</a></li>
+      <li>Previous: <a href="reviews_database.html" title="previous chapter">Reviews Database Helpers (reviews_service/database.py)</a></li>
   </ul></li>
 </ul>
 </div>
@@ -233,7 +234,7 @@ None</p>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
-      <a href="_sources/reviews_database.rst.txt"
+      <a href="_sources/root_database.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
