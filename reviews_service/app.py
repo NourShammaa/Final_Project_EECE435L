@@ -6,7 +6,7 @@ and then returns JSON responses.
 """
 
 from flask import Flask, jsonify, request
-
+from functools import wraps
 # Support both import styles: for Sphinx and direct run
 try:
     from reviews_service.database import (
@@ -16,6 +16,9 @@ try:
         delete_review,
         get_reviews_for_room,
         flag_review,
+        find_user_by_id,
+        find_room_by_id,
+        find_review_by_id,
     )
 except ImportError:
     from database import (
@@ -25,9 +28,33 @@ except ImportError:
         delete_review,
         get_reviews_for_room,
         flag_review,
+        find_user_by_id,
+        find_room_by_id,
+        find_review_by_id,
     )
 
 app = Flask(__name__)
+
+
+def get_current_user():
+    username = request.headers.get("X-User-Name")
+    role = request.headers.get("X-User-Role")
+    return username, role
+
+def require_roles(*allowed_roles):
+    def decorator(view_func):
+        @wraps(view_func)
+        def wrapped(*args, **kwargs):
+            username, role = get_current_user()
+            if role is None:
+                return jsonify({"error": "missing X-User-Role header"}), 401
+            if role not in allowed_roles:
+                return jsonify({
+                    "error": f"forbidden: requires one of roles: {', '.join(allowed_roles)}"
+                }), 403
+            return view_func(*args, **kwargs)
+        return wrapped
+    return decorator
 
 
 
@@ -76,10 +103,10 @@ def valid_rating(r):
 
 
 # Routes
-
+#everyone can read reviews!!
 @app.route("/reviews/room/<int:room_id>", methods=["GET"])
 def list_reviews_for_room(room_id):
-    """Get all reviews for a room, newest first.
+    """Get all reviews for a room, newest first. Everyone can read reviews.
 
     Parameters
     room_id : int
@@ -89,11 +116,18 @@ def list_reviews_for_room(room_id):
     tuple
         A JSON list of reviews and a 200 status code.
     """
+    
+
+    # ensure the room exists
+    if not find_room_by_id(room_id):
+        return jsonify({"error": "room not found"}), 404
+
     rows = get_reviews_for_room(room_id)
     return jsonify([dict(r) for r in rows]), 200
 
 
 @app.route("/reviews", methods=["POST"])
+@require_roles("admin", "regular", "facility_manager")
 def submit_review_route():
     """Create a new review.
 
@@ -114,17 +148,48 @@ def submit_review_route():
     """
     data = request.get_json() or {}
 
+
+
+    current_username, role = get_current_user()
+
+    # If regular → can only create for self
+    if role == "regular":
+        user_row = find_user_by_id(data.get("user_id"))
+        if not user_row:
+            return jsonify({"error": "user not found"}), 404
+
+        if user_row["username"] != current_username:
+            return jsonify({
+                "error": "forbidden: you can only submit reviews as yourself"}), 403
+
+
     needed = ["user_id", "room_id", "rating", "comment"]
     missing_msg = require_fields(data, needed)
 
     if missing_msg:
         return jsonify({"error": missing_msg}), 400
 
+    # validate rating
     if not valid_rating(data["rating"]):
-        return jsonify(
-            {"error": "rating must be an integer between 0 and 10"}), 400
+        return jsonify({"error": "rating must be an integer between 0 and 10"}), 400
 
-    review_id = submit_review(data["user_id"], data["room_id"], int(data["rating"]), data["comment"],
+    # validate comment not empty
+    if not data["comment"].strip():
+        return jsonify({"error": "comment cannot be empty"}), 400
+
+    # check user exists
+    if not find_user_by_id(data["user_id"]):
+        return jsonify({"error": "user not found"}), 404
+
+    # check room exists
+    if not find_room_by_id(data["room_id"]):
+        return jsonify({"error": "room not found"}), 404
+
+    review_id = submit_review(
+        data["user_id"],
+        data["room_id"],
+        int(data["rating"]),
+        data["comment"],
     )
 
     if not review_id:
@@ -133,7 +198,9 @@ def submit_review_route():
     return jsonify({"message": "review submitted", "review_id": review_id}), 201
 
 
+
 @app.route("/reviews/<int:review_id>", methods=["PUT"])
+@require_roles("admin", "regular", "facility_manager")
 def update_review_route(review_id):
     """Update the rating and comment of an existing review.
 
@@ -150,25 +217,42 @@ def update_review_route(review_id):
     """
     data = request.get_json() or {}
 
+
+    current_username, role = get_current_user()
+
+    row = find_review_by_id(review_id)
+    if not row:
+        return jsonify({"error": "review not found"}), 404
+
+    review_owner = find_user_by_id(row["user_id"])
+
+    # Regular → only own review
+    if role in ("regular", "facility_manager") and review_owner["username"] != current_username:
+        return jsonify({
+            "error": "forbidden: you can only update your own reviews"}), 403
+
+
     needed = ["rating", "comment"]
     missing_msg = require_fields(data, needed)
     if missing_msg:
         return jsonify({"error": missing_msg}), 400
 
     if not valid_rating(data["rating"]):
-        return jsonify(
-            {"error": "rating must be an integer between 0 and 10"}
-        ), 400
+        return jsonify({"error": "rating must be an integer between 0 and 10"}), 400
 
-    update_review(review_id, int(data["rating"]), data["comment"],
-    )
+    if not data["comment"].strip():
+        return jsonify({"error": "comment cannot be empty"}), 400
+
+
+    update_review(review_id, int(data["rating"]), data["comment"])
 
     return jsonify({"message": "review updated"}), 200
 
 
 @app.route("/reviews/<int:review_id>", methods=["DELETE"])
+@require_roles("admin", "regular", "facility_manager", "moderator")
 def delete_review_route(review_id):
-    """Delete a review forever (no take-backs).
+    """This fct will delete a review forever!
 
     Parameters
     review_id : int
@@ -178,11 +262,31 @@ def delete_review_route(review_id):
     tuple
         A short confirmation message and status 200.
     """
+
+    # check review exists
+    row = find_review_by_id(review_id)
+    if not row:
+        return jsonify({"error": "review not found"}), 404
+    
+    current_username, role = get_current_user()
+
+    review_owner = find_user_by_id(row["user_id"])
+
+    # regular/fac manager → only their own
+    if role in ("regular", "facility_manager"):
+        if review_owner["username"] != current_username:
+            return jsonify({
+                "error": "forbidden: you can only delete your own reviews"}), 403
+
+    # moderator/admin is  allowed to continue normally
+
+
     delete_review(review_id)
     return jsonify({"message": "review deleted"}), 200
 
 
 @app.route("/reviews/<int:review_id>/flag", methods=["PUT"])
+@require_roles("admin", "moderator")
 def flag_review_route(review_id):
     """Mark a review as flagged so it can be reviewed by someone human.
 
@@ -194,6 +298,12 @@ def flag_review_route(review_id):
     tuple
         A confirmation message and status 200.
     """
+
+    # check review exists
+    row = find_review_by_id(review_id)
+    if not row:
+        return jsonify({"error": "review not found"}), 404
+
     flag_review(review_id)
     return jsonify({"message": "review flagged"}), 200
 

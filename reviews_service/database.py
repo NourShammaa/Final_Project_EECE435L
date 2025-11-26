@@ -7,9 +7,11 @@ and other db related functions which will be used by app.py.
 
 import sqlite3
 import os
+import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.dirname(BASE_DIR)
+ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
+DB_PATH = os.path.join(ROOT_DIR, "database.db")
+
 DB_NAME = os.path.join(ROOT_DIR, "database.db")
 
 
@@ -215,6 +217,62 @@ def flag_review(review_id):
     conn.close()
 
 
-# Auto-create table on import (consistent with bookings service)
-if not os.path.exists(DB_NAME):
-    make_reviews_table_if_missing()
+def find_review_by_id(review_id):
+    """Retrieve a single review row using its ID.
+
+    Parameters
+    ----------
+    review_id : int
+        The ID of the review to look up.
+
+    Returns
+    -------
+    sqlite3.Row or None
+        The review row if it exists, otherwise None.
+    """
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("select * from reviews where id = ?;", (review_id,))
+    row = cur.fetchone()
+    conn.close()
+    return row
+
+
+def find_user_by_id(user_id):
+    """This fct will retrieve a single user row using the user's ID.
+
+    Parameters
+    user_id : int
+        The ID of the user to look up.
+
+    Returns
+    sqlite3.Row or None
+        The user row if found, None otherwise.
+    """
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("select * from users where id = ?;", (user_id,))
+    row = cur.fetchone()
+    conn.close()
+    return row
+
+
+def find_room_by_id(room_id):
+    """This fct will retrieve a single room row using the room's ID.
+
+    Parameters
+    room_id : int
+        The ID of the room to look up.
+
+    Returns
+    sqlite3.Row or None
+        The room row if found, None otherwise.
+    """
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("select * from rooms where id = ?;", (room_id,))
+    row = cur.fetchone()
+    conn.close()
+    return row
+
+#make_reviews_table_if_missing()

@@ -72,6 +72,25 @@ def make_bookings_table_if_missing():
     conn.close()
 
 
+def get_booking_by_id(booking_id):
+    """This fct fetches one booking row from the database using its ID. This will help me get what room and user are associated with a certain booking.
+
+    Parameters
+    booking_id : int
+        The ID of the booking I want to retrieve.
+
+    Returns
+    sqlite3.Row or None
+        The booking row if it exists, otherwise None.
+    """
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("select * from bookings where id = ?", (booking_id,))
+    row = cur.fetchone()
+    conn.close()
+    return row
+
+
 def get_all_bookings():
     """This fct gets all bookings stored in the database.
 
@@ -223,6 +242,55 @@ def get_bookings_for_user(user_id):
     conn.close()
     return rows
 
+def find_user_by_id(user_id):
+    """This fct retrieves a single user row using the user's ID.
+
+    Parameters
+    user_id : int
+        The ID of the user we want to look up.
+
+    Returns
+    sqlite3.Row or None
+        The user row if found, or None if no such user exists.
+    """
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        "select * from users where id = ?;",
+        (user_id,),
+    )
+
+    row = cur.fetchone()
+    conn.close()
+
+    return row
+
+
+
+def find_room_by_id(room_id):
+    """This fct retrieves a single room row using the room's ID.
+
+    Parameters
+    room_id : int
+        The ID of the room we want to look up.
+
+    Returns
+    sqlite3.Row or None
+        The room row if found, or None if no such room exists.
+    """
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        "select * from rooms where id = ?;",
+        (room_id,),
+    )
+
+    row = cur.fetchone()
+    conn.close()
+
+    return row
 
 def is_room_available(room_id, date, start_time, end_time):
     """This fct checks whether a room is free during a specific time window.
