@@ -1,0 +1,62 @@
+2025-11-26 23:55:23,691 [INFO] REQUEST method=POST path=/users/register user=anonymous role=none remote_addr=127.0.0.1
+2025-11-26 23:55:23,835 [INFO] RESPONSE method=POST path=/users/register status=201 user=anonymous role=none
+2025-11-26 23:55:48,940 [INFO] REQUEST method=POST path=/users/login user=anonymous role=none remote_addr=127.0.0.1
+2025-11-26 23:55:49,051 [INFO] RESPONSE method=POST path=/users/login status=200 user=anonymous role=none
+2025-11-26 23:56:58,655 [INFO] REQUEST method=POST path=/users/register user=anonymous role=none remote_addr=127.0.0.1
+2025-11-26 23:56:58,809 [INFO] RESPONSE method=POST path=/users/register status=201 user=anonymous role=none
+2025-11-26 23:57:23,567 [INFO] REQUEST method=GET path=/users user=anonymous role=none remote_addr=127.0.0.1
+2025-11-26 23:57:23,567 [WARNING] RESPONSE method=GET path=/users status=401 user=anonymous role=none
+2025-11-26 23:58:08,066 [INFO] REQUEST method=GET path=/users user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-26 23:58:08,067 [INFO] RESPONSE method=GET path=/users status=200 user=admin1 role=admin
+2025-11-26 23:58:56,213 [INFO] REQUEST method=GET path=/users user=anonymous role=none remote_addr=127.0.0.1
+2025-11-26 23:58:56,214 [WARNING] RESPONSE method=GET path=/users status=401 user=anonymous role=none
+2025-11-27 00:00:53,816 [INFO] REQUEST method=GET path=/users user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:00:53,818 [INFO] RESPONSE method=GET path=/users status=200 user=admin1 role=admin
+2025-11-27 00:22:06,412 [INFO] REQUEST method=GET path=/users user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:22:06,413 [WARNING] RESPONSE method=GET path=/users status=401 user=anonymous role=none
+2025-11-27 00:24:11,662 [INFO] REQUEST method=POST path=/users/login user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:24:11,778 [INFO] RESPONSE method=POST path=/users/login status=200 user=anonymous role=none
+2025-11-27 00:24:54,325 [INFO] REQUEST method=GET path=/users
+ user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:24:54,326 [WARNING] RESPONSE method=GET path=/users
+ status=404 user=admin1 role=admin
+2025-11-27 00:24:58,766 [INFO] REQUEST method=GET path=/users
+ user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:24:58,766 [WARNING] RESPONSE method=GET path=/users
+ status=404 user=admin1 role=admin
+2025-11-27 00:25:21,242 [INFO] REQUEST method=GET path=/users user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:25:21,243 [INFO] RESPONSE method=GET path=/users status=200 user=admin1 role=admin
+2025-11-27 00:39:59,126 [INFO] REQUEST method=POST path=/users/register user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:39:59,127 [WARNING] RESPONSE method=POST path=/users/register status=400 user=anonymous role=none
+2025-11-27 00:40:37,170 [INFO] REQUEST method=GET path=/users/nour1 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:40:37,171 [WARNING] RESPONSE method=GET path=/users/nour1 status=401 user=anonymous role=none
+2025-11-27 00:42:29,590 [INFO] REQUEST method=POST path=/users/register user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:42:29,591 [WARNING] RESPONSE method=POST path=/users/register status=400 user=anonymous role=none
+2025-11-27 00:51:39,614 [INFO] REQUEST method=POST path=/users/login user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:51:39,615 [WARNING] RESPONSE method=POST path=/users/login status=415 user=anonymous role=none
+2025-11-27 00:51:49,141 [INFO] REQUEST method=POST path=/users/login user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:51:49,254 [INFO] RESPONSE method=POST path=/users/login status=200 user=anonymous role=none
+2025-11-27 00:52:50,492 [INFO] REQUEST method=GET path=/users user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:52:50,492 [WARNING] RESPONSE method=GET path=/users status=401 user=anonymous role=none
+2025-11-27 00:54:00,230 [INFO] REQUEST method=GET path=/users user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:54:00,231 [INFO] RESPONSE method=GET path=/users status=200 user=admin1 role=admin
+2025-11-27 00:54:58,252 [INFO] REQUEST method=DELETE path=/users/nour1 user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:54:58,268 [INFO] RESPONSE method=DELETE path=/users/nour1 status=200 user=admin1 role=admin
+2025-11-27 00:55:25,156 [INFO] REQUEST method=POST path=/users/register user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:55:25,287 [INFO] RESPONSE method=POST path=/users/register status=201 user=admin1 role=admin
+2025-11-27 00:55:41,674 [INFO] REQUEST method=POST path=/users/login user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:55:41,788 [INFO] RESPONSE method=POST path=/users/login status=200 user=admin1 role=admin
+2025-11-27 00:56:19,498 [INFO] REQUEST method=GET path=/users/nour1 user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:56:19,500 [INFO] RESPONSE method=GET path=/users/nour1 status=200 user=admin1 role=admin
+2025-11-27 00:56:40,079 [INFO] REQUEST method=GET path=/users/nour1 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:56:40,080 [WARNING] RESPONSE method=GET path=/users/nour1 status=401 user=anonymous role=none
+2025-11-27 00:56:49,506 [INFO] REQUEST method=GET path=/users/nour1 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:56:49,506 [WARNING] RESPONSE method=GET path=/users/nour1 status=401 user=anonymous role=none
+2025-11-27 00:56:59,651 [INFO] REQUEST method=GET path=/users/nour1 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:56:59,652 [WARNING] RESPONSE method=GET path=/users/nour1 status=401 user=anonymous role=none
+2025-11-27 00:57:29,483 [INFO] REQUEST method=GET path=/users/nour1 user=nour1 role=regular remote_addr=127.0.0.1
+2025-11-27 00:57:29,484 [INFO] RESPONSE method=GET path=/users/nour1 status=200 user=nour1 role=regular
+2025-11-27 10:37:27,137 [INFO] REQUEST method=POST path=/users/register user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:37:27,195 [WARNING] RESPONSE method=POST path=/users/register status=400 user=anonymous role=none
+2025-11-27 10:38:34,722 [INFO] REQUEST method=POST path=/users/login user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:38:34,978 [INFO] RESPONSE method=POST path=/users/login status=200 user=anonymous role=none

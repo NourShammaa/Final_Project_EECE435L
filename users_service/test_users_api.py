@@ -74,7 +74,7 @@ def test_login_success():
 
     register_body = {
         "name": "riwa",
-        "username": "roro",
+               "username": "roro",
         "email": "riro@example.com",
         "password": "RORARI",
         "role": "admin",
@@ -94,8 +94,14 @@ def test_login_success():
 
     assert response.status_code == 200
     data = response.get_json()
-    assert data["message"] == "login ok"
+    assert data["message"] == "login successful"
+    assert "token" in data
+    assert isinstance(data["token"], str)
+    assert "user" in data
     assert data["user"]["username"] == "roro"
+
+
+
 
 def test_login_wrong_password():
     clean_users_table()

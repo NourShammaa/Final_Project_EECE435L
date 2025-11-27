@@ -1,20 +1,60 @@
 # users_service/app.py
 """ This part of the project exposes the HTTP endpoints for the users service. It takes care of  all direct database work to :mod:`database`  
 focuses on validation and shaping  the JSON responses. """
-from flask import Flask, jsonify, request
+import os
+from datetime import datetime, timedelta
+import logging
+from flask_talisman import Talisman
+
+import jwt
+from flask import Flask, jsonify, request, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+
+# ── Authentication config ────────────────────────────────────────────────
+AUTH_SECRET_KEY = os.environ.get("AUTH_SECRET_KEY", "dev-secret-key-change-me")
+TOKEN_EXP_MINUTES = 60  # 1 hour tokens
+
 def get_current_user():
     """
-    Read current user identity from HTTP headers.
+    read current user identity, preferring a Bearer token, falling back to headers.
 
-    We assume some external gateway already authenticated the user and set:
-    - X-User-Name: username string
-    - X-User-Role: role string such as 'admin', 'regular', 'facility_manager', etc.
+    Priority:
+    1) Authorization: Bearer <JWT>  → decode, return (username, role)
+    2) Legacy headers X-User-Name / X-User-Role  → used by existing tests
     """
+    auth_header = request.headers.get("Authorization", "")
+    if auth_header.startswith("Bearer "):
+        token = auth_header[7:]
+        try:
+            payload = jwt.decode(token, AUTH_SECRET_KEY, algorithms=["HS256"])
+            return payload.get("username"), payload.get("role")
+        except jwt.ExpiredSignatureError:
+            # Token expired → treated as unauthenticated
+            return None, None
+        except jwt.InvalidTokenError:
+            # Any other token error → unauthenticated
+            return None, None
+
+
     username = request.headers.get("X-User-Name")
     role = request.headers.get("X-User-Role")
     return username, role
+
+def generate_auth_token(user_row):
+    """
+    Create a JWT token containing username + role with an expiration time.
+    """
+    payload = {
+        "username": user_row["username"],
+        "role": user_row["role"],
+        "exp": datetime.utcnow() + timedelta(minutes=TOKEN_EXP_MINUTES),
+    }
+    token = jwt.encode(payload, AUTH_SECRET_KEY, algorithm="HS256")
+    # PyJWT may return bytes or str depending on version
+    if isinstance(token, bytes):
+        token = token.decode("utf-8")
+    return token
 
 
 def require_roles(*allowed_roles):
@@ -68,7 +108,67 @@ except ImportError:
 
 
 app = Flask(__name__)
+Talisman(app, content_security_policy=None)
 
+# ── Auditing / Logging setup ─────────────────────────────────────────────
+LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
+os.makedirs(LOG_DIR, exist_ok=True)
+
+logger = logging.getLogger("users_service")
+logger.setLevel(logging.INFO)
+
+# Avoid duplicate handlers in debug/reload
+if not logger.handlers:
+    file_handler = logging.FileHandler(os.path.join(LOG_DIR, "users_service.log"))
+    formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+# ── Auditing hooks: log every request & response ─────────────────────────
+@app.before_request
+def audit_request():
+    """
+    Log incoming requests:
+    - method, path, remote_addr
+    - username & role (decoded from token or headers)
+    """
+    try:
+        username, role = get_current_user()
+    except Exception:
+        username, role = None, None
+
+    g.audit_username = username or "anonymous"
+    g.audit_role = role or "none"
+
+    logger.info(
+        "REQUEST method=%s path=%s user=%s role=%s remote_addr=%s",
+        request.method,
+        request.path,
+        g.audit_username,
+        g.audit_role,
+        request.remote_addr,
+    )
+
+
+@app.after_request
+def audit_response(response):
+    """
+    Log outgoing responses with status code.
+    """
+    username = getattr(g, "audit_username", "anonymous")
+    role = getattr(g, "audit_role", "none")
+
+    level = logging.INFO if response.status_code < 400 else logging.WARNING
+
+    logger.log(
+        level,
+        "RESPONSE method=%s path=%s status=%s user=%s role=%s",
+        request.method,
+        request.path,
+        response.status_code,
+        username,
+        role,
+    )
+    return response
 
 @app.route("/users/register", methods=["POST"])
 def register_user():
@@ -107,9 +207,18 @@ def register_user():
 
 @app.route("/users/login", methods=["POST"])
 def login_user():
-    """ handles user login, this endpoint expects a JSON body with "username" and "password" fields.
-    password is checked against stored hash. if  credentials are correct, user data is returned.
-    reutrns JSON response with appropriate status code 4xx/5xx if error, 200 if login ok."""
+    """User login.
+
+    Expects JSON:
+    {
+      "username": "...",
+      "password": "..."
+    }
+
+    If credentials are correct:
+    - returns a JWT token in the "token" field
+    - returns user info (without password hash)
+    """
     data = request.get_json() or {}
     username = data.get("username")
     password = data.get("password")
@@ -125,8 +234,22 @@ def login_user():
     if not check_password_hash(stored_hash, password):
         return jsonify({"message": "invalid username or password"}), 401
 
-    user_row.pop("password_hash", None)
-    return jsonify({"message": "login ok", "user": user_row}), 200
+    # Build token + clean user
+    token = generate_auth_token(user_row)
+    user_copy = dict(user_row)
+    user_copy.pop("password_hash", None)
+
+    return (
+        jsonify(
+            {
+                "message": "login successful",
+                "token": token,
+                "user": user_copy,
+            }
+        ),
+        200,
+    )
+
 
 
 @app.route("/users", methods=["GET"])
