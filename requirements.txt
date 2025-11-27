@@ -8,3 +8,5 @@ psutil
 Flask-Cors
 Werkzeug
 coverage
+PyJWT
+flask-talisman

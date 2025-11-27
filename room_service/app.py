@@ -1,10 +1,35 @@
 """This part of the project iis just the HTTP endpoints for the rooms service. it is for managing meeting rooms:
 creating, updating, deleting, listing, and checking availability.
 """
-from flask import Flask, jsonify, request
+import os
+import logging
+from flask_talisman import Talisman
+import jwt
+from flask import Flask, jsonify, request, g
 from functools import wraps
+import time   # <-- NEW
+
+AUTH_SECRET_KEY = os.environ.get("AUTH_SECRET_KEY", "dev-secret-key-change-me")
+
+# --- Simple in-memory cache for rooms (NEW) ------------------------------
+ROOMS_CACHE_TTL = 30.0  # seconds
+
+_all_rooms_cache = {"data": None, "expires_at": 0.0}
+_available_rooms_cache = {}  # key -> (data, expires_at)
+
 def get_current_user():
-    """Read current user identity from HTTP headers."""
+    """Read current user identity, preferring Bearer token, then X-User-* headers."""
+    auth_header = request.headers.get("Authorization", "")
+    if auth_header.startswith("Bearer "):
+        token = auth_header[7:]
+        try:
+            payload = jwt.decode(token, AUTH_SECRET_KEY, algorithms=["HS256"])
+            return payload.get("username"), payload.get("role")
+        except jwt.ExpiredSignatureError:
+            return None, None
+        except jwt.InvalidTokenError:
+            return None, None
+
     username = request.headers.get("X-User-Name")
     role = request.headers.get("X-User-Role")
     return username, role
@@ -54,7 +79,106 @@ except ImportError:
     )
 
 
+# --- Caching helpers (NEW) -----------------------------------------------
+def _availability_cache_key(min_capacity, location, equipment_contains):
+    """Turn query parameters into a deterministic cache key."""
+    return f"{min_capacity}|{location}|{equipment_contains}"
+
+
+def get_cached_all_rooms():
+    """Return cached list of all rooms, or refresh cache if expired."""
+    now = time.time()
+    if (
+        _all_rooms_cache["data"] is not None
+        and _all_rooms_cache["expires_at"] > now
+    ):
+        return _all_rooms_cache["data"]
+
+    data = list_all_rooms()
+    _all_rooms_cache["data"] = data
+    _all_rooms_cache["expires_at"] = now + ROOMS_CACHE_TTL
+    return data
+
+
+def get_cached_available_rooms(min_capacity=None, location=None, equipment_contains=None):
+    """Return cached search results for /rooms/available."""
+    key = _availability_cache_key(min_capacity, location, equipment_contains)
+    now = time.time()
+    entry = _available_rooms_cache.get(key)
+
+    if entry is not None:
+        data, expires_at = entry
+        if expires_at > now:
+            return data
+
+    data = search_available_rooms(
+        min_capacity=min_capacity,
+        location=location,
+        equipment_contains=equipment_contains,
+    )
+    _available_rooms_cache[key] = (data, now + ROOMS_CACHE_TTL)
+    return data
+
+
+def invalidate_rooms_cache():
+    """Clear cache after any change to rooms."""
+    _all_rooms_cache["data"] = None
+    _all_rooms_cache["expires_at"] = 0.0
+    _available_rooms_cache.clear()
+
+
 app = Flask(__name__)
+Talisman(app, content_security_policy=None)
+
+# ── Auditing / Logging setup ─────────────────────────────────────────────
+LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
+os.makedirs(LOG_DIR, exist_ok=True)
+
+logger = logging.getLogger("room_service")
+logger.setLevel(logging.INFO)
+
+if not logger.handlers:
+    file_handler = logging.FileHandler(os.path.join(LOG_DIR, "room_service.log"))
+    formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+# ── Auditing hooks ───────────────────────────────────────────────────────
+@app.before_request
+def audit_request():
+    try:
+        username, role = get_current_user()
+    except Exception:
+        username, role = None, None
+
+    g.audit_username = username or "anonymous"
+    g.audit_role = role or "none"
+
+    logger.info(
+        "REQUEST method=%s path=%s user=%s role=%s remote_addr=%s",
+        request.method,
+        request.path,
+        g.audit_username,
+        g.audit_role,
+        request.remote_addr,
+    )
+
+
+@app.after_request
+def audit_response(response):
+    username = getattr(g, "audit_username", "anonymous")
+    role = getattr(g, "audit_role", "none")
+
+    level = logging.INFO if response.status_code < 400 else logging.WARNING
+    logger.log(
+        level,
+        "RESPONSE method=%s path=%s status=%s user=%s role=%s",
+        request.method,
+        request.path,
+        response.status_code,
+        username,
+        role,
+    )
+    return response
 
 
 @app.route("/rooms", methods=["POST"])
@@ -88,24 +212,24 @@ def create_room():
     if not created:
         return jsonify({"error": "could not create room"}), 500
 
+    invalidate_rooms_cache()  # <-- NEW
+
     return jsonify({"message": "room created", "room": created}), 201
 
 
 @app.route("/rooms", methods=["GET"])
 def get_all_rooms():
-    """return all rooms in the system as a JSON list."""
-    all_rooms = list_all_rooms()
+    """return all rooms in the system as a JSON list (with simple caching)."""
+    all_rooms = get_cached_all_rooms()          # <-- uses cache
     return jsonify(all_rooms), 200
 
 
 @app.route("/rooms/available", methods=["GET"])
 def get_available_rooms():
-    """returns available rooms, optionally filtered by capacity, location, and equipment. takes in as query params min_capacity, location, equipment.
-    returns JSON list of matching rooms.
-    """
+    """returns available rooms, optionally filtered by capacity, location, equipment."""
     min_capacity = request.args.get("min_capacity")
     location = request.args.get("location")
-    equipment_contains = request.args.get("equipment")
+    equipment_contains = request.args.get("equipment_contains")
 
     if min_capacity is not None:
         try:
@@ -113,7 +237,7 @@ def get_available_rooms():
         except ValueError:
             return jsonify({"error": "min_capacity must be an integer"}), 400
 
-    rooms = search_available_rooms(
+    rooms = get_cached_available_rooms(       # <-- uses cache
         min_capacity=min_capacity,
         location=location,
         equipment_contains=equipment_contains,
@@ -161,6 +285,8 @@ def update_room(name):
     if not updated:
         return jsonify({"error": "could not update room"}), 500
 
+    invalidate_rooms_cache()  # <-- NEW
+
     return jsonify({"message": "room updated", "room": updated}), 200
 
 
@@ -175,6 +301,8 @@ def delete_room(name):
     rows_deleted = delete_room_row(name)
     if rows_deleted == 0:
         return jsonify({"error": "nothing deleted"}), 500
+
+    invalidate_rooms_cache()  # <-- NEW
 
     return jsonify({"message": f"room {name} deleted"}), 200
 
@@ -191,5 +319,6 @@ def get_room_status(name):
 
 if __name__ == "__main__":
     make_rooms_table_if_missing()
-    app.run(host="0.0.0.0", port=5002, debug=True)
+    port = int(os.environ.get("ROOM_SERVICE_PORT", 5002))
+    app.run(host="0.0.0.0", port=port, debug=True)
  

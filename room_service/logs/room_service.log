@@ -1,0 +1,66 @@
+2025-11-26 23:59:55,351 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-26 23:59:55,352 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 00:00:07,684 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:00:07,685 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 00:00:22,332 [INFO] REQUEST method=POST path=/rooms user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:00:22,346 [INFO] RESPONSE method=POST path=/rooms status=201 user=admin1 role=admin
+2025-11-27 00:01:53,176 [INFO] REQUEST method=POST path=/rooms user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:01:53,178 [WARNING] RESPONSE method=POST path=/rooms status=415 user=admin1 role=admin
+2025-11-27 00:01:57,368 [INFO] REQUEST method=POST path=/rooms user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:01:57,369 [WARNING] RESPONSE method=POST path=/rooms status=400 user=admin1 role=admin
+2025-11-27 00:03:37,932 [INFO] REQUEST method=POST path=/rooms user=nour1 role=regular remote_addr=127.0.0.1
+2025-11-27 00:03:37,933 [WARNING] RESPONSE method=POST path=/rooms status=403 user=nour1 role=regular
+2025-11-27 00:58:01,692 [INFO] REQUEST method=POST path=/rooms user=nour1 role=regular remote_addr=127.0.0.1
+2025-11-27 00:58:01,694 [WARNING] RESPONSE method=POST path=/rooms status=403 user=nour1 role=regular
+2025-11-27 00:58:14,311 [INFO] REQUEST method=POST path=/rooms user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:58:14,313 [WARNING] RESPONSE method=POST path=/rooms status=415 user=admin1 role=admin
+2025-11-27 00:58:24,442 [INFO] REQUEST method=POST path=/rooms user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:58:24,446 [WARNING] RESPONSE method=POST path=/rooms status=400 user=admin1 role=admin
+2025-11-27 01:16:37,341 [INFO] REQUEST method=GET path=/rooms/BigZa3tar
+ user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 01:16:37,343 [WARNING] RESPONSE method=GET path=/rooms/BigZa3tar
+ status=404 user=admin1 role=admin
+2025-11-27 10:13:41,789 [INFO] REQUEST method=GET path=/rooms/BigZa3tar
+ user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:13:41,832 [WARNING] RESPONSE method=GET path=/rooms/BigZa3tar
+ status=404 user=anonymous role=none
+2025-11-27 10:14:52,978 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:14:52,978 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 10:15:32,497 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:15:32,497 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 10:22:54,066 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:22:54,070 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 10:22:56,289 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:22:56,289 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 10:23:06,453 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:23:06,453 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 10:23:17,783 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:23:17,785 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 10:24:32,769 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 10:24:32,769 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 11:03:12,557 [INFO] REQUEST method=POST path=/rooms user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 11:03:12,572 [WARNING] RESPONSE method=POST path=/rooms status=400 user=admin1 role=admin
+2025-11-27 23:17:22,416 [INFO] REQUEST method=POST path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 23:17:22,418 [WARNING] RESPONSE method=POST path=/rooms status=401 user=anonymous role=none
+2025-11-27 23:18:09,419 [INFO] REQUEST method=POST path=/rooms user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 23:18:09,440 [INFO] RESPONSE method=POST path=/rooms status=201 user=admin1 role=admin
+2025-11-28 01:21:26,753 [INFO] REQUEST method=GET path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 01:21:26,754 [INFO] DB QUERY: list_all_rooms called
+2025-11-28 01:21:26,755 [INFO] RESPONSE method=GET path=/rooms status=200 user=anonymous role=none
+2025-11-28 01:21:28,392 [INFO] REQUEST method=GET path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 01:21:28,393 [INFO] RESPONSE method=GET path=/rooms status=200 user=anonymous role=none
+2025-11-28 01:21:29,631 [INFO] REQUEST method=GET path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 01:21:29,631 [INFO] RESPONSE method=GET path=/rooms status=200 user=anonymous role=none
+2025-11-28 01:21:49,329 [INFO] REQUEST method=GET path=/rooms/available user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 01:21:49,330 [INFO] DB QUERY: search_available_rooms called
+2025-11-28 01:21:49,330 [INFO] RESPONSE method=GET path=/rooms/available status=200 user=anonymous role=none
+2025-11-28 01:21:50,540 [INFO] REQUEST method=GET path=/rooms/available user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 01:21:50,540 [INFO] RESPONSE method=GET path=/rooms/available status=200 user=anonymous role=none
+2025-11-28 01:21:51,716 [INFO] REQUEST method=GET path=/rooms/available user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 01:21:51,717 [INFO] RESPONSE method=GET path=/rooms/available status=200 user=anonymous role=none
+2025-11-28 01:41:25,946 [INFO] REQUEST method=GET path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 01:41:25,948 [INFO] DB QUERY: list_all_rooms called
+2025-11-28 01:41:25,951 [INFO] RESPONSE method=GET path=/rooms status=200 user=anonymous role=none
+2025-11-28 01:41:44,254 [INFO] REQUEST method=GET path=/rooms user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 01:41:44,257 [INFO] DB QUERY: list_all_rooms called
+2025-11-28 01:41:44,258 [INFO] RESPONSE method=GET path=/rooms status=200 user=anonymous role=none

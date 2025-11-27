@@ -1,20 +1,22 @@
 """
 This part of the project is the databse of the rooms service.
 """
-
 import sqlite3
-
 import os
+import logging
+logger = logging.getLogger("room_service")
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-db_file_name = os.path.join(BASE_DIR, "database.db")
+DEFAULT_DB_FILE = os.path.join(BASE_DIR, "database.db")
+DB_FILE = os.environ.get("ROOMS_DB_PATH", DEFAULT_DB_FILE)
 
 def get_db_connection():
     """open a connection to the rooms database and return it.
     connection uses ``sqlite3.Row`` so we can access columns by name.
     """
-    conn = sqlite3.connect(db_file_name)
+    conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
     return conn
+
 
 
 def make_rooms_table_if_missing():
@@ -34,6 +36,11 @@ def make_rooms_table_if_missing():
             status text not null
         );
         """
+    )
+
+    # NEW: index to speed up lookups by room name
+    cur.execute(
+        "create index if not exists idx_rooms_name on rooms(name);"
     )
 
     conn.commit()
@@ -81,6 +88,7 @@ def find_room_by_name(name):
 def list_all_rooms():
     """return all rooms as a list of dicts."""
     conn = get_db_connection()
+    logger.info("DB QUERY: list_all_rooms called")
     cur = conn.cursor()
 
     cur.execute("select * from rooms")
@@ -135,6 +143,7 @@ def search_available_rooms(min_capacity=None, location=None, equipment_contains=
     Only rooms with status = "available" are returned.
     """
     conn = get_db_connection()
+    logger.info("DB QUERY: search_available_rooms called") 
     cur = conn.cursor()
 
     query = "select * from rooms where status = 'available'"

@@ -60,3 +60,6 @@
 2025-11-27 10:37:27,195 [WARNING] RESPONSE method=POST path=/users/register status=400 user=anonymous role=none
 2025-11-27 10:38:34,722 [INFO] REQUEST method=POST path=/users/login user=anonymous role=none remote_addr=127.0.0.1
 2025-11-27 10:38:34,978 [INFO] RESPONSE method=POST path=/users/login status=200 user=anonymous role=none
+2025-11-27 23:27:53,377 [INFO] REQUEST method=POST path=/users/register user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 23:33:34,761 [INFO] REQUEST method=POST path=/users/register user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 23:33:34,871 [INFO] RESPONSE method=POST path=/users/register status=201 user=anonymous role=none

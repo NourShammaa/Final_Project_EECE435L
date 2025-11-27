@@ -3,33 +3,23 @@ This file is for database related code for the reviews service.
 Getting db connection, creating reviews table if it's not there,
 and other db related functions which will be used by app.py.
 """
-
-
 import sqlite3
 import os
-import os
 
-ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
-DB_PATH = os.path.join(ROOT_DIR, "database.db")
-
-DB_NAME = os.path.join(ROOT_DIR, "database.db")
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+DEFAULT_DB_FILE = os.path.join(BASE_DIR, "database.db")
+DB_FILE = os.environ.get("REVIEWS_DB_PATH", DEFAULT_DB_FILE)
 
 
-def get_connection():
-    """Open a connection to the unified reviews database.
-    It uses sqlite3.Row so columns can be accessed by name.
-    Foreign-key constraints are enabled for safety.
-
-    Returns
-    sqlite3.Connection
-        An active SQLite connection with row access by column name.
+def get_db_connection():
+    """open a connection to the reviews database and return it.
+    connection uses ``sqlite3.Row`` so we can access columns by name.
     """
-    conn = sqlite3.connect(DB_NAME)
+    conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
-
-    # This will enable FK constraints 
-    conn.execute("pragma foreign_keys = on;")
     return conn
+
+
 
 
 def make_reviews_table_if_missing():
@@ -41,7 +31,7 @@ def make_reviews_table_if_missing():
     None
         Simply ensures the table exists in the database.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(
@@ -70,6 +60,14 @@ def make_reviews_table_if_missing():
         """
     )
 
+    # NEW: indexes to speed up listing/filtering reviews
+    cur.execute(
+        "create index if not exists idx_reviews_room on reviews(room_id);"
+    )
+    cur.execute(
+        "create index if not exists idx_reviews_user on reviews(user_id);"
+    )
+
     conn.commit()
     conn.close()
 
@@ -91,7 +89,7 @@ def submit_review(user_id, room_id, rating, comment):
     int
         The auto-generated ID of the newly created review.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(
@@ -123,7 +121,7 @@ def update_review(review_id, rating, comment):
     None
         The review row is updated in-place.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(
@@ -150,7 +148,7 @@ def delete_review(review_id):
     None
         The review row is removed from the database.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(
@@ -173,7 +171,7 @@ def get_reviews_for_room(room_id):
     list of sqlite3.Row
         A list of rows containing review data for this room.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(
@@ -201,7 +199,7 @@ def flag_review(review_id):
     None
         Updates the 'flagged' field of the given review.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(
@@ -230,7 +228,7 @@ def find_review_by_id(review_id):
     sqlite3.Row or None
         The review row if it exists, otherwise None.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("select * from reviews where id = ?;", (review_id,))
     row = cur.fetchone()
@@ -249,7 +247,7 @@ def find_user_by_id(user_id):
     sqlite3.Row or None
         The user row if found, None otherwise.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("select * from users where id = ?;", (user_id,))
     row = cur.fetchone()
@@ -268,7 +266,7 @@ def find_room_by_id(room_id):
     sqlite3.Row or None
         The room row if found, None otherwise.
     """
-    conn = get_connection()
+    conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("select * from rooms where id = ?;", (room_id,))
     row = cur.fetchone()

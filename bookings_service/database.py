@@ -7,25 +7,20 @@ and provides helper functions that app.py depends on.
 import sqlite3
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.dirname(BASE_DIR)
-db_file_name = os.path.join(ROOT_DIR, "database.db")
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+DEFAULT_DB_FILE = os.path.join(BASE_DIR, "database.db")
+DB_FILE = os.environ.get("BOOKINGS_DB_PATH", DEFAULT_DB_FILE)
 
 
 def get_db_connection():
-    """This fct opens a connection to the bookings database.
-
-    It configures sqlite3 so rows can be accessed by column name 
-    and enables foreign-key constraints.
-
-    Returns
-    sqlite3.Connection
-        A ready to use SQLite connection.
+    """open a connection to the bookings database and return it.
+    connection uses ``sqlite3.Row`` so we can access columns by name.
     """
-    conn = sqlite3.connect(db_file_name)
+    conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
-    conn.execute("pragma foreign_keys = on;")
     return conn
+
+
 
 
 def make_bookings_table_if_missing():
@@ -66,6 +61,14 @@ def make_bookings_table_if_missing():
             foreign key(room_id) references rooms(id)
         );
         """
+    )
+
+    # NEW: indexes for common queries
+    cur.execute(
+        "create index if not exists idx_bookings_room_date on bookings(room_id, date);"
+    )
+    cur.execute(
+        "create index if not exists idx_bookings_user on bookings(user_id);"
     )
 
     conn.commit()
@@ -334,5 +337,6 @@ def is_room_available(room_id, date, start_time, end_time):
 
 
 # Create the table automatically
-if not os.path.exists(db_file_name):
+# Create the table automatically (only if DB file does not exist yet)
+if not os.path.exists(DB_FILE):
     make_bookings_table_if_missing()

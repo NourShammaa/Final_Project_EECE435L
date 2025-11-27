@@ -5,8 +5,15 @@ It uses db functions from database.py which is  in the same folder, validates us
 and then returns JSON responses.
 """
 
-from flask import Flask, jsonify, request
+import os
+import logging
+from flask_talisman import Talisman 
+import jwt
+from flask import Flask, jsonify, request, g
 from functools import wraps
+
+AUTH_SECRET_KEY = os.environ.get("AUTH_SECRET_KEY", "dev-secret-key-change-me")
+
 # Support both import styles: for Sphinx and direct run
 try:
     from reviews_service.database import (
@@ -34,12 +41,84 @@ except ImportError:
     )
 
 app = Flask(__name__)
+Talisman(app, content_security_policy=None)
+# ── Auditing / Logging setup ─────────────────────────────────────────────
+LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
+os.makedirs(LOG_DIR, exist_ok=True)
+
+logger = logging.getLogger("reviews_service")
+logger.setLevel(logging.INFO)
+
+if not logger.handlers:
+    file_handler = logging.FileHandler(os.path.join(LOG_DIR, "reviews_service.log"))
+    formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
 
 
 def get_current_user():
+    """Decode user from token, fallback to X-User-* headers."""
+    auth_header = request.headers.get("Authorization", "")
+    if auth_header.startswith("Bearer "):
+        token = auth_header[7:]
+        try:
+            payload = jwt.decode(token, AUTH_SECRET_KEY, algorithms=["HS256"])
+            return payload.get("username"), payload.get("role")
+        except jwt.ExpiredSignatureError:
+            return None, None
+        except jwt.InvalidTokenError:
+            return None, None
+
     username = request.headers.get("X-User-Name")
     role = request.headers.get("X-User-Role")
     return username, role
+# ── Auditing hooks: log every request & response ─────────────────────────
+@app.before_request
+def audit_request():
+    """
+    Log incoming requests:
+    - method, path, remote_addr
+    - username & role (decoded from token or headers)
+    """
+    try:
+        username, role = get_current_user()
+    except Exception:
+        username, role = None, None
+
+    g.audit_username = username or "anonymous"
+    g.audit_role = role or "none"
+
+    logger.info(
+        "REQUEST method=%s path=%s user=%s role=%s remote_addr=%s",
+        request.method,
+        request.path,
+        g.audit_username,
+        g.audit_role,
+        request.remote_addr,
+    )
+
+
+@app.after_request
+def audit_response(response):
+    """
+    Log outgoing responses with status code.
+    """
+    username = getattr(g, "audit_username", "anonymous")
+    role = getattr(g, "audit_role", "none")
+
+    level = logging.INFO if response.status_code < 400 else logging.WARNING
+
+    logger.log(
+        level,
+        "RESPONSE method=%s path=%s status=%s user=%s role=%s",
+        request.method,
+        request.path,
+        response.status_code,
+        username,
+        role,
+    )
+    return response
+
 
 def require_roles(*allowed_roles):
     def decorator(view_func):
@@ -308,8 +387,7 @@ def flag_review_route(review_id):
     return jsonify({"message": "review flagged"}), 200
 
 
-
-# Launch (local dev)
 if __name__ == "__main__":
     make_reviews_table_if_missing()
-    app.run(host="0.0.0.0", port=5004, debug=True)
+    port = int(os.environ.get("REVIEWS_SERVICE_PORT", 5004))
+    app.run(host="0.0.0.0", port=port, debug=True)

@@ -1,0 +1,2 @@
+2025-11-27 00:15:30,486 [INFO] REQUEST method=GET path=/reviews user=anonymous role=none remote_addr=127.0.0.1
+2025-11-27 00:15:30,486 [WARNING] RESPONSE method=GET path=/reviews status=405 user=anonymous role=none

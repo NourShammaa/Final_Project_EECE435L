@@ -1,0 +1,12 @@
+2025-11-27 00:06:28,558 [INFO] REQUEST method=POST path=/bookings user=nour1 role=regular remote_addr=127.0.0.1
+2025-11-27 00:06:28,560 [WARNING] RESPONSE method=POST path=/bookings status=404 user=nour1 role=regular
+2025-11-27 00:38:52,437 [INFO] REQUEST method=POST path=/bookings user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:38:52,438 [WARNING] RESPONSE method=POST path=/bookings status=415 user=admin1 role=admin
+2025-11-27 00:39:01,338 [INFO] REQUEST method=POST path=/bookings user=admin1 role=admin remote_addr=127.0.0.1
+2025-11-27 00:39:01,339 [WARNING] RESPONSE method=POST path=/bookings status=400 user=admin1 role=admin
+2025-11-27 01:00:11,792 [INFO] REQUEST method=POST path=/bookings user=nour1 role=regular remote_addr=127.0.0.1
+2025-11-27 01:00:11,792 [WARNING] RESPONSE method=POST path=/bookings status=415 user=nour1 role=regular
+2025-11-27 01:00:23,420 [INFO] REQUEST method=POST path=/bookings user=nour1 role=regular remote_addr=127.0.0.1
+2025-11-27 01:00:23,421 [WARNING] RESPONSE method=POST path=/bookings status=400 user=nour1 role=regular
+2025-11-27 01:00:43,902 [INFO] REQUEST method=POST path=/bookings user=nour1 role=regular remote_addr=127.0.0.1
+2025-11-27 01:00:43,905 [WARNING] RESPONSE method=POST path=/bookings status=404 user=nour1 role=regular

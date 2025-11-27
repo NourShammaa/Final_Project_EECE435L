@@ -3,16 +3,18 @@
 """
 
 import sqlite3
-from datetime import datetime
 import os
+from datetime import datetime
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-db_file_name = os.path.join(BASE_DIR, "database.db")
+
+DEFAULT_DB_FILE = os.path.join(BASE_DIR, "database.db")
+
+DB_FILE = os.environ.get("USERS_DB_PATH", DEFAULT_DB_FILE)
 def get_db_connection():
-    """Open a connection to the users database and return it.
-    The connection uses ``sqlite3.Row`` so we can access columns by name.
-    The caller is responsible for closing the connection when finished.
+    """open a connection to the users database and return it.
+    connection uses ``sqlite3.Row`` so we can access columns by name.
     """
-    conn = sqlite3.connect(db_file_name)
+    conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
     return conn
 

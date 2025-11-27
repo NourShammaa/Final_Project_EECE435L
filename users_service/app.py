@@ -10,6 +10,7 @@ import jwt
 from flask import Flask, jsonify, request, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+import time  
 
 # ── Authentication config ────────────────────────────────────────────────
 AUTH_SECRET_KEY = os.environ.get("AUTH_SECRET_KEY", "dev-secret-key-change-me")
@@ -106,31 +107,54 @@ except ImportError:
         delete_user_row,
     )
 
+USER_CACHE_TTL = 30.0  # seconds
+_user_cache = {}       # username -> (data_without_hash, expires_at)
+
+
+def get_cached_user(username):
+    """Return sanitized user dict from cache or DB."""
+    now = time.time()
+    entry = _user_cache.get(username)
+    if entry is not None:
+        data, expires_at = entry
+        if expires_at > now:
+            return data
+        # expired -> drop it
+        _user_cache.pop(username, None)
+
+    user_row = find_user_by_username(username)
+    if not user_row:
+        return None
+
+    user_dict = dict(user_row)
+    user_dict.pop("password_hash", None)
+    _user_cache[username] = (user_dict, now + USER_CACHE_TTL)
+    return user_dict
+
+
+def invalidate_user_cache(username=None):
+    """Clear cache for one user or for all users."""
+    if username is None:
+        _user_cache.clear()
+    else:
+        _user_cache.pop(username, None)
 
 app = Flask(__name__)
 Talisman(app, content_security_policy=None)
 
-# ── Auditing / Logging setup ─────────────────────────────────────────────
 LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 
 logger = logging.getLogger("users_service")
 logger.setLevel(logging.INFO)
 
-# Avoid duplicate handlers in debug/reload
 if not logger.handlers:
     file_handler = logging.FileHandler(os.path.join(LOG_DIR, "users_service.log"))
     formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
-# ── Auditing hooks: log every request & response ─────────────────────────
 @app.before_request
 def audit_request():
-    """
-    Log incoming requests:
-    - method, path, remote_addr
-    - username & role (decoded from token or headers)
-    """
     try:
         username, role = get_current_user()
     except Exception:
@@ -151,12 +175,8 @@ def audit_request():
 
 @app.after_request
 def audit_response(response):
-    """
-    Log outgoing responses with status code.
-    """
     username = getattr(g, "audit_username", "anonymous")
     role = getattr(g, "audit_role", "none")
-
     level = logging.INFO if response.status_code < 400 else logging.WARNING
 
     logger.log(
@@ -202,6 +222,7 @@ def register_user():
 
     # never send hash back
     created.pop("password_hash", None)
+    invalidate_user_cache(created["username"])  # <-- NEW (optional but ok)
     return jsonify({"message": "user registered", "user": created}), 201
 
 
@@ -234,7 +255,7 @@ def login_user():
     if not check_password_hash(stored_hash, password):
         return jsonify({"message": "invalid username or password"}), 401
 
-    # Build token + clean user
+   
     token = generate_auth_token(user_row)
     user_copy = dict(user_row)
     user_copy.pop("password_hash", None)
@@ -277,12 +298,11 @@ def get_user_by_username_route(username):
 
     """ retrieves a single user by username, removes password hash before returning.
     returns JSON user object if found with user data, 404 if not found if user doesn't even exist. """
-    user_row = find_user_by_username(username)
-    if not user_row:
+    user_data = get_cached_user(username)  # <-- NEW
+    if not user_data:
         return jsonify({"error": "user not found"}), 404
 
-    user_row.pop("password_hash", None)
-    return jsonify(user_row), 200
+    return jsonify(user_data), 200
 
 
 @app.route("/users/<string:username>", methods=["PUT"])
@@ -320,6 +340,7 @@ def update_user(username):
         return jsonify({"error": "could not update user"}), 500
 
     updated.pop("password_hash", None)
+    invalidate_user_cache(username)  # <-- NEW
     return jsonify({"message": "user updated", "user": updated}), 200
 
 
@@ -341,6 +362,8 @@ def delete_user(username):
     rows_deleted = delete_user_row(username)
     if rows_deleted == 0:
         return jsonify({"error": "nothing deleted"}), 500
+
+    invalidate_user_cache(username)  # <-- NEW
 
     return jsonify({"message": f"user {username} deleted"}), 200
 
@@ -372,4 +395,5 @@ def get_user_bookings(username):
 
 if __name__ == "__main__":
     make_users_table_if_missing()
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    port = int(os.environ.get("USERS_SERVICE_PORT", 5001))
+    app.run(host="0.0.0.0", port=port, debug=True)
