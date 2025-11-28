@@ -13,3 +13,5 @@ psutil
 
 sphinx
 sphinx_rtd_theme
+prometheus-flask-exporter
+sentry-sdk

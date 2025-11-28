@@ -234,3 +234,317 @@
 2025-11-28 18:45:39,071 [WARNING] RESPONSE method=PUT path=/reviews/99999/flag status=404 user=admin role=admin
 2025-11-28 18:45:39,097 [INFO] REQUEST method=POST path=/reviews user=anonymous role=none remote_addr=127.0.0.1
 2025-11-28 18:45:39,099 [WARNING] RESPONSE method=POST path=/reviews status=401 user=anonymous role=none
+2025-11-28 20:13:23,073 [INFO] REQUEST method=GET path=/reviews/room/99999 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:13:23,076 [WARNING] RESPONSE method=GET path=/reviews/room/99999 status=404 user=anonymous role=none
+2025-11-28 20:13:23,240 [INFO] REQUEST method=GET path=/reviews/room/205 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:13:23,244 [INFO] RESPONSE method=GET path=/reviews/room/205 status=200 user=anonymous role=none
+2025-11-28 20:13:23,282 [INFO] REQUEST method=POST path=/reviews user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,295 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwaelkari role=regular
+2025-11-28 20:13:23,330 [INFO] REQUEST method=POST path=/reviews user=someone_else role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,334 [WARNING] RESPONSE method=POST path=/reviews status=403 user=someone_else role=regular
+2025-11-28 20:13:23,387 [INFO] REQUEST method=PUT path=/reviews/39 user=nour123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,400 [INFO] RESPONSE method=PUT path=/reviews/39 status=200 user=nour123 role=regular
+2025-11-28 20:13:23,475 [INFO] REQUEST method=PUT path=/reviews/40 user=not_dana role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,479 [WARNING] RESPONSE method=PUT path=/reviews/40 status=403 user=not_dana role=regular
+2025-11-28 20:13:23,604 [INFO] REQUEST method=DELETE path=/reviews/41 user=karim123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,630 [INFO] RESPONSE method=DELETE path=/reviews/41 status=200 user=karim123 role=regular
+2025-11-28 20:13:23,673 [INFO] REQUEST method=DELETE path=/reviews/42 user=mod_beirut role=moderator remote_addr=127.0.0.1
+2025-11-28 20:13:23,683 [INFO] RESPONSE method=DELETE path=/reviews/42 status=200 user=mod_beirut role=moderator
+2025-11-28 20:13:23,728 [INFO] REQUEST method=DELETE path=/reviews/43 user=otheruser role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,732 [WARNING] RESPONSE method=DELETE path=/reviews/43 status=403 user=otheruser role=regular
+2025-11-28 20:13:23,781 [INFO] REQUEST method=PUT path=/reviews/44/flag user=admin_user role=admin remote_addr=127.0.0.1
+2025-11-28 20:13:23,792 [INFO] RESPONSE method=PUT path=/reviews/44/flag status=200 user=admin_user role=admin
+2025-11-28 20:13:23,839 [INFO] REQUEST method=PUT path=/reviews/45/flag user=tony123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,840 [WARNING] RESPONSE method=PUT path=/reviews/45/flag status=403 user=tony123 role=regular
+2025-11-28 20:13:23,883 [INFO] REQUEST method=POST path=/reviews user=test123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,887 [WARNING] RESPONSE method=POST path=/reviews status=400 user=test123 role=regular
+2025-11-28 20:13:23,933 [INFO] REQUEST method=POST path=/reviews user=sam123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,937 [WARNING] RESPONSE method=POST path=/reviews status=400 user=sam123 role=regular
+2025-11-28 20:13:23,988 [INFO] REQUEST method=POST path=/reviews user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:23,993 [WARNING] RESPONSE method=POST path=/reviews status=400 user=lina123 role=regular
+2025-11-28 20:13:24,023 [INFO] REQUEST method=PUT path=/reviews/99999 user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:24,026 [WARNING] RESPONSE method=PUT path=/reviews/99999 status=404 user=any role=regular
+2025-11-28 20:13:24,049 [INFO] REQUEST method=DELETE path=/reviews/99999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:13:24,055 [WARNING] RESPONSE method=DELETE path=/reviews/99999 status=404 user=admin role=admin
+2025-11-28 20:13:24,088 [INFO] REQUEST method=PUT path=/reviews/99999/flag user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:13:24,093 [WARNING] RESPONSE method=PUT path=/reviews/99999/flag status=404 user=admin role=admin
+2025-11-28 20:13:24,118 [INFO] REQUEST method=POST path=/reviews user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:13:24,118 [WARNING] RESPONSE method=POST path=/reviews status=401 user=anonymous role=none
+2025-11-28 20:38:35,546 [INFO] REQUEST method=GET path=/reviews/room/99999 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:38:35,553 [WARNING] RESPONSE method=GET path=/reviews/room/99999 status=404 user=anonymous role=none
+2025-11-28 20:38:35,809 [INFO] REQUEST method=GET path=/reviews/room/251 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:38:35,815 [INFO] RESPONSE method=GET path=/reviews/room/251 status=200 user=anonymous role=none
+2025-11-28 20:38:35,875 [INFO] REQUEST method=POST path=/reviews user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:35,902 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwaelkari role=regular
+2025-11-28 20:38:35,974 [INFO] REQUEST method=POST path=/reviews user=someone_else role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:35,984 [WARNING] RESPONSE method=POST path=/reviews status=403 user=someone_else role=regular
+2025-11-28 20:38:36,131 [INFO] REQUEST method=PUT path=/reviews/48 user=nour123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:36,152 [INFO] RESPONSE method=PUT path=/reviews/48 status=200 user=nour123 role=regular
+2025-11-28 20:38:36,259 [INFO] REQUEST method=PUT path=/reviews/49 user=not_dana role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:36,270 [WARNING] RESPONSE method=PUT path=/reviews/49 status=403 user=not_dana role=regular
+2025-11-28 20:38:36,472 [INFO] REQUEST method=DELETE path=/reviews/50 user=karim123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:36,499 [INFO] RESPONSE method=DELETE path=/reviews/50 status=200 user=karim123 role=regular
+2025-11-28 20:38:36,638 [INFO] REQUEST method=DELETE path=/reviews/51 user=mod_beirut role=moderator remote_addr=127.0.0.1
+2025-11-28 20:38:36,663 [INFO] RESPONSE method=DELETE path=/reviews/51 status=200 user=mod_beirut role=moderator
+2025-11-28 20:38:36,760 [INFO] REQUEST method=DELETE path=/reviews/52 user=otheruser role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:36,771 [WARNING] RESPONSE method=DELETE path=/reviews/52 status=403 user=otheruser role=regular
+2025-11-28 20:38:36,874 [INFO] REQUEST method=PUT path=/reviews/53/flag user=admin_user role=admin remote_addr=127.0.0.1
+2025-11-28 20:38:36,886 [INFO] RESPONSE method=PUT path=/reviews/53/flag status=200 user=admin_user role=admin
+2025-11-28 20:38:36,975 [INFO] REQUEST method=PUT path=/reviews/54/flag user=tony123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:36,976 [WARNING] RESPONSE method=PUT path=/reviews/54/flag status=403 user=tony123 role=regular
+2025-11-28 20:38:37,048 [INFO] REQUEST method=POST path=/reviews user=test123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:37,058 [WARNING] RESPONSE method=POST path=/reviews status=400 user=test123 role=regular
+2025-11-28 20:38:37,148 [INFO] REQUEST method=POST path=/reviews user=sam123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:37,162 [WARNING] RESPONSE method=POST path=/reviews status=400 user=sam123 role=regular
+2025-11-28 20:38:37,294 [INFO] REQUEST method=POST path=/reviews user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:37,307 [WARNING] RESPONSE method=POST path=/reviews status=400 user=lina123 role=regular
+2025-11-28 20:38:37,374 [INFO] REQUEST method=PUT path=/reviews/99999 user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:38:37,389 [WARNING] RESPONSE method=PUT path=/reviews/99999 status=404 user=any role=regular
+2025-11-28 20:38:37,480 [INFO] REQUEST method=DELETE path=/reviews/99999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:38:37,494 [WARNING] RESPONSE method=DELETE path=/reviews/99999 status=404 user=admin role=admin
+2025-11-28 20:38:37,586 [INFO] REQUEST method=PUT path=/reviews/99999/flag user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:38:37,595 [WARNING] RESPONSE method=PUT path=/reviews/99999/flag status=404 user=admin role=admin
+2025-11-28 20:38:37,702 [INFO] REQUEST method=POST path=/reviews user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:38:37,703 [WARNING] RESPONSE method=POST path=/reviews status=401 user=anonymous role=none
+2025-11-28 20:39:54,806 [INFO] REQUEST method=GET path=/reviews/room/99999 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:39:54,814 [WARNING] RESPONSE method=GET path=/reviews/room/99999 status=404 user=anonymous role=none
+2025-11-28 20:39:54,935 [INFO] REQUEST method=GET path=/reviews/room/263 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:39:54,944 [INFO] RESPONSE method=GET path=/reviews/room/263 status=200 user=anonymous role=none
+2025-11-28 20:39:55,025 [INFO] REQUEST method=POST path=/reviews user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:55,058 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwaelkari role=regular
+2025-11-28 20:39:55,176 [INFO] REQUEST method=POST path=/reviews user=someone_else role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:55,186 [WARNING] RESPONSE method=POST path=/reviews status=403 user=someone_else role=regular
+2025-11-28 20:39:55,525 [INFO] REQUEST method=PUT path=/reviews/57 user=nour123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:55,551 [INFO] RESPONSE method=PUT path=/reviews/57 status=200 user=nour123 role=regular
+2025-11-28 20:39:55,631 [INFO] REQUEST method=PUT path=/reviews/58 user=not_dana role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:55,639 [WARNING] RESPONSE method=PUT path=/reviews/58 status=403 user=not_dana role=regular
+2025-11-28 20:39:55,739 [INFO] REQUEST method=DELETE path=/reviews/59 user=karim123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:55,768 [INFO] RESPONSE method=DELETE path=/reviews/59 status=200 user=karim123 role=regular
+2025-11-28 20:39:55,867 [INFO] REQUEST method=DELETE path=/reviews/60 user=mod_beirut role=moderator remote_addr=127.0.0.1
+2025-11-28 20:39:55,883 [INFO] RESPONSE method=DELETE path=/reviews/60 status=200 user=mod_beirut role=moderator
+2025-11-28 20:39:55,977 [INFO] REQUEST method=DELETE path=/reviews/61 user=otheruser role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:55,983 [WARNING] RESPONSE method=DELETE path=/reviews/61 status=403 user=otheruser role=regular
+2025-11-28 20:39:56,069 [INFO] REQUEST method=PUT path=/reviews/62/flag user=admin_user role=admin remote_addr=127.0.0.1
+2025-11-28 20:39:56,091 [INFO] RESPONSE method=PUT path=/reviews/62/flag status=200 user=admin_user role=admin
+2025-11-28 20:39:56,218 [INFO] REQUEST method=PUT path=/reviews/63/flag user=tony123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:56,219 [WARNING] RESPONSE method=PUT path=/reviews/63/flag status=403 user=tony123 role=regular
+2025-11-28 20:39:56,284 [INFO] REQUEST method=POST path=/reviews user=test123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:56,291 [WARNING] RESPONSE method=POST path=/reviews status=400 user=test123 role=regular
+2025-11-28 20:39:56,371 [INFO] REQUEST method=POST path=/reviews user=sam123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:56,382 [WARNING] RESPONSE method=POST path=/reviews status=400 user=sam123 role=regular
+2025-11-28 20:39:56,464 [INFO] REQUEST method=POST path=/reviews user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:56,472 [WARNING] RESPONSE method=POST path=/reviews status=400 user=lina123 role=regular
+2025-11-28 20:39:56,498 [INFO] REQUEST method=PUT path=/reviews/99999 user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:39:56,506 [WARNING] RESPONSE method=PUT path=/reviews/99999 status=404 user=any role=regular
+2025-11-28 20:39:56,545 [INFO] REQUEST method=DELETE path=/reviews/99999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:39:56,558 [WARNING] RESPONSE method=DELETE path=/reviews/99999 status=404 user=admin role=admin
+2025-11-28 20:39:56,609 [INFO] REQUEST method=PUT path=/reviews/99999/flag user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:39:56,620 [WARNING] RESPONSE method=PUT path=/reviews/99999/flag status=404 user=admin role=admin
+2025-11-28 20:39:56,671 [INFO] REQUEST method=POST path=/reviews user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:39:56,672 [WARNING] RESPONSE method=POST path=/reviews status=401 user=anonymous role=none
+2025-11-28 20:42:05,733 [INFO] REQUEST method=GET path=/reviews/room/99999 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:42:05,736 [WARNING] RESPONSE method=GET path=/reviews/room/99999 status=404 user=anonymous role=none
+2025-11-28 20:42:05,778 [INFO] REQUEST method=GET path=/reviews/room/275 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:42:05,782 [INFO] RESPONSE method=GET path=/reviews/room/275 status=200 user=anonymous role=none
+2025-11-28 20:42:05,811 [INFO] REQUEST method=POST path=/reviews user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:05,824 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwaelkari role=regular
+2025-11-28 20:42:05,869 [INFO] REQUEST method=POST path=/reviews user=someone_else role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:05,874 [WARNING] RESPONSE method=POST path=/reviews status=403 user=someone_else role=regular
+2025-11-28 20:42:06,104 [INFO] REQUEST method=PUT path=/reviews/66 user=nour123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,120 [INFO] RESPONSE method=PUT path=/reviews/66 status=200 user=nour123 role=regular
+2025-11-28 20:42:06,173 [INFO] REQUEST method=PUT path=/reviews/67 user=not_dana role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,177 [WARNING] RESPONSE method=PUT path=/reviews/67 status=403 user=not_dana role=regular
+2025-11-28 20:42:06,226 [INFO] REQUEST method=DELETE path=/reviews/68 user=karim123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,239 [INFO] RESPONSE method=DELETE path=/reviews/68 status=200 user=karim123 role=regular
+2025-11-28 20:42:06,284 [INFO] REQUEST method=DELETE path=/reviews/69 user=mod_beirut role=moderator remote_addr=127.0.0.1
+2025-11-28 20:42:06,298 [INFO] RESPONSE method=DELETE path=/reviews/69 status=200 user=mod_beirut role=moderator
+2025-11-28 20:42:06,341 [INFO] REQUEST method=DELETE path=/reviews/70 user=otheruser role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,346 [WARNING] RESPONSE method=DELETE path=/reviews/70 status=403 user=otheruser role=regular
+2025-11-28 20:42:06,394 [INFO] REQUEST method=PUT path=/reviews/71/flag user=admin_user role=admin remote_addr=127.0.0.1
+2025-11-28 20:42:06,402 [INFO] RESPONSE method=PUT path=/reviews/71/flag status=200 user=admin_user role=admin
+2025-11-28 20:42:06,445 [INFO] REQUEST method=PUT path=/reviews/72/flag user=tony123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,445 [WARNING] RESPONSE method=PUT path=/reviews/72/flag status=403 user=tony123 role=regular
+2025-11-28 20:42:06,469 [INFO] REQUEST method=POST path=/reviews user=test123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,476 [WARNING] RESPONSE method=POST path=/reviews status=400 user=test123 role=regular
+2025-11-28 20:42:06,515 [INFO] REQUEST method=POST path=/reviews user=sam123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,518 [WARNING] RESPONSE method=POST path=/reviews status=400 user=sam123 role=regular
+2025-11-28 20:42:06,563 [INFO] REQUEST method=POST path=/reviews user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,566 [WARNING] RESPONSE method=POST path=/reviews status=400 user=lina123 role=regular
+2025-11-28 20:42:06,582 [INFO] REQUEST method=PUT path=/reviews/99999 user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:42:06,585 [WARNING] RESPONSE method=PUT path=/reviews/99999 status=404 user=any role=regular
+2025-11-28 20:42:06,601 [INFO] REQUEST method=DELETE path=/reviews/99999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:42:06,605 [WARNING] RESPONSE method=DELETE path=/reviews/99999 status=404 user=admin role=admin
+2025-11-28 20:42:06,618 [INFO] REQUEST method=PUT path=/reviews/99999/flag user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:42:06,621 [WARNING] RESPONSE method=PUT path=/reviews/99999/flag status=404 user=admin role=admin
+2025-11-28 20:42:06,634 [INFO] REQUEST method=POST path=/reviews user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:42:06,634 [WARNING] RESPONSE method=POST path=/reviews status=401 user=anonymous role=none
+2025-11-28 20:46:22,520 [INFO] REQUEST method=GET path=/reviews/room/99999 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:46:22,524 [WARNING] RESPONSE method=GET path=/reviews/room/99999 status=404 user=anonymous role=none
+2025-11-28 20:46:22,637 [INFO] REQUEST method=GET path=/reviews/room/287 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:46:22,655 [INFO] RESPONSE method=GET path=/reviews/room/287 status=200 user=anonymous role=none
+2025-11-28 20:46:22,745 [INFO] REQUEST method=POST path=/reviews user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:22,772 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwaelkari role=regular
+2025-11-28 20:46:22,859 [INFO] REQUEST method=POST path=/reviews user=someone_else role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:22,875 [WARNING] RESPONSE method=POST path=/reviews status=403 user=someone_else role=regular
+2025-11-28 20:46:22,973 [INFO] REQUEST method=PUT path=/reviews/75 user=nour123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:22,992 [INFO] RESPONSE method=PUT path=/reviews/75 status=200 user=nour123 role=regular
+2025-11-28 20:46:23,272 [INFO] REQUEST method=PUT path=/reviews/76 user=not_dana role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:23,280 [WARNING] RESPONSE method=PUT path=/reviews/76 status=403 user=not_dana role=regular
+2025-11-28 20:46:23,361 [INFO] REQUEST method=DELETE path=/reviews/77 user=karim123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:23,388 [INFO] RESPONSE method=DELETE path=/reviews/77 status=200 user=karim123 role=regular
+2025-11-28 20:46:23,490 [INFO] REQUEST method=DELETE path=/reviews/78 user=mod_beirut role=moderator remote_addr=127.0.0.1
+2025-11-28 20:46:23,523 [INFO] RESPONSE method=DELETE path=/reviews/78 status=200 user=mod_beirut role=moderator
+2025-11-28 20:46:23,643 [INFO] REQUEST method=DELETE path=/reviews/79 user=otheruser role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:23,655 [WARNING] RESPONSE method=DELETE path=/reviews/79 status=403 user=otheruser role=regular
+2025-11-28 20:46:23,760 [INFO] REQUEST method=PUT path=/reviews/80/flag user=admin_user role=admin remote_addr=127.0.0.1
+2025-11-28 20:46:23,783 [INFO] RESPONSE method=PUT path=/reviews/80/flag status=200 user=admin_user role=admin
+2025-11-28 20:46:23,890 [INFO] REQUEST method=PUT path=/reviews/81/flag user=tony123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:23,890 [WARNING] RESPONSE method=PUT path=/reviews/81/flag status=403 user=tony123 role=regular
+2025-11-28 20:46:23,975 [INFO] REQUEST method=POST path=/reviews user=test123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:23,989 [WARNING] RESPONSE method=POST path=/reviews status=400 user=test123 role=regular
+2025-11-28 20:46:24,061 [INFO] REQUEST method=POST path=/reviews user=sam123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:24,065 [WARNING] RESPONSE method=POST path=/reviews status=400 user=sam123 role=regular
+2025-11-28 20:46:24,114 [INFO] REQUEST method=POST path=/reviews user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:24,124 [WARNING] RESPONSE method=POST path=/reviews status=400 user=lina123 role=regular
+2025-11-28 20:46:24,158 [INFO] REQUEST method=PUT path=/reviews/99999 user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:46:24,169 [WARNING] RESPONSE method=PUT path=/reviews/99999 status=404 user=any role=regular
+2025-11-28 20:46:24,204 [INFO] REQUEST method=DELETE path=/reviews/99999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:46:24,215 [WARNING] RESPONSE method=DELETE path=/reviews/99999 status=404 user=admin role=admin
+2025-11-28 20:46:24,247 [INFO] REQUEST method=PUT path=/reviews/99999/flag user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:46:24,256 [WARNING] RESPONSE method=PUT path=/reviews/99999/flag status=404 user=admin role=admin
+2025-11-28 20:46:24,282 [INFO] REQUEST method=POST path=/reviews user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:46:24,282 [WARNING] RESPONSE method=POST path=/reviews status=401 user=anonymous role=none
+2025-11-28 21:10:27,282 [INFO] REQUEST method=GET path=/reviews/room/99999 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 21:10:27,286 [WARNING] RESPONSE method=GET path=/reviews/room/99999 status=404 user=anonymous role=none
+2025-11-28 21:10:27,334 [INFO] REQUEST method=GET path=/reviews/room/309 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 21:10:27,338 [INFO] RESPONSE method=GET path=/reviews/room/309 status=200 user=anonymous role=none
+2025-11-28 21:10:27,366 [INFO] REQUEST method=POST path=/reviews user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,381 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwaelkari role=regular
+2025-11-28 21:10:27,419 [INFO] REQUEST method=POST path=/reviews user=someone_else role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,423 [WARNING] RESPONSE method=POST path=/reviews status=403 user=someone_else role=regular
+2025-11-28 21:10:27,467 [INFO] REQUEST method=PUT path=/reviews/84 user=nour123 role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,488 [INFO] RESPONSE method=PUT path=/reviews/84 status=200 user=nour123 role=regular
+2025-11-28 21:10:27,545 [INFO] REQUEST method=PUT path=/reviews/85 user=not_dana role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,549 [WARNING] RESPONSE method=PUT path=/reviews/85 status=403 user=not_dana role=regular
+2025-11-28 21:10:27,591 [INFO] REQUEST method=DELETE path=/reviews/86 user=karim123 role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,606 [INFO] RESPONSE method=DELETE path=/reviews/86 status=200 user=karim123 role=regular
+2025-11-28 21:10:27,653 [INFO] REQUEST method=DELETE path=/reviews/87 user=mod_beirut role=moderator remote_addr=127.0.0.1
+2025-11-28 21:10:27,669 [INFO] RESPONSE method=DELETE path=/reviews/87 status=200 user=mod_beirut role=moderator
+2025-11-28 21:10:27,718 [INFO] REQUEST method=DELETE path=/reviews/88 user=otheruser role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,724 [WARNING] RESPONSE method=DELETE path=/reviews/88 status=403 user=otheruser role=regular
+2025-11-28 21:10:27,774 [INFO] REQUEST method=PUT path=/reviews/89/flag user=admin_user role=admin remote_addr=127.0.0.1
+2025-11-28 21:10:27,786 [INFO] RESPONSE method=PUT path=/reviews/89/flag status=200 user=admin_user role=admin
+2025-11-28 21:10:27,832 [INFO] REQUEST method=PUT path=/reviews/90/flag user=tony123 role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,832 [WARNING] RESPONSE method=PUT path=/reviews/90/flag status=403 user=tony123 role=regular
+2025-11-28 21:10:27,880 [INFO] REQUEST method=POST path=/reviews user=test123 role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,885 [WARNING] RESPONSE method=POST path=/reviews status=400 user=test123 role=regular
+2025-11-28 21:10:27,931 [INFO] REQUEST method=POST path=/reviews user=sam123 role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,939 [WARNING] RESPONSE method=POST path=/reviews status=400 user=sam123 role=regular
+2025-11-28 21:10:27,993 [INFO] REQUEST method=POST path=/reviews user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:27,998 [WARNING] RESPONSE method=POST path=/reviews status=400 user=lina123 role=regular
+2025-11-28 21:10:28,016 [INFO] REQUEST method=PUT path=/reviews/99999 user=any role=regular remote_addr=127.0.0.1
+2025-11-28 21:10:28,021 [WARNING] RESPONSE method=PUT path=/reviews/99999 status=404 user=any role=regular
+2025-11-28 21:10:28,045 [INFO] REQUEST method=DELETE path=/reviews/99999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 21:10:28,050 [WARNING] RESPONSE method=DELETE path=/reviews/99999 status=404 user=admin role=admin
+2025-11-28 21:10:28,066 [INFO] REQUEST method=PUT path=/reviews/99999/flag user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 21:10:28,068 [WARNING] RESPONSE method=PUT path=/reviews/99999/flag status=404 user=admin role=admin
+2025-11-28 21:10:28,085 [INFO] REQUEST method=POST path=/reviews user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 21:10:28,085 [WARNING] RESPONSE method=POST path=/reviews status=401 user=anonymous role=none
+2025-11-28 21:17:24,789 [INFO] REQUEST method=POST path=/reviews user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 21:17:24,793 [WARNING] RESPONSE method=POST path=/reviews status=404 user=riwa_regular role=regular
+2025-11-28 21:17:38,329 [INFO] REQUEST method=POST path=/reviews user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 21:17:38,345 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwa_regular role=regular
+2025-11-28 21:27:18,281 [INFO] REQUEST method=POST path=/api/reviews user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 21:27:18,282 [ERROR] Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-28 21:27:18,372 [WARNING] RESPONSE method=POST path=/api/reviews status=500 user=riwa_regular role=regular
+2025-11-28 21:28:55,672 [INFO] REQUEST method=POST path=/api/reviews user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 21:28:55,673 [ERROR] Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-28 21:28:55,679 [WARNING] RESPONSE method=POST path=/api/reviews status=500 user=riwa_regular role=regular
+2025-11-28 21:29:28,276 [INFO] REQUEST method=POST path=/reviews user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 21:29:28,296 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwa_regular role=regular
+2025-11-28 22:21:30,845 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:21:30,845 [WARNING] RESPONSE method=GET path=/metrics status=401 user=anonymous role=none
+2025-11-28 22:21:30,900 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:21:30,901 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:21:32,687 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:21:32,687 [WARNING] RESPONSE method=GET path=/metrics status=401 user=anonymous role=none
+2025-11-28 22:21:33,000 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:21:33,000 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:21:33,222 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:21:33,222 [WARNING] RESPONSE method=GET path=/metrics status=401 user=anonymous role=none
+2025-11-28 22:21:33,264 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:21:33,265 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:21:33,540 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:21:33,540 [WARNING] RESPONSE method=GET path=/metrics status=401 user=anonymous role=none
+2025-11-28 22:21:33,731 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:21:33,731 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:23:04,558 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:23:04,558 [INFO] RESPONSE method=GET path=/metrics status=200 user=anonymous role=none
+2025-11-28 22:23:04,585 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:23:04,586 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:48:21,637 [INFO] REQUEST method=GET path=/reviews/room/99999 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:48:21,640 [WARNING] RESPONSE method=GET path=/reviews/room/99999 status=404 user=anonymous role=none
+2025-11-28 22:48:21,702 [INFO] REQUEST method=GET path=/reviews/room/403 user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:48:21,706 [INFO] RESPONSE method=GET path=/reviews/room/403 status=200 user=anonymous role=none
+2025-11-28 22:48:21,746 [INFO] REQUEST method=POST path=/reviews user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:21,763 [INFO] RESPONSE method=POST path=/reviews status=201 user=riwaelkari role=regular
+2025-11-28 22:48:21,799 [INFO] REQUEST method=POST path=/reviews user=someone_else role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:21,804 [WARNING] RESPONSE method=POST path=/reviews status=403 user=someone_else role=regular
+2025-11-28 22:48:21,859 [INFO] REQUEST method=PUT path=/reviews/95 user=nour123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:21,873 [INFO] RESPONSE method=PUT path=/reviews/95 status=200 user=nour123 role=regular
+2025-11-28 22:48:21,934 [INFO] REQUEST method=PUT path=/reviews/96 user=not_dana role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:21,938 [WARNING] RESPONSE method=PUT path=/reviews/96 status=403 user=not_dana role=regular
+2025-11-28 22:48:21,994 [INFO] REQUEST method=DELETE path=/reviews/97 user=karim123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:22,009 [INFO] RESPONSE method=DELETE path=/reviews/97 status=200 user=karim123 role=regular
+2025-11-28 22:48:22,068 [INFO] REQUEST method=DELETE path=/reviews/98 user=mod_beirut role=moderator remote_addr=127.0.0.1
+2025-11-28 22:48:22,087 [INFO] RESPONSE method=DELETE path=/reviews/98 status=200 user=mod_beirut role=moderator
+2025-11-28 22:48:22,156 [INFO] REQUEST method=DELETE path=/reviews/99 user=otheruser role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:22,163 [WARNING] RESPONSE method=DELETE path=/reviews/99 status=403 user=otheruser role=regular
+2025-11-28 22:48:22,235 [INFO] REQUEST method=PUT path=/reviews/100/flag user=admin_user role=admin remote_addr=127.0.0.1
+2025-11-28 22:48:22,249 [INFO] RESPONSE method=PUT path=/reviews/100/flag status=200 user=admin_user role=admin
+2025-11-28 22:48:22,317 [INFO] REQUEST method=PUT path=/reviews/101/flag user=tony123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:22,318 [WARNING] RESPONSE method=PUT path=/reviews/101/flag status=403 user=tony123 role=regular
+2025-11-28 22:48:22,346 [INFO] REQUEST method=POST path=/reviews user=test123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:22,350 [WARNING] RESPONSE method=POST path=/reviews status=400 user=test123 role=regular
+2025-11-28 22:48:22,394 [INFO] REQUEST method=POST path=/reviews user=sam123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:22,399 [WARNING] RESPONSE method=POST path=/reviews status=400 user=sam123 role=regular
+2025-11-28 22:48:22,440 [INFO] REQUEST method=POST path=/reviews user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:22,447 [WARNING] RESPONSE method=POST path=/reviews status=400 user=lina123 role=regular
+2025-11-28 22:48:22,474 [INFO] REQUEST method=PUT path=/reviews/99999 user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:48:22,480 [WARNING] RESPONSE method=PUT path=/reviews/99999 status=404 user=any role=regular
+2025-11-28 22:48:22,502 [INFO] REQUEST method=DELETE path=/reviews/99999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:48:22,506 [WARNING] RESPONSE method=DELETE path=/reviews/99999 status=404 user=admin role=admin
+2025-11-28 22:48:22,527 [INFO] REQUEST method=PUT path=/reviews/99999/flag user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:48:22,532 [WARNING] RESPONSE method=PUT path=/reviews/99999/flag status=404 user=admin role=admin
+2025-11-28 22:48:22,554 [INFO] REQUEST method=POST path=/reviews user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:48:22,555 [WARNING] RESPONSE method=POST path=/reviews status=401 user=anonymous role=none

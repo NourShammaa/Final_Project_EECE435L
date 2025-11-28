@@ -11,6 +11,28 @@ from flask import Flask, jsonify, request, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import time  
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+
+import sentry_sdk
+sentry_sdk.init(
+    dsn="https://48bdf0331a6458ead11b21da3ac3f9ec@o4510444553437184.ingest.de.sentry.io/4510444562481232",
+    traces_sample_rate=1.0
+)
+
+# ------------------------------
+# Global API Version Prefix: /api/v1
+# ------------------------------
+class PrefixMiddleware:
+    def __init__(self, app, prefix):
+        self.app = app
+        self.prefix = prefix
+
+    def __call__(self, environ, start_response):
+        if environ['PATH_INFO'].startswith(self.prefix):
+            environ['PATH_INFO'] = environ['PATH_INFO'][len(self.prefix):]
+        return self.app(environ, start_response)
+
+#app.wsgi_app = PrefixMiddleware(app.wsgi_app, prefix="/api/v1")
 
 # ── Authentication config ────────────────────────────────────────────────
 AUTH_SECRET_KEY = os.environ.get("AUTH_SECRET_KEY", "dev-secret-key-change-me")
@@ -140,6 +162,11 @@ def invalidate_user_cache(username=None):
         _user_cache.pop(username, None)
 
 app = Flask(__name__)
+
+@app.route("/metrics")
+def metrics_endpoint():
+    return generate_latest(), 200, {"Content-Type": CONTENT_TYPE_LATEST}
+
 Talisman(app, content_security_policy=None,force_https=False)
 
 LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
@@ -391,6 +418,49 @@ def get_user_bookings(username):
     fake_bookings_list = []
 
     return jsonify({"user": existing, "bookings": fake_bookings_list}), 200
+
+
+
+@app.before_request
+def allow_metrics():
+    if request.path == "/metrics":
+        return None
+
+#  Global Error Handlers 
+
+@app.errorhandler(400)
+def handle_400(e):
+    logger.warning(f"BadRequest: {str(e)}")
+    return jsonify({"error": "bad request"}), 400
+
+@app.errorhandler(401)
+def handle_401(e):
+    logger.warning(f"Unauthorized: {str(e)}")
+    return jsonify({"error": "unauthorized"}), 401
+
+@app.errorhandler(403)
+def handle_403(e):
+    logger.warning(f"Forbidden: {str(e)}")
+    return jsonify({"error": "forbidden"}), 403
+
+@app.errorhandler(404)
+def handle_404(e):
+    
+    logger.warning(f"NotFound: {str(e)}")
+    if request.path == "/metrics":
+        return e
+    return jsonify({"error": "not found"}), 404
+
+@app.errorhandler(500)
+def handle_500(e):
+    logger.error(f"Internal Server Error: {str(e)}")
+    return jsonify({"error": "internal server error"}), 500
+
+# fallback for *any* other uncaught exception
+@app.errorhandler(Exception)
+def handle_generic(e):
+    logger.exception("Unhandled exception in users_service")
+    return jsonify({"error": "internal server error"}), 500
 
 
 if __name__ == "__main__":

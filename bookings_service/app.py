@@ -11,8 +11,44 @@ from flask_talisman import Talisman
 import jwt
 from flask import Flask, jsonify, request, g
 from functools import wraps
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+
+import sentry_sdk
+sentry_sdk.init(
+    dsn="https://48bdf0331a6458ead11b21da3ac3f9ec@o4510444553437184.ingest.de.sentry.io/4510444562481232",
+    traces_sample_rate=1.0
+)
 
 AUTH_SECRET_KEY = os.environ.get("AUTH_SECRET_KEY", "dev-secret-key-change-me")
+
+# ──────────────────────────────
+# Custom Exceptions (for Task 7)
+# ──────────────────────────────
+class BadRequestError(Exception):
+    """Raised when user input is invalid (400)."""
+    pass
+
+class UnauthorizedError(Exception):
+    """Raised when authentication fails (401)."""
+    pass
+
+class ForbiddenError(Exception):
+    """Raised when user lacks permission (403)."""
+    pass
+
+class NotFoundError(Exception):
+    """Raised when a resource does not exist (404)."""
+    pass
+
+class ConflictError(Exception):
+    """Raised when a conflict occurs (409)."""
+    pass
+
+class InternalServerError(Exception):
+    """Raised for unexpected server errors (500)."""
+    pass
+
+
 
 
 # Support both import styles: package import (for Sphinx) and direct run (avoiding error)
@@ -46,6 +82,10 @@ except ImportError:
     )
 
 app = Flask(__name__)
+@app.route("/metrics")
+def metrics_endpoint():
+    return generate_latest(), 200, {"Content-Type": CONTENT_TYPE_LATEST}
+
 Talisman(app, content_security_policy=None,force_https=False)
 
 # ── Auditing / Logging setup ─────────────────────────────────────────────
@@ -131,6 +171,9 @@ def audit_request():
     )
 @app.before_request
 def enforce_auth():
+    # Allow Prometheus metrics without authentication
+    if request.path == "/metrics":
+        return
     if request.method == "OPTIONS":
         return
 
@@ -298,7 +341,9 @@ def get_bookings_for_user_route(user_id):
     # first check that the target user exists
     user_row = find_user_by_id(user_id)
     if not user_row:
+        raise NotFoundError("user not found")
         return jsonify({"error": "user not found"}), 404
+
 
     target_username = user_row["username"]
 
@@ -426,7 +471,9 @@ def update_booking_route(booking_id):
     # booking must exist first, because we need its user_id for ownership check
     row = get_booking_by_id(booking_id)
     if not row:
+        raise NotFoundError("booking not found")
         return jsonify({"error": "booking not found"}), 404
+
 
     # find the booking owner
     booking_user = find_user_by_id(row["user_id"])
@@ -453,6 +500,7 @@ def update_booking_route(booking_id):
     needed = ["date", "start_time", "end_time"]
     missing_msg = require_fields(data, needed)
     if missing_msg:
+        raise BadRequestError(missing_msg)
         return jsonify({"error": missing_msg}), 400
 
     if not valid_time(data["start_time"]) or not valid_time(data["end_time"]):
@@ -573,7 +621,50 @@ def check_room_availability_route(room_id):
     return jsonify({"room_id": room_id, "available": ok}), 200
 
 
+@app.before_request
+def allow_metrics():
+    if request.path == "/metrics":
+        return None
+
+
+# ──────────────────────────────
+# Global Error Handling (Task 7)
+# ──────────────────────────────
+
+@app.errorhandler(BadRequestError)
+def handle_bad_request(e):
+    return jsonify({"error": {"type": "BadRequest", "message": str(e)}}), 400
+
+@app.errorhandler(UnauthorizedError)
+def handle_unauthorized(e):
+    return jsonify({"error": {"type": "Unauthorized", "message": str(e)}}), 401
+
+@app.errorhandler(ForbiddenError)
+def handle_forbidden(e):
+    return jsonify({"error": {"type": "Forbidden", "message": str(e)}}), 403
+
+@app.errorhandler(NotFoundError)
+def handle_not_found(e):
+
+    if request.path == "/metrics":
+        return e
+    return jsonify({"error": {"type": "NotFound", "message": str(e)}}), 404
+
+@app.errorhandler(ConflictError)
+def handle_conflict(e):
+    return jsonify({"error": {"type": "Conflict", "message": str(e)}}), 409
+
+@app.errorhandler(Exception)
+def handle_generic_error(e):
+    logger.exception("Unhandled exception: %s", str(e))
+    return jsonify({
+        "error": {
+            "type": "InternalServerError",
+            "message": "An unexpected error occurred"
+        }
+    }), 500
+
 if __name__ == "__main__":
     make_bookings_table_if_missing()
     port = int(os.environ.get("BOOKINGS_SERVICE_PORT", 5003))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=True)  

@@ -9,6 +9,17 @@ from flask import Flask, jsonify, request, g
 from functools import wraps
 import time   # <-- NEW
 
+
+from prometheus_flask_exporter import PrometheusMetrics
+
+
+import sentry_sdk
+sentry_sdk.init(
+    dsn="https://48bdf0331a6458ead11b21da3ac3f9ec@o4510444553437184.ingest.de.sentry.io/4510444562481232",
+    traces_sample_rate=1.0
+)
+
+
 AUTH_SECRET_KEY = os.environ.get("AUTH_SECRET_KEY", "dev-secret-key-change-me")
 
 # --- Simple in-memory cache for rooms (NEW) ------------------------------
@@ -127,8 +138,30 @@ def invalidate_rooms_cache():
     _available_rooms_cache.clear()
 
 
+
+
 app = Flask(__name__)
-Talisman(app, content_security_policy=None,force_https=False)
+metrics = PrometheusMetrics(app, group_by='endpoint')
+Talisman(app, content_security_policy=None, force_https=False)
+
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+
+@app.route("/metrics")
+def metrics_endpoint():
+    return generate_latest(), 200, {"Content-Type": CONTENT_TYPE_LATEST}
+
+# Global API Version Prefix: /api/v1
+class PrefixMiddleware:
+    def __init__(self, app, prefix):
+        self.app = app
+        self.prefix = prefix
+
+    def __call__(self, environ, start_response):
+        if environ['PATH_INFO'].startswith(self.prefix):
+            environ['PATH_INFO'] = environ['PATH_INFO'][len(self.prefix):]
+        return self.app(environ, start_response)
+
+#app.wsgi_app = PrefixMiddleware(app.wsgi_app, prefix="/api/v1")
 
 # ── Auditing / Logging setup ─────────────────────────────────────────────
 LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
@@ -179,6 +212,10 @@ def audit_response(response):
         role,
     )
     return response
+
+#@app.route("/boom")
+#def boom():
+#    1/0   # CRASH on purpose
 
 
 @app.route("/rooms", methods=["POST"])
@@ -315,6 +352,48 @@ def get_room_status(name):
         return jsonify({"error": "room not found"}), 404
 
     return jsonify({"name": room["name"], "status": room["status"]}), 200
+
+# --- Avoid applying JSON error handlers to /metrics ---
+@app.before_request
+def _allow_metrics_route():
+    if request.path == "/metrics":
+        # Skip auth + skip error handlers
+        return None
+
+# --- Global Error Handlers (simple version) ---------------------------------------
+
+@app.errorhandler(400)
+def handle_400(e):
+    logger.warning(f"BadRequest: {str(e)}")
+    return jsonify({"error": "bad request"}), 400
+
+@app.errorhandler(401)
+def handle_401(e):
+    logger.warning(f"Unauthorized: {str(e)}")
+    return jsonify({"error": "unauthorized"}), 401
+
+@app.errorhandler(403)
+def handle_403(e):
+    logger.warning(f"Forbidden: {str(e)}")
+    return jsonify({"error": "forbidden"}), 403
+
+@app.errorhandler(404)
+def handle_404(e):
+    if request.path == "/metrics":
+        return e
+    logger.warning(f"NotFound: {str(e)}")
+    return jsonify({"error": "not found"}), 404
+
+@app.errorhandler(500)
+def handle_500(e):
+    logger.error(f"Internal Server Error: {str(e)}")
+    return jsonify({"error": "internal server error"}), 500
+
+# fallback for *any* other uncaught exception
+@app.errorhandler(Exception)
+def handle_generic(e):
+    logger.exception("Unhandled exception in room_service")
+    return jsonify({"error": "internal server error"}), 500
 
 
 if __name__ == "__main__":

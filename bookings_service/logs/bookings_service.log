@@ -38,3 +38,515 @@
 2025-11-28 09:53:16,839 [INFO] RESPONSE method=POST path=/rooms/186/availability status=200 user=anonymous role=none
 2025-11-28 09:53:16,925 [INFO] REQUEST method=POST path=/rooms/187/availability user=anonymous role=none remote_addr=127.0.0.1
 2025-11-28 09:53:16,928 [INFO] RESPONSE method=POST path=/rooms/187/availability status=200 user=anonymous role=none
+2025-11-28 19:58:57,870 [INFO] REQUEST method=POST path=/bookings user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 19:58:57,872 [WARNING] RESPONSE method=POST path=/bookings status=404 user=riwa_regular role=regular
+2025-11-28 19:59:24,651 [INFO] REQUEST method=POST path=/bookings user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 19:59:24,664 [INFO] RESPONSE method=POST path=/bookings status=201 user=riwa_regular role=regular
+2025-11-28 20:00:45,605 [INFO] REQUEST method=PUT path=/bookings/55 user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 20:00:45,611 [ERROR] Unhandled exception: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 608, in get_json
+    rv = self.json_module.loads(data)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\json\provider.py", line 187, in loads
+    return json.loads(s, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\Desktop\Fall 2025-2026\EECE 435L\newproj\Final_Project_EECE435L\bookings_service\app.py", line 212, in wrapped
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\Desktop\Fall 2025-2026\EECE 435L\newproj\Final_Project_EECE435L\bookings_service\app.py", line 482, in update_booking_route
+    data = request.get_json() or {}
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 617, in get_json
+    rv = self.on_json_loading_failed(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\wrappers.py", line 131, in on_json_loading_failed
+    return super().on_json_loading_failed(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 642, in on_json_loading_failed
+    raise BadRequest(f"Failed to decode JSON object: {e}")
+werkzeug.exceptions.BadRequest: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+2025-11-28 20:01:01,609 [INFO] REQUEST method=PUT path=/bookings/55 user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 20:01:01,612 [ERROR] Unhandled exception: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 608, in get_json
+    rv = self.json_module.loads(data)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\json\provider.py", line 187, in loads
+    return json.loads(s, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\Desktop\Fall 2025-2026\EECE 435L\newproj\Final_Project_EECE435L\bookings_service\app.py", line 212, in wrapped
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\Desktop\Fall 2025-2026\EECE 435L\newproj\Final_Project_EECE435L\bookings_service\app.py", line 482, in update_booking_route
+    data = request.get_json() or {}
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 617, in get_json
+    rv = self.on_json_loading_failed(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\wrappers.py", line 131, in on_json_loading_failed
+    return super().on_json_loading_failed(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 642, in on_json_loading_failed
+    raise BadRequest(f"Failed to decode JSON object: {e}")
+werkzeug.exceptions.BadRequest: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+2025-11-28 20:01:01,617 [WARNING] RESPONSE method=PUT path=/bookings/55 status=500 user=riwa_regular role=regular
+2025-11-28 20:02:54,942 [INFO] REQUEST method=PUT path=/bookings/55 user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 20:02:54,947 [ERROR] Unhandled exception: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 608, in get_json
+    rv = self.json_module.loads(data)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\json\provider.py", line 187, in loads
+    return json.loads(s, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\Desktop\Fall 2025-2026\EECE 435L\newproj\Final_Project_EECE435L\bookings_service\app.py", line 212, in wrapped
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\Desktop\Fall 2025-2026\EECE 435L\newproj\Final_Project_EECE435L\bookings_service\app.py", line 482, in update_booking_route
+    data = request.get_json() or {}
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 617, in get_json
+    rv = self.on_json_loading_failed(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\wrappers.py", line 131, in on_json_loading_failed
+    return super().on_json_loading_failed(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\wrappers\request.py", line 642, in on_json_loading_failed
+    raise BadRequest(f"Failed to decode JSON object: {e}")
+werkzeug.exceptions.BadRequest: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 5 column 1 (char 58)
+2025-11-28 20:02:54,951 [WARNING] RESPONSE method=PUT path=/bookings/55 status=500 user=riwa_regular role=regular
+2025-11-28 20:02:59,393 [INFO] REQUEST method=PUT path=/bookings/55 user=riwa_regular role=regular remote_addr=127.0.0.1
+2025-11-28 20:02:59,398 [WARNING] RESPONSE method=PUT path=/bookings/55 status=400 user=riwa_regular role=regular
+2025-11-28 20:13:11,338 [INFO] REQUEST method=GET path=/bookings user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,338 [WARNING] RESPONSE method=GET path=/bookings status=403 user=any role=regular
+2025-11-28 20:13:11,345 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:13:11,346 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 20:13:11,366 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,382 [INFO] RESPONSE method=POST path=/bookings status=201 user=riwaelkari role=regular
+2025-11-28 20:13:11,415 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,418 [WARNING] RESPONSE method=POST path=/bookings status=403 user=riwaelkari role=regular
+2025-11-28 20:13:11,474 [INFO] REQUEST method=GET path=/bookings/user/197 user=maya_beirut role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,479 [INFO] RESPONSE method=GET path=/bookings/user/197 status=200 user=maya_beirut role=regular
+2025-11-28 20:13:11,529 [INFO] REQUEST method=GET path=/bookings/user/198 user=different_user role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,535 [WARNING] RESPONSE method=GET path=/bookings/user/198 status=403 user=different_user role=regular
+2025-11-28 20:13:11,590 [INFO] REQUEST method=PUT path=/bookings/59 user=dana123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,606 [INFO] RESPONSE method=PUT path=/bookings/59 status=200 user=dana123 role=regular
+2025-11-28 20:13:11,652 [INFO] REQUEST method=PUT path=/bookings/60 user=not_nour role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,657 [WARNING] RESPONSE method=PUT path=/bookings/60 status=403 user=not_nour role=regular
+2025-11-28 20:13:11,723 [INFO] REQUEST method=DELETE path=/bookings/61 user=jad123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,733 [INFO] RESPONSE method=DELETE path=/bookings/61 status=200 user=jad123 role=regular
+2025-11-28 20:13:11,797 [INFO] REQUEST method=DELETE path=/bookings/62 user=notkarim role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,800 [WARNING] RESPONSE method=DELETE path=/bookings/62 status=403 user=notkarim role=regular
+2025-11-28 20:13:11,830 [INFO] REQUEST method=POST path=/bookings user=hadi123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,834 [WARNING] RESPONSE method=POST path=/bookings status=400 user=hadi123 role=regular
+2025-11-28 20:13:11,877 [INFO] REQUEST method=POST path=/bookings user=yara123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,884 [WARNING] RESPONSE method=POST path=/bookings status=409 user=yara123 role=regular
+2025-11-28 20:13:11,911 [INFO] REQUEST method=POST path=/rooms/198/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,916 [INFO] RESPONSE method=POST path=/rooms/198/availability status=200 user=any role=regular
+2025-11-28 20:13:11,978 [INFO] REQUEST method=POST path=/rooms/199/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:11,982 [INFO] RESPONSE method=POST path=/rooms/199/availability status=200 user=any role=regular
+2025-11-28 20:13:11,996 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:13:11,997 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 20:13:12,007 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:13:12,007 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 20:13:12,012 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:13:12,013 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 20:13:12,016 [INFO] REQUEST method=GET path=/bookings user=any role=none remote_addr=127.0.0.1
+2025-11-28 20:13:12,016 [WARNING] RESPONSE method=GET path=/bookings status=401 user=any role=none
+2025-11-28 20:13:12,020 [INFO] REQUEST method=GET path=/bookings user=expired role=none remote_addr=127.0.0.1
+2025-11-28 20:13:12,020 [WARNING] RESPONSE method=GET path=/bookings status=401 user=expired role=none
+2025-11-28 20:13:12,026 [INFO] REQUEST method=PUT path=/bookings/9999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:13:12,027 [WARNING] RESPONSE method=PUT path=/bookings/9999 status=404 user=admin role=admin
+2025-11-28 20:13:12,060 [INFO] REQUEST method=PUT path=/bookings/65 user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:12,064 [WARNING] RESPONSE method=PUT path=/bookings/65 status=404 user=lina123 role=regular
+2025-11-28 20:13:12,112 [INFO] REQUEST method=DELETE path=/bookings/66 user=nada123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:12,117 [INFO] RESPONSE method=DELETE path=/bookings/66 status=200 user=nada123 role=regular
+2025-11-28 20:13:12,159 [INFO] REQUEST method=POST path=/bookings user=rami123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:12,163 [WARNING] RESPONSE method=POST path=/bookings status=400 user=rami123 role=regular
+2025-11-28 20:13:12,189 [INFO] REQUEST method=POST path=/rooms/203/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:12,193 [WARNING] RESPONSE method=POST path=/rooms/203/availability status=400 user=any role=regular
+2025-11-28 20:13:12,221 [INFO] REQUEST method=POST path=/rooms/204/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:12,225 [WARNING] RESPONSE method=POST path=/rooms/204/availability status=400 user=any role=regular
+2025-11-28 20:13:12,242 [INFO] REQUEST method=POST path=/rooms/9999/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:13:12,248 [WARNING] RESPONSE method=POST path=/rooms/9999/availability status=404 user=any role=regular
+2025-11-28 20:13:12,255 [INFO] REQUEST method=OPTIONS path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:13:12,255 [INFO] RESPONSE method=OPTIONS path=/bookings status=200 user=anonymous role=none
+2025-11-28 20:24:30,326 [INFO] REQUEST method=GET path=/bookings user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:30,326 [WARNING] RESPONSE method=GET path=/bookings status=403 user=any role=regular
+2025-11-28 20:24:30,333 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:24:30,334 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 20:24:30,357 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:30,371 [INFO] RESPONSE method=POST path=/bookings status=201 user=riwaelkari role=regular
+2025-11-28 20:24:30,406 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:30,410 [WARNING] RESPONSE method=POST path=/bookings status=403 user=riwaelkari role=regular
+2025-11-28 20:24:30,458 [INFO] REQUEST method=GET path=/bookings/user/224 user=maya_beirut role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:30,464 [INFO] RESPONSE method=GET path=/bookings/user/224 status=200 user=maya_beirut role=regular
+2025-11-28 20:24:30,592 [INFO] REQUEST method=GET path=/bookings/user/225 user=different_user role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:30,596 [WARNING] RESPONSE method=GET path=/bookings/user/225 status=403 user=different_user role=regular
+2025-11-28 20:24:30,676 [INFO] REQUEST method=PUT path=/bookings/70 user=dana123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:30,696 [INFO] RESPONSE method=PUT path=/bookings/70 status=200 user=dana123 role=regular
+2025-11-28 20:24:30,771 [INFO] REQUEST method=PUT path=/bookings/71 user=not_nour role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:30,780 [WARNING] RESPONSE method=PUT path=/bookings/71 status=403 user=not_nour role=regular
+2025-11-28 20:24:30,879 [INFO] REQUEST method=DELETE path=/bookings/72 user=jad123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:30,901 [INFO] RESPONSE method=DELETE path=/bookings/72 status=200 user=jad123 role=regular
+2025-11-28 20:24:31,005 [INFO] REQUEST method=DELETE path=/bookings/73 user=notkarim role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:31,014 [WARNING] RESPONSE method=DELETE path=/bookings/73 status=403 user=notkarim role=regular
+2025-11-28 20:24:31,070 [INFO] REQUEST method=POST path=/bookings user=hadi123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:31,078 [WARNING] RESPONSE method=POST path=/bookings status=400 user=hadi123 role=regular
+2025-11-28 20:24:31,153 [INFO] REQUEST method=POST path=/bookings user=yara123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:31,165 [WARNING] RESPONSE method=POST path=/bookings status=409 user=yara123 role=regular
+2025-11-28 20:24:31,211 [INFO] REQUEST method=POST path=/rooms/227/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:31,221 [INFO] RESPONSE method=POST path=/rooms/227/availability status=200 user=any role=regular
+2025-11-28 20:24:31,311 [INFO] REQUEST method=POST path=/rooms/228/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:31,324 [INFO] RESPONSE method=POST path=/rooms/228/availability status=200 user=any role=regular
+2025-11-28 20:24:31,356 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:24:31,357 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 20:24:31,388 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:24:31,389 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 20:24:31,428 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:24:31,434 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 20:24:31,469 [INFO] REQUEST method=GET path=/bookings user=any role=none remote_addr=127.0.0.1
+2025-11-28 20:24:31,470 [WARNING] RESPONSE method=GET path=/bookings status=401 user=any role=none
+2025-11-28 20:24:31,501 [INFO] REQUEST method=GET path=/bookings user=expired role=none remote_addr=127.0.0.1
+2025-11-28 20:24:31,501 [WARNING] RESPONSE method=GET path=/bookings status=401 user=expired role=none
+2025-11-28 20:24:31,544 [INFO] REQUEST method=PUT path=/bookings/9999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:24:31,550 [WARNING] RESPONSE method=PUT path=/bookings/9999 status=404 user=admin role=admin
+2025-11-28 20:24:31,635 [INFO] REQUEST method=PUT path=/bookings/76 user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:31,652 [WARNING] RESPONSE method=PUT path=/bookings/76 status=404 user=lina123 role=regular
+2025-11-28 20:24:31,784 [INFO] REQUEST method=DELETE path=/bookings/77 user=nada123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:31,801 [INFO] RESPONSE method=DELETE path=/bookings/77 status=200 user=nada123 role=regular
+2025-11-28 20:24:31,919 [INFO] REQUEST method=POST path=/bookings user=rami123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:31,930 [WARNING] RESPONSE method=POST path=/bookings status=400 user=rami123 role=regular
+2025-11-28 20:24:32,016 [INFO] REQUEST method=POST path=/rooms/232/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:32,037 [WARNING] RESPONSE method=POST path=/rooms/232/availability status=400 user=any role=regular
+2025-11-28 20:24:32,115 [INFO] REQUEST method=POST path=/rooms/233/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:32,129 [WARNING] RESPONSE method=POST path=/rooms/233/availability status=400 user=any role=regular
+2025-11-28 20:24:32,172 [INFO] REQUEST method=POST path=/rooms/9999/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:24:32,188 [WARNING] RESPONSE method=POST path=/rooms/9999/availability status=404 user=any role=regular
+2025-11-28 20:24:32,218 [INFO] REQUEST method=OPTIONS path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:24:32,219 [INFO] RESPONSE method=OPTIONS path=/bookings status=200 user=anonymous role=none
+2025-11-28 20:26:42,159 [INFO] REQUEST method=GET path=/bookings user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,159 [WARNING] RESPONSE method=GET path=/bookings status=403 user=any role=regular
+2025-11-28 20:26:42,166 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:26:42,167 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 20:26:42,184 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,195 [INFO] RESPONSE method=POST path=/bookings status=201 user=riwaelkari role=regular
+2025-11-28 20:26:42,224 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,227 [WARNING] RESPONSE method=POST path=/bookings status=403 user=riwaelkari role=regular
+2025-11-28 20:26:42,266 [INFO] REQUEST method=GET path=/bookings/user/238 user=maya_beirut role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,271 [INFO] RESPONSE method=GET path=/bookings/user/238 status=200 user=maya_beirut role=regular
+2025-11-28 20:26:42,352 [INFO] REQUEST method=GET path=/bookings/user/239 user=different_user role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,357 [WARNING] RESPONSE method=GET path=/bookings/user/239 status=403 user=different_user role=regular
+2025-11-28 20:26:42,438 [INFO] REQUEST method=PUT path=/bookings/81 user=dana123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,450 [INFO] RESPONSE method=PUT path=/bookings/81 status=200 user=dana123 role=regular
+2025-11-28 20:26:42,502 [INFO] REQUEST method=PUT path=/bookings/82 user=not_nour role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,508 [WARNING] RESPONSE method=PUT path=/bookings/82 status=403 user=not_nour role=regular
+2025-11-28 20:26:42,555 [INFO] REQUEST method=DELETE path=/bookings/83 user=jad123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,564 [INFO] RESPONSE method=DELETE path=/bookings/83 status=200 user=jad123 role=regular
+2025-11-28 20:26:42,613 [INFO] REQUEST method=DELETE path=/bookings/84 user=notkarim role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,617 [WARNING] RESPONSE method=DELETE path=/bookings/84 status=403 user=notkarim role=regular
+2025-11-28 20:26:42,650 [INFO] REQUEST method=POST path=/bookings user=hadi123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,653 [WARNING] RESPONSE method=POST path=/bookings status=400 user=hadi123 role=regular
+2025-11-28 20:26:42,690 [INFO] REQUEST method=POST path=/bookings user=yara123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,694 [WARNING] RESPONSE method=POST path=/bookings status=409 user=yara123 role=regular
+2025-11-28 20:26:42,717 [INFO] REQUEST method=POST path=/rooms/244/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,723 [INFO] RESPONSE method=POST path=/rooms/244/availability status=200 user=any role=regular
+2025-11-28 20:26:42,759 [INFO] REQUEST method=POST path=/rooms/245/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,763 [INFO] RESPONSE method=POST path=/rooms/245/availability status=200 user=any role=regular
+2025-11-28 20:26:42,775 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:26:42,775 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 20:26:42,780 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:26:42,781 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 20:26:42,785 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:26:42,788 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 20:26:42,792 [INFO] REQUEST method=GET path=/bookings user=any role=none remote_addr=127.0.0.1
+2025-11-28 20:26:42,792 [WARNING] RESPONSE method=GET path=/bookings status=401 user=any role=none
+2025-11-28 20:26:42,795 [INFO] REQUEST method=GET path=/bookings user=expired role=none remote_addr=127.0.0.1
+2025-11-28 20:26:42,795 [WARNING] RESPONSE method=GET path=/bookings status=401 user=expired role=none
+2025-11-28 20:26:42,799 [INFO] REQUEST method=PUT path=/bookings/9999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 20:26:42,800 [WARNING] RESPONSE method=PUT path=/bookings/9999 status=404 user=admin role=admin
+2025-11-28 20:26:42,832 [INFO] REQUEST method=PUT path=/bookings/87 user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,840 [WARNING] RESPONSE method=PUT path=/bookings/87 status=404 user=lina123 role=regular
+2025-11-28 20:26:42,881 [INFO] REQUEST method=DELETE path=/bookings/88 user=nada123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,886 [INFO] RESPONSE method=DELETE path=/bookings/88 status=200 user=nada123 role=regular
+2025-11-28 20:26:42,918 [INFO] REQUEST method=POST path=/bookings user=rami123 role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,922 [WARNING] RESPONSE method=POST path=/bookings status=400 user=rami123 role=regular
+2025-11-28 20:26:42,945 [INFO] REQUEST method=POST path=/rooms/249/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,948 [WARNING] RESPONSE method=POST path=/rooms/249/availability status=400 user=any role=regular
+2025-11-28 20:26:42,975 [INFO] REQUEST method=POST path=/rooms/250/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:42,980 [WARNING] RESPONSE method=POST path=/rooms/250/availability status=400 user=any role=regular
+2025-11-28 20:26:42,998 [INFO] REQUEST method=POST path=/rooms/9999/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 20:26:43,003 [WARNING] RESPONSE method=POST path=/rooms/9999/availability status=404 user=any role=regular
+2025-11-28 20:26:43,011 [INFO] REQUEST method=OPTIONS path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 20:26:43,012 [INFO] RESPONSE method=OPTIONS path=/bookings status=200 user=anonymous role=none
+2025-11-28 22:28:16,470 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:28:16,470 [WARNING] RESPONSE method=GET path=/metrics status=401 user=anonymous role=none
+2025-11-28 22:28:16,525 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:28:16,525 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:29:08,751 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:29:08,751 [ERROR] Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-28 22:29:08,751 [WARNING] RESPONSE method=GET path=/metrics status=500 user=anonymous role=none
+2025-11-28 22:29:08,791 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:29:08,792 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:29:11,897 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:29:11,897 [ERROR] Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rkriw\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-28 22:29:11,899 [WARNING] RESPONSE method=GET path=/metrics status=500 user=anonymous role=none
+2025-11-28 22:29:11,923 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:29:11,923 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:29:39,980 [INFO] REQUEST method=GET path=/bookings user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:39,981 [WARNING] RESPONSE method=GET path=/bookings status=403 user=any role=regular
+2025-11-28 22:29:39,985 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:29:39,986 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 22:29:40,004 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,015 [INFO] RESPONSE method=POST path=/bookings status=201 user=riwaelkari role=regular
+2025-11-28 22:29:40,046 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,050 [WARNING] RESPONSE method=POST path=/bookings status=403 user=riwaelkari role=regular
+2025-11-28 22:29:40,093 [INFO] REQUEST method=GET path=/bookings/user/330 user=maya_beirut role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,095 [INFO] RESPONSE method=GET path=/bookings/user/330 status=200 user=maya_beirut role=regular
+2025-11-28 22:29:40,132 [INFO] REQUEST method=GET path=/bookings/user/331 user=different_user role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,140 [WARNING] RESPONSE method=GET path=/bookings/user/331 status=403 user=different_user role=regular
+2025-11-28 22:29:40,194 [INFO] REQUEST method=PUT path=/bookings/92 user=dana123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,210 [INFO] RESPONSE method=PUT path=/bookings/92 status=200 user=dana123 role=regular
+2025-11-28 22:29:40,257 [INFO] REQUEST method=PUT path=/bookings/93 user=not_nour role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,261 [WARNING] RESPONSE method=PUT path=/bookings/93 status=403 user=not_nour role=regular
+2025-11-28 22:29:40,315 [INFO] REQUEST method=DELETE path=/bookings/94 user=jad123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,325 [INFO] RESPONSE method=DELETE path=/bookings/94 status=200 user=jad123 role=regular
+2025-11-28 22:29:40,370 [INFO] REQUEST method=DELETE path=/bookings/95 user=notkarim role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,376 [WARNING] RESPONSE method=DELETE path=/bookings/95 status=403 user=notkarim role=regular
+2025-11-28 22:29:40,404 [INFO] REQUEST method=POST path=/bookings user=hadi123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,407 [WARNING] RESPONSE method=POST path=/bookings status=400 user=hadi123 role=regular
+2025-11-28 22:29:40,452 [INFO] REQUEST method=POST path=/bookings user=yara123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,459 [WARNING] RESPONSE method=POST path=/bookings status=409 user=yara123 role=regular
+2025-11-28 22:29:40,478 [INFO] REQUEST method=POST path=/rooms/342/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,482 [INFO] RESPONSE method=POST path=/rooms/342/availability status=200 user=any role=regular
+2025-11-28 22:29:40,528 [INFO] REQUEST method=POST path=/rooms/343/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,534 [INFO] RESPONSE method=POST path=/rooms/343/availability status=200 user=any role=regular
+2025-11-28 22:29:40,546 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:29:40,546 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 22:29:40,551 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:29:40,551 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 22:29:40,555 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:29:40,556 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 22:29:40,562 [INFO] REQUEST method=GET path=/bookings user=any role=none remote_addr=127.0.0.1
+2025-11-28 22:29:40,563 [WARNING] RESPONSE method=GET path=/bookings status=401 user=any role=none
+2025-11-28 22:29:40,569 [INFO] REQUEST method=GET path=/bookings user=expired role=none remote_addr=127.0.0.1
+2025-11-28 22:29:40,570 [WARNING] RESPONSE method=GET path=/bookings status=401 user=expired role=none
+2025-11-28 22:29:40,577 [INFO] REQUEST method=PUT path=/bookings/9999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:29:40,579 [WARNING] RESPONSE method=PUT path=/bookings/9999 status=404 user=admin role=admin
+2025-11-28 22:29:40,624 [INFO] REQUEST method=PUT path=/bookings/98 user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,630 [WARNING] RESPONSE method=PUT path=/bookings/98 status=404 user=lina123 role=regular
+2025-11-28 22:29:40,672 [INFO] REQUEST method=DELETE path=/bookings/99 user=nada123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,675 [INFO] RESPONSE method=DELETE path=/bookings/99 status=200 user=nada123 role=regular
+2025-11-28 22:29:40,707 [INFO] REQUEST method=POST path=/bookings user=rami123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,711 [WARNING] RESPONSE method=POST path=/bookings status=400 user=rami123 role=regular
+2025-11-28 22:29:40,735 [INFO] REQUEST method=POST path=/rooms/347/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,738 [WARNING] RESPONSE method=POST path=/rooms/347/availability status=400 user=any role=regular
+2025-11-28 22:29:40,762 [INFO] REQUEST method=POST path=/rooms/348/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,765 [WARNING] RESPONSE method=POST path=/rooms/348/availability status=400 user=any role=regular
+2025-11-28 22:29:40,776 [INFO] REQUEST method=POST path=/rooms/9999/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:29:40,780 [WARNING] RESPONSE method=POST path=/rooms/9999/availability status=404 user=any role=regular
+2025-11-28 22:29:40,787 [INFO] REQUEST method=OPTIONS path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:29:40,787 [INFO] RESPONSE method=OPTIONS path=/bookings status=200 user=anonymous role=none
+2025-11-28 22:30:26,057 [INFO] REQUEST method=GET path=/metrics user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:30:26,057 [INFO] RESPONSE method=GET path=/metrics status=200 user=anonymous role=none
+2025-11-28 22:30:26,085 [INFO] REQUEST method=GET path=/favicon.ico user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:30:26,085 [WARNING] RESPONSE method=GET path=/favicon.ico status=401 user=anonymous role=none
+2025-11-28 22:40:20,210 [INFO] REQUEST method=GET path=/bookings user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,210 [WARNING] RESPONSE method=GET path=/bookings status=403 user=any role=regular
+2025-11-28 22:40:20,216 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:40:20,217 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 22:40:20,268 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,306 [INFO] RESPONSE method=POST path=/bookings status=201 user=riwaelkari role=regular
+2025-11-28 22:40:20,383 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,391 [WARNING] RESPONSE method=POST path=/bookings status=403 user=riwaelkari role=regular
+2025-11-28 22:40:20,482 [INFO] REQUEST method=GET path=/bookings/user/344 user=maya_beirut role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,496 [INFO] RESPONSE method=GET path=/bookings/user/344 status=200 user=maya_beirut role=regular
+2025-11-28 22:40:20,588 [INFO] REQUEST method=GET path=/bookings/user/345 user=different_user role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,592 [WARNING] RESPONSE method=GET path=/bookings/user/345 status=403 user=different_user role=regular
+2025-11-28 22:40:20,680 [INFO] REQUEST method=PUT path=/bookings/103 user=dana123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,702 [INFO] RESPONSE method=PUT path=/bookings/103 status=200 user=dana123 role=regular
+2025-11-28 22:40:20,788 [INFO] REQUEST method=PUT path=/bookings/104 user=not_nour role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,794 [WARNING] RESPONSE method=PUT path=/bookings/104 status=403 user=not_nour role=regular
+2025-11-28 22:40:20,854 [INFO] REQUEST method=DELETE path=/bookings/105 user=jad123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,873 [INFO] RESPONSE method=DELETE path=/bookings/105 status=200 user=jad123 role=regular
+2025-11-28 22:40:20,952 [INFO] REQUEST method=DELETE path=/bookings/106 user=notkarim role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:20,957 [WARNING] RESPONSE method=DELETE path=/bookings/106 status=403 user=notkarim role=regular
+2025-11-28 22:40:21,024 [INFO] REQUEST method=POST path=/bookings user=hadi123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:21,034 [WARNING] RESPONSE method=POST path=/bookings status=400 user=hadi123 role=regular
+2025-11-28 22:40:21,124 [INFO] REQUEST method=POST path=/bookings user=yara123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:21,146 [WARNING] RESPONSE method=POST path=/bookings status=409 user=yara123 role=regular
+2025-11-28 22:40:21,197 [INFO] REQUEST method=POST path=/rooms/359/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:21,210 [INFO] RESPONSE method=POST path=/rooms/359/availability status=200 user=any role=regular
+2025-11-28 22:40:21,318 [INFO] REQUEST method=POST path=/rooms/360/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:21,326 [INFO] RESPONSE method=POST path=/rooms/360/availability status=200 user=any role=regular
+2025-11-28 22:40:21,344 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:40:21,346 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 22:40:21,364 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:40:21,364 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 22:40:21,373 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:40:21,376 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 22:40:21,385 [INFO] REQUEST method=GET path=/bookings user=any role=none remote_addr=127.0.0.1
+2025-11-28 22:40:21,386 [WARNING] RESPONSE method=GET path=/bookings status=401 user=any role=none
+2025-11-28 22:40:21,393 [INFO] REQUEST method=GET path=/bookings user=expired role=none remote_addr=127.0.0.1
+2025-11-28 22:40:21,394 [WARNING] RESPONSE method=GET path=/bookings status=401 user=expired role=none
+2025-11-28 22:40:21,402 [INFO] REQUEST method=PUT path=/bookings/9999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:40:21,404 [WARNING] RESPONSE method=PUT path=/bookings/9999 status=404 user=admin role=admin
+2025-11-28 22:40:21,509 [INFO] REQUEST method=PUT path=/bookings/109 user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:21,524 [WARNING] RESPONSE method=PUT path=/bookings/109 status=404 user=lina123 role=regular
+2025-11-28 22:40:21,805 [INFO] REQUEST method=DELETE path=/bookings/110 user=nada123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:21,814 [INFO] RESPONSE method=DELETE path=/bookings/110 status=200 user=nada123 role=regular
+2025-11-28 22:40:21,888 [INFO] REQUEST method=POST path=/bookings user=rami123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:21,902 [WARNING] RESPONSE method=POST path=/bookings status=400 user=rami123 role=regular
+2025-11-28 22:40:21,972 [INFO] REQUEST method=POST path=/rooms/364/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:21,981 [WARNING] RESPONSE method=POST path=/rooms/364/availability status=400 user=any role=regular
+2025-11-28 22:40:22,042 [INFO] REQUEST method=POST path=/rooms/365/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:22,055 [WARNING] RESPONSE method=POST path=/rooms/365/availability status=400 user=any role=regular
+2025-11-28 22:40:22,105 [INFO] REQUEST method=POST path=/rooms/9999/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:40:22,114 [WARNING] RESPONSE method=POST path=/rooms/9999/availability status=404 user=any role=regular
+2025-11-28 22:40:22,135 [INFO] REQUEST method=OPTIONS path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:40:22,137 [INFO] RESPONSE method=OPTIONS path=/bookings status=200 user=anonymous role=none
+2025-11-28 22:47:47,035 [INFO] REQUEST method=GET path=/bookings user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,036 [WARNING] RESPONSE method=GET path=/bookings status=403 user=any role=regular
+2025-11-28 22:47:47,047 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:47:47,051 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 22:47:47,079 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,094 [INFO] RESPONSE method=POST path=/bookings status=201 user=riwaelkari role=regular
+2025-11-28 22:47:47,137 [INFO] REQUEST method=POST path=/bookings user=riwaelkari role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,143 [WARNING] RESPONSE method=POST path=/bookings status=403 user=riwaelkari role=regular
+2025-11-28 22:47:47,195 [INFO] REQUEST method=GET path=/bookings/user/369 user=maya_beirut role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,201 [INFO] RESPONSE method=GET path=/bookings/user/369 status=200 user=maya_beirut role=regular
+2025-11-28 22:47:47,255 [INFO] REQUEST method=GET path=/bookings/user/370 user=different_user role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,261 [WARNING] RESPONSE method=GET path=/bookings/user/370 status=403 user=different_user role=regular
+2025-11-28 22:47:47,324 [INFO] REQUEST method=PUT path=/bookings/114 user=dana123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,340 [INFO] RESPONSE method=PUT path=/bookings/114 status=200 user=dana123 role=regular
+2025-11-28 22:47:47,396 [INFO] REQUEST method=PUT path=/bookings/115 user=not_nour role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,401 [WARNING] RESPONSE method=PUT path=/bookings/115 status=403 user=not_nour role=regular
+2025-11-28 22:47:47,454 [INFO] REQUEST method=DELETE path=/bookings/116 user=jad123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,468 [INFO] RESPONSE method=DELETE path=/bookings/116 status=200 user=jad123 role=regular
+2025-11-28 22:47:47,535 [INFO] REQUEST method=DELETE path=/bookings/117 user=notkarim role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,541 [WARNING] RESPONSE method=DELETE path=/bookings/117 status=403 user=notkarim role=regular
+2025-11-28 22:47:47,584 [INFO] REQUEST method=POST path=/bookings user=hadi123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,588 [WARNING] RESPONSE method=POST path=/bookings status=400 user=hadi123 role=regular
+2025-11-28 22:47:47,650 [INFO] REQUEST method=POST path=/bookings user=yara123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,661 [WARNING] RESPONSE method=POST path=/bookings status=409 user=yara123 role=regular
+2025-11-28 22:47:47,704 [INFO] REQUEST method=POST path=/rooms/396/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,710 [INFO] RESPONSE method=POST path=/rooms/396/availability status=200 user=any role=regular
+2025-11-28 22:47:47,770 [INFO] REQUEST method=POST path=/rooms/397/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,777 [INFO] RESPONSE method=POST path=/rooms/397/availability status=200 user=any role=regular
+2025-11-28 22:47:47,793 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:47:47,793 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 22:47:47,802 [INFO] REQUEST method=GET path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:47:47,803 [WARNING] RESPONSE method=GET path=/bookings status=401 user=anonymous role=none
+2025-11-28 22:47:47,811 [INFO] REQUEST method=GET path=/bookings user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:47:47,814 [INFO] RESPONSE method=GET path=/bookings status=200 user=admin role=admin
+2025-11-28 22:47:47,821 [INFO] REQUEST method=GET path=/bookings user=any role=none remote_addr=127.0.0.1
+2025-11-28 22:47:47,822 [WARNING] RESPONSE method=GET path=/bookings status=401 user=any role=none
+2025-11-28 22:47:47,838 [INFO] REQUEST method=GET path=/bookings user=expired role=none remote_addr=127.0.0.1
+2025-11-28 22:47:47,839 [WARNING] RESPONSE method=GET path=/bookings status=401 user=expired role=none
+2025-11-28 22:47:47,852 [INFO] REQUEST method=PUT path=/bookings/9999 user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 22:47:47,854 [WARNING] RESPONSE method=PUT path=/bookings/9999 status=404 user=admin role=admin
+2025-11-28 22:47:47,907 [INFO] REQUEST method=PUT path=/bookings/120 user=lina123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,917 [WARNING] RESPONSE method=PUT path=/bookings/120 status=404 user=lina123 role=regular
+2025-11-28 22:47:47,986 [INFO] REQUEST method=DELETE path=/bookings/121 user=nada123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:47,993 [INFO] RESPONSE method=DELETE path=/bookings/121 status=200 user=nada123 role=regular
+2025-11-28 22:47:48,039 [INFO] REQUEST method=POST path=/bookings user=rami123 role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:48,045 [WARNING] RESPONSE method=POST path=/bookings status=400 user=rami123 role=regular
+2025-11-28 22:47:48,076 [INFO] REQUEST method=POST path=/rooms/401/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:48,081 [WARNING] RESPONSE method=POST path=/rooms/401/availability status=400 user=any role=regular
+2025-11-28 22:47:48,118 [INFO] REQUEST method=POST path=/rooms/402/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:48,124 [WARNING] RESPONSE method=POST path=/rooms/402/availability status=400 user=any role=regular
+2025-11-28 22:47:48,144 [INFO] REQUEST method=POST path=/rooms/9999/availability user=any role=regular remote_addr=127.0.0.1
+2025-11-28 22:47:48,148 [WARNING] RESPONSE method=POST path=/rooms/9999/availability status=404 user=any role=regular
+2025-11-28 22:47:48,157 [INFO] REQUEST method=OPTIONS path=/bookings user=anonymous role=none remote_addr=127.0.0.1
+2025-11-28 22:47:48,158 [INFO] RESPONSE method=OPTIONS path=/bookings status=200 user=anonymous role=none
