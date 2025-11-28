@@ -61,22 +61,55 @@ if not logger.handlers:
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 
+
 def get_current_user():
-    """Decode user from token, fallback to X-User-* headers."""
+    """This wll decode JWT or fallback headers. Always return (username, role) or (None, None)."""
+
     auth_header = request.headers.get("Authorization", "")
+
     if auth_header.startswith("Bearer "):
         token = auth_header[7:]
         try:
             payload = jwt.decode(token, AUTH_SECRET_KEY, algorithms=["HS256"])
-            return payload.get("username"), payload.get("role")
+            u = payload.get("username")
+            r = payload.get("role")
+            if not u or not r:
+                return None, None
+            return u, r
         except jwt.ExpiredSignatureError:
-            return None, None
+            # Decode payload without verifying exp, so we get the username
+            try:
+                payload = jwt.decode(
+                    token,
+                    AUTH_SECRET_KEY,
+                    algorithms=["HS256"],
+                    options={"verify_exp": False},
+                )
+                u = payload.get("username")
+            except Exception:
+                u = None
+
+            return (u, None)   # username known, role missing => missing-role error
+
         except jwt.InvalidTokenError:
             return None, None
 
+
+    # fallback headers
     username = request.headers.get("X-User-Name")
     role = request.headers.get("X-User-Role")
+
+        # missing username => full auth failure
+    if not username:
+        return None, None
+
+    # username present but role missing => specific failure
+    if not role:
+        return username, None
+
+
     return username, role
+
 
 @app.before_request
 def audit_request():
@@ -96,6 +129,20 @@ def audit_request():
         g.audit_role,
         request.remote_addr,
     )
+@app.before_request
+def enforce_auth():
+    if request.method == "OPTIONS":
+        return
+
+    username, role = get_current_user()
+
+    # unified auth failure
+    if not username:
+        return jsonify({"error": "authentication required"}), 401
+
+    if not role:
+        return jsonify({"error": "missing X-User-Role header"}), 401
+
 
 
 @app.after_request
@@ -115,21 +162,30 @@ def audit_response(response):
     )
     return response
 
-
 def require_roles(*allowed_roles):
     def decorator(view_func):
         @wraps(view_func)
         def wrapped(*args, **kwargs):
             username, role = get_current_user()
-            if role is None:
+
+            # unified auth failure
+            # missing username OR missing role
+            if not username:
+                return jsonify({"error": "authentication required"}), 401
+
+            if not role:
                 return jsonify({"error": "missing X-User-Role header"}), 401
+
+
             if role not in allowed_roles:
                 return jsonify({
                     "error": f"forbidden: requires one of roles: {', '.join(allowed_roles)}"
                 }), 403
+
             return view_func(*args, **kwargs)
         return wrapped
     return decorator
+
 
 
 # Helpers
@@ -199,6 +255,7 @@ def valid_date(d):
     day = int(dd)
 
     return 1 <= month <= 12 and 1 <= day <= 31
+
 
 
 # Routes

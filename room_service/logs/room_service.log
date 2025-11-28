@@ -116,3 +116,9 @@
 2025-11-28 09:36:30,229 [WARNING] RESPONSE method=POST path=/rooms status=400 user=adminuser role=admin
 2025-11-28 09:36:30,260 [INFO] REQUEST method=POST path=/rooms user=nour role=regular remote_addr=127.0.0.1
 2025-11-28 09:36:30,262 [WARNING] RESPONSE method=POST path=/rooms status=403 user=nour role=regular
+2025-11-28 11:48:54,122 [INFO] REQUEST method=POST path=/rooms user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 11:48:54,131 [INFO] RESPONSE method=POST path=/rooms status=201 user=admin role=admin
+2025-11-28 11:50:27,144 [INFO] REQUEST method=POST path=/rooms user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 11:50:27,159 [INFO] RESPONSE method=POST path=/rooms status=201 user=admin role=admin
+2025-11-28 11:51:42,346 [INFO] REQUEST method=POST path=/rooms user=admin role=admin remote_addr=127.0.0.1
+2025-11-28 11:51:42,354 [INFO] RESPONSE method=POST path=/rooms status=201 user=admin role=admin

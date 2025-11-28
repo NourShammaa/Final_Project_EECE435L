@@ -55,23 +55,29 @@ if not logger.handlers:
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 
-
 def get_current_user():
-    """Decode user from token, fallback to X-User-* headers."""
+    """This fct decode user from token, fallback to X-User-* headers."""
     auth_header = request.headers.get("Authorization", "")
+    
     if auth_header.startswith("Bearer "):
         token = auth_header[7:]
         try:
             payload = jwt.decode(token, AUTH_SECRET_KEY, algorithms=["HS256"])
             return payload.get("username"), payload.get("role")
-        except jwt.ExpiredSignatureError:
-            return None, None
-        except jwt.InvalidTokenError:
+        except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
+            # Token invalid → treat as missing
             return None, None
 
+    # fallback headers
     username = request.headers.get("X-User-Name")
     role = request.headers.get("X-User-Role")
+
+    # if either is missing → treat as unauthenticated
+    if not username or not role:
+        return None, None
+
     return username, role
+
 # ── Auditing hooks: log every request & response ─────────────────────────
 @app.before_request
 def audit_request():
@@ -97,6 +103,21 @@ def audit_request():
         request.remote_addr,
     )
 
+@app.before_request
+def enforce_auth():
+    if request.method == "OPTIONS":
+        return 
+
+    # Public endpoints allowed without authentication
+    # Reading reviews is public for ex!
+    if request.path.startswith("/reviews/room/") and request.method == "GET":
+        return
+
+    # All other endpoints require auth
+    username, role = get_current_user()
+
+    if username is None or role is None:
+        return jsonify({"error": "authentication required"}), 401
 
 @app.after_request
 def audit_response(response):
