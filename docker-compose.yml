@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  users:
+    build:
+      context: .
+      dockerfile: Dockerfile.users
+    container_name: users_service
+    environment:
+      - AUTH_SECRET_KEY=my-435L-secret
+      - USERS_DB_PATH=/data/users_secure.db
+    volumes:
+      # host:container
+      - ./users_secure.db:/data/users_secure.db
+    ports:
+      - "5001:5001"
+
+  rooms:
+    build:
+      context: .
+      dockerfile: Dockerfile.rooms
+    container_name: room_service
+    environment:
+      - AUTH_SECRET_KEY=my-435L-secret
+      - ROOMS_DB_PATH=/data/rooms_secure.db
+    volumes:
+      - ./rooms_secure.db:/data/rooms_secure.db
+    ports:
+      - "5002:5002"
+    depends_on:
+      - users
+
+  bookings:
+    build:
+      context: .
+      dockerfile: Dockerfile.bookings
+    container_name: bookings_service
+    environment:
+      - AUTH_SECRET_KEY=my-435L-secret
+      - BOOKINGS_DB_PATH=/data/bookings_secure.db
+    volumes:
+      - ./bookings_secure.db:/data/bookings_secure.db
+    ports:
+      - "5003:5003"
+    depends_on:
+      - users
+      - rooms
+
+  reviews:
+    build:
+      context: .
+      dockerfile: Dockerfile.reviews
+    container_name: reviews_service
+    environment:
+      - AUTH_SECRET_KEY=my-435L-secret
+      - REVIEWS_DB_PATH=/data/reviews_secure.db
+    volumes:
+      - ./reviews_secure.db:/data/reviews_secure.db
+    ports:
+      - "5004:5004"
+    depends_on:
+      - users
+      - rooms

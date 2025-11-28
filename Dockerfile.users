@@ -1,0 +1,27 @@
+# Dockerfile.users
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy only the users service code
+COPY users_service /app/users_service
+
+# Directory where the DB will live INSIDE the container
+RUN mkdir -p /data
+
+# Defaults (will be overridden by docker-compose)
+ENV USERS_DB_PATH=/data/users_secure.db
+ENV AUTH_SECRET_KEY=change-me
+
+EXPOSE 5001
+
+WORKDIR /app/users_service
+CMD ["python", "app.py"]

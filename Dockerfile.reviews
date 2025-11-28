@@ -1,0 +1,23 @@
+# Dockerfile.reviews
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY reviews_service /app/reviews_service
+
+RUN mkdir -p /data
+
+ENV REVIEWS_DB_PATH=/data/reviews_secure.db
+ENV AUTH_SECRET_KEY=change-me
+
+EXPOSE 5004
+
+WORKDIR /app/reviews_service
+CMD ["python", "app.py"]
