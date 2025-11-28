@@ -41,7 +41,7 @@ except ImportError:
     )
 
 app = Flask(__name__)
-Talisman(app, content_security_policy=None)
+Talisman(app, content_security_policy=None,force_https=False)
 # ── Auditing / Logging setup ─────────────────────────────────────────────
 LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
 os.makedirs(LOG_DIR, exist_ok=True)

@@ -128,7 +128,7 @@ def invalidate_rooms_cache():
 
 
 app = Flask(__name__)
-Talisman(app, content_security_policy=None)
+Talisman(app, content_security_policy=None,force_https=False)
 
 # ── Auditing / Logging setup ─────────────────────────────────────────────
 LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")

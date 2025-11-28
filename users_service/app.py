@@ -140,7 +140,7 @@ def invalidate_user_cache(username=None):
         _user_cache.pop(username, None)
 
 app = Flask(__name__)
-Talisman(app, content_security_policy=None)
+Talisman(app, content_security_policy=None,force_https=False)
 
 LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
